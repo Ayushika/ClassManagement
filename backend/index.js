@@ -40,3 +40,6 @@ app.use(errorHandler);
 app.listen(process.env.PORT || 5000, () =>
   console.log(`Server Running ${process.env.NODE_ENV} mode on port 5000`)
 );
+
+// Access Key id -> AKIASBMIZ3GVLQDP3Y3W
+// Secret -> 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
