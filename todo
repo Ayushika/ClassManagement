@@ -1,0 +1,4 @@
+@todo: 
+1. Add Authorization Login / Register Navbar
+2. Add Instructor Model -> email name universityId batch[] 
+3. Add Student Model -> email name univeristyId batch year subject[]
