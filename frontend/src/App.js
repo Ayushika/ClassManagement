@@ -1,3 +1,4 @@
+
 import React, { lazy, Suspense } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -21,6 +22,16 @@ const App = () => {
         </Switch>
       </Suspense>
     </Router>
+/** @format */
+
+import React from "react";
+
+const App = () => {
+  return (
+    <div className='container'>
+      <h1 className='text-center text-success'>ClassRoom</h1>
+      <p className='text-danger text-center'>Starts from 20-12-2021</p>
+    </div>
   );
 };
 
