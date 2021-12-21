@@ -1,12 +1,17 @@
-
 import React, { lazy, Suspense } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Container } from "react-bootstrap";
 
 // Components
 import Header from "./components/layout/Header";
 
 // Pages
 const HomePage = lazy(() => import("./pages/HomePage"));
+const LoginPage = lazy(() => import("./pages/auth/LoginPage"));
+const RegisterPage = lazy(() => import("./pages/auth/RegisterPage"));
+const ForgotPasswordPage = lazy(() =>
+  import("./pages/auth/ForgotPasswordPage")
+);
 
 const App = () => {
   return (
@@ -17,21 +22,22 @@ const App = () => {
         }
       >
         <Header />
-        <Switch>
-          <Route exact path="/" component={HomePage} />
-        </Switch>
+        <main className="py-3">
+          <Container>
+            <Switch>
+              <Route exact path="/" component={HomePage} />
+              <Route exact path="/login" component={LoginPage} />
+              <Route exact path="/register" component={RegisterPage} />
+              <Route
+                exact
+                path="/forgot-password"
+                component={ForgotPasswordPage}
+              />
+            </Switch>
+          </Container>
+        </main>
       </Suspense>
     </Router>
-/** @format */
-
-import React from "react";
-
-const App = () => {
-  return (
-    <div className='container'>
-      <h1 className='text-center text-success'>ClassRoom</h1>
-      <p className='text-danger text-center'>Starts from 20-12-2021</p>
-    </div>
   );
 };
 
