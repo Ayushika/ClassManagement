@@ -2,3 +2,38 @@
 1. Add Authorization Login / Register Navbar
 2. Add Instructor Model -> email name universityId batch[] 
 3. Add Student Model -> email name univeristyId batch year subject[]
+
+
+/* Only admin can register users */
+Register Button will only be visible to Admin. 
+
+On Admin Dashboard we have two options to register student and register Professor
+
+userModal{
+    admins[{email , password}] , students[{email , password}] , teachers[{email , password}],
+}
+
+userModal{
+    name , email , phone , password, image , enum[role] , courseId , batchId
+}
+
+AdminModal{
+    name, email, phone, isAdmin, password, 
+}
+
+ProfessorModal{
+    name, email , phone , isProfessor , password  , image
+    createCourses -> add Lessons
+}
+
+CourseModal{
+   lessonModal{}
+}
+
+StudentModal{
+    name , email , phone , isStudent , password , image , courseId[]
+}
+
+BatchModal {
+    institute , branch , year , batch 
+}
