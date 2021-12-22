@@ -16,7 +16,7 @@ const LoginPage = () => {
       <Container>
         <Row className="justify-content-md-center">
           <Col xs={12} md={6}>
-            <h2>Sign In</h2>
+            <h2 className="text-success">Sign In</h2>
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="email" className="mt-3">
                 <Form.Label>Email Address</Form.Label>
@@ -36,7 +36,7 @@ const LoginPage = () => {
                   onChange={(e) => setPassword(e.target.value)}
                 ></Form.Control>
               </Form.Group>
-              <Button type="submit" variant="dark mt-4">
+              <Button type="submit" className=" btn btn-success mt-3">
                 Sign In
               </Button>
             </Form>

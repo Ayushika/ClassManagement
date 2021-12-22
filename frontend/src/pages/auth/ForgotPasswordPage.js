@@ -19,7 +19,7 @@ const ForgotPasswordPage = () => {
       <Container>
         <Row className="justify-content-md-center">
           <Col xs={12} md={6}>
-            <h2>Forgot Password ?</h2>
+            <h2 className="text-success">Forgot Password ?</h2>
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="email" className="mt-3">
                 <Form.Label>Email Address</Form.Label>
@@ -52,7 +52,11 @@ const ForgotPasswordPage = () => {
                   </Form.Group>
                 </>
               )}
-              <Button type="submit" variant="dark mt-4">
+              <Button
+                type="submit"
+                className="btn btn-success mt-3"
+                disabled={!email}
+              >
                 {success ? "Reset Password" : "Send Otp"}
               </Button>
             </Form>
