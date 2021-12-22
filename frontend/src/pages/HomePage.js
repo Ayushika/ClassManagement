@@ -5,7 +5,7 @@ const HomePage = () => {
   return (
     <div>
       <Meta title="Home" />
-      <h1 className="text-center text-success">ClassRoom</h1>
+      <h1 className="text-center text-success">Pustak</h1>
     </div>
   );
 };
