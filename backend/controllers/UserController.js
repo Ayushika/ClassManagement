@@ -1,3 +1,5 @@
+/** @format */
+
 import userSchema from "../models/UserModel";
 import { hashPassword, comparePassword } from "../utils/bcrypt";
 import generateToken from "../utils/generateToken";
@@ -55,4 +57,17 @@ export const loginUser = async (req, res) => {
     image: user.image,
     phone: user.phone,
   });
+};
+
+//@desc   Logout User
+//@routes POST /api/user/logout
+//@access PRIVATE/USER
+export const logoutUser = async (req, res) => {
+  try {
+    res.clearCookie("token");
+    return res.json({ message: "Successfully logout" });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).send("Error! try again");
+  }
 };
