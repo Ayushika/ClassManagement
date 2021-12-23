@@ -1,6 +1,8 @@
 import userSchema from "../models/UserModel";
 import { hashPassword, comparePassword } from "../utils/bcrypt";
 import generateToken from "../utils/generateToken";
+import { nanoid } from "nanoid";
+import { mailTemplate } from "../utils/awsServices";
 
 //@desc   Register User
 //@routes POST /api/user/register
@@ -27,32 +29,146 @@ export const registerUser = async (req, res) => {
 //@routes POST /api/user/login
 //@access PUBLIC
 export const loginUser = async (req, res) => {
-  const { email, password } = req.body;
-  const user = await userSchema.findOne({ email });
-  if (!user) {
-    return res.status(400).send("User Not Found!");
+  try {
+    const { email, password } = req.body;
+    const user = await userSchema.findOne({ email });
+    if (!user) {
+      return res.status(400).send("User Not Found!");
+    }
+
+    const isPasswordMatched = await comparePassword(password, user.password);
+    if (!isPasswordMatched) {
+      return res.status(400).send("Invalid Credentials");
+    }
+    const token = generateToken(user._id);
+
+    // send token in cookie
+    // when user successfully logs in server send the cookie response so this token will be accessible for the browser so browser whenever making request to backend this token is automatically included.
+    res.cookie("token", token, {
+      httpOnly: true,
+      // secure: true // only work on https in production with ssl certificates
+    });
+
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      token,
+      image: user.image,
+      phone: user.phone,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).send("Login Failed");
   }
+};
 
-  const isPasswordMatched = await comparePassword(password, user.password);
-  if (!isPasswordMatched) {
-    return res.status(400).send("Invalid Credentials");
+//@desc   Verify Email For Resetting Password
+//@routes POST /api/user/verify-email
+//@access PUBLIC
+export const verifyEmail = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await userSchema.findOne({ email }).exec();
+    if (!user) {
+      return res.status(400).send("User Not Found!");
+    }
+    const otp = nanoid(6).toUpperCase();
+    const params = {
+      Source: process.env.EMAIL_FROM,
+      Destination: {
+        ToAddresses: [email],
+      },
+      ReplyToAddresses: [process.env.EMAIL_FROM],
+      Message: {
+        Body: {
+          Html: {
+            Charset: "UTF-8",
+            Data: `
+            <html>
+            <h1>Reset Your Password</h1>
+            <p>Use this code</p>
+            <h2 style="color:red;">${otp}</h2>
+            <i>ClassRoom</i>
+            </html>
+            `,
+          },
+        },
+        Subject: {
+          Charset: "UTF-8",
+          Data: "Otp for Reset Password",
+        },
+      },
+    };
+    const emailSent = mailTemplate(params);
+    emailSent
+      .then((data) => {
+        res.json(otp);
+      })
+      .catch((err) => console.log(err));
+  } catch (error) {
+    console.log(error);
+    res.status(400).send("Error Try Again");
   }
-  const token = generateToken(user._id);
+};
 
-  // send token in cookie
-  // when user successfully logs in server send the cookie response so this token will be accessible for the browser so browser whenever making request to backend this token is automatically included.
-  res.cookie("token", token, {
-    httpOnly: true,
-    // secure: true // only work on https in production with ssl certificates
-  });
+//@desc   Forgot Password
+//@routes POST /api/user/forgot-password
+//@access PUBLIC
+export const forgotPassword = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await userSchema.findOne({ email });
 
-  res.json({
-    _id: user._id,
-    name: user.name,
-    email: user.email,
-    role: user.role,
-    token,
-    image: user.image,
-    phone: user.phone,
-  });
+    if (!password || password.length < 8)
+      return res
+        .status(400)
+        .send("Password is required and should be min 8 characters long");
+
+    if (!user) {
+      return res.status(400).send("Email Not Found");
+    }
+
+    const hashedPassword = await hashPassword(password);
+
+    const updateUser = await userSchema.findOneAndUpdate(
+      { email },
+      { password: hashedPassword }
+    );
+
+    const params = {
+      Source: process.env.EMAIL_FROM,
+      Destination: {
+        ToAddresses: [email],
+      },
+      ReplyToAddresses: [process.env.EMAIL_FROM],
+      Message: {
+        Body: {
+          Html: {
+            Charset: "UTF-8",
+            Data: `
+                <html>
+                <h1>Password Reset Successfully</h1>
+                <i>ClassRoom</i>
+                </html>
+                `,
+          },
+        },
+        Subject: {
+          Charset: "UTF-8",
+          Data: "Password Reset",
+        },
+      },
+    };
+    const emailSent = mailTemplate(params);
+    emailSent
+      .then((data) => {
+        res.json({ success: true });
+      })
+      .catch((err) => console.log(err));
+  } catch (error) {
+    console.log(error);
+    res.status(400).send("Error Try Again");
+  }
 };
