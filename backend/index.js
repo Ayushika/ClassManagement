@@ -6,6 +6,7 @@ import cors from "cors";
 // import cookieParser from "cookie-parser";
 import connectDB from "./config/db";
 import { notFound, errorHandler } from "./middleware/errMiddleware";
+import UserRoutes from "./routes/UserRoutes";
 
 const app = express();
 dotenv.config();
@@ -28,6 +29,8 @@ if (process.env.NODE_ENV === "development") {
 // app.get("/api/csrf-token", (req, res) => {
 //   res.json({ csrfToken: req.csrfToken() });
 // });
+
+app.use("/api/user", UserRoutes);
 
 // connecting to the database
 connectDB();

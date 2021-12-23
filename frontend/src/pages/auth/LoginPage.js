@@ -2,12 +2,32 @@ import React, { useState } from "react";
 import Meta from "../../components/Meta";
 import { Row, Col, Button, Form, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const handleSubmit = (e) => {
+
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const { data } = await axios.post(
+        "/api/user/login",
+        { email, password },
+        config
+      );
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data);
+    }
   };
 
   return (

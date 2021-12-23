@@ -12,6 +12,9 @@ const ForgotPasswordPage = () => {
     e.preventDefault();
     setSuccess(true);
   };
+  const handleOtp = (e) => {
+    e.preventDefault();
+  };
 
   return (
     <div>
@@ -20,7 +23,7 @@ const ForgotPasswordPage = () => {
         <Row className="justify-content-md-center">
           <Col xs={12} md={6}>
             <h2 className="text-success">Forgot Password ?</h2>
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={success ? handleOtp : handleSubmit}>
               <Form.Group controlId="email" className="mt-3">
                 <Form.Label>Email Address</Form.Label>
                 <Form.Control
@@ -28,6 +31,7 @@ const ForgotPasswordPage = () => {
                   placeholder="Email Address"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  disabled={success}
                 ></Form.Control>
               </Form.Group>
               {success && (
@@ -56,6 +60,7 @@ const ForgotPasswordPage = () => {
                 type="submit"
                 className="btn btn-success mt-3"
                 disabled={!email}
+                onClick={success ? handleOtp : handleSubmit}
               >
                 {success ? "Reset Password" : "Send Otp"}
               </Button>

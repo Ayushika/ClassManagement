@@ -24,19 +24,17 @@ const UserSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
-      maxLength: 32,
-      minLength: 6,
     },
     role: {
       type: String,
       default: "Student",
-      enum: ["Student", "Instructor"],
+      enum: ["Student", "Instructor", "Admin"],
     },
     image: {},
     // courseId: [{ type: mongoose.Schema.Types.ObjectId, ref: "Course" }],
     // batchId: { type: mongoose.Schema.Types.ObjectId, ref: "Batch" },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 const User = mongoose.model("User", UserSchema);
