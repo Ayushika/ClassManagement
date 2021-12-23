@@ -28,7 +28,7 @@ export const login = (email, password, history) => async (dispatch) => {
     const { data } = await axios.post(
       "http://localhost:5000/api/user/login",
       { email, password },
-      config
+      config,
     );
 
     console.log(data);
@@ -66,7 +66,7 @@ export const verifyEmail = (email) => async (dispatch) => {
     const { data } = await axios.post(
       "/api/user/verify-email",
       { email },
-      config
+      config,
     );
     dispatch({ type: USER_VERIFY_EMAIL_SUCCESS, payload: data });
   } catch (error) {
@@ -82,13 +82,15 @@ export const forgotPassword = (email, password) => async (dispatch) => {
     const { data } = await axios.post(
       "/api/user/forgot-password",
       { email, password },
-      config
+      config,
     );
     dispatch({ type: USER_FORGOT_PASSWORD_SUCCESS, payload: data });
   } catch (error) {
     console.log(error);
     toast.error(error.response.data);
     dispatch({ type: USER_FORGOT_PASSWORD_FAIL, payload: error.response.data });
+  }
+};
 
 export const logout = (history) => async (dispatch) => {
   try {
