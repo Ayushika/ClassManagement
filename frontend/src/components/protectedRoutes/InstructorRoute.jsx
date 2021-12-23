@@ -20,7 +20,7 @@ const InstructorRoute = ({ children, ...rest }) => {
       const { data } = await axios.post(
         "http://localhost:5000/api/instructor/isValid",
         {},
-        config,
+        config
       );
       if (data.success === true) setOk(true);
     } catch (error) {
@@ -31,9 +31,10 @@ const InstructorRoute = ({ children, ...rest }) => {
 
   useEffect(() => {
     isValidInstructor();
+    // eslint-disable-next-line
   }, []);
 
-   return ok ? <Route {...rest} /> : <LoadingToRedirect />;
+  return ok ? <Route {...rest} /> : <LoadingToRedirect />;
 };
 
 export default InstructorRoute;

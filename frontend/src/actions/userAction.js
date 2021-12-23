@@ -29,7 +29,7 @@ export const login = (email, password, history) => async (dispatch) => {
     const { data } = await axios.post(
       "http://localhost:5000/api/user/login",
       { email, password },
-      config,
+      config
     );
 
     dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
@@ -65,7 +65,7 @@ export const verifyEmail = (email) => async (dispatch) => {
     const { data } = await axios.post(
       "http://localhost:5000/api/user/verify-email",
       { email },
-      config,
+      config
     );
     dispatch({ type: USER_VERIFY_EMAIL_SUCCESS, payload: data });
   } catch (error) {
@@ -80,7 +80,7 @@ export const forgotPassword = (email, password) => async (dispatch) => {
     const { data } = await axios.post(
       "http://localhost:5000/api/user/forgot-password",
       { email, password },
-      config,
+      config
     );
     dispatch({ type: USER_FORGOT_PASSWORD_SUCCESS, payload: data });
   } catch (error) {
@@ -91,11 +91,7 @@ export const forgotPassword = (email, password) => async (dispatch) => {
 
 export const logout = (history) => async (dispatch) => {
   try {
-    const { data } = await axios.post(
-      "http://localhost:5000/api/user/logout",
-      {},
-      config
-    );
+    await axios.post("http://localhost:5000/api/user/logout", {}, config);
     window.localStorage.removeItem("userInfo");
     dispatch({ type: USER_LOGOUT });
     history.push("/");

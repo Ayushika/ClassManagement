@@ -1,7 +1,8 @@
 @todo: 
-1. Protected Routes
-2. Not Found Page and Spinner 
-3. Register Form for students and instructor.
+1. student register form
+2. instructor register form 
+3. upload images on aws
+
 
 
 /* Only admin can register users */

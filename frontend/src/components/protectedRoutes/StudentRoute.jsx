@@ -20,7 +20,7 @@ const StudentRoute = ({ children, ...rest }) => {
       const { data } = await axios.post(
         "http://localhost:5000/api/student/isValid",
         {},
-        config,
+        config
       );
       if (data.success === true) setOk(true);
     } catch (error) {
@@ -31,6 +31,7 @@ const StudentRoute = ({ children, ...rest }) => {
 
   useEffect(() => {
     isValidStudent();
+    // eslint-disable-next-line
   }, []);
 
   return ok ? <Route {...rest} /> : <LoadingToRedirect />;
