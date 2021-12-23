@@ -1,19 +1,52 @@
 import React, { useState } from "react";
 import Meta from "../../components/Meta";
 import { Row, Col, Button, Form, Container } from "react-bootstrap";
+import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { verifyEmail, forgotPassword } from "../../actions/userAction";
+import {
+  USER_FORGOT_PASSWORD_RESET,
+  USER_VERIFY_EMAIL_RESET,
+} from "../../constants/userConstants";
 
-const ForgotPasswordPage = () => {
+const ForgotPasswordPage = ({ history }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [otp, setOtp] = useState("");
   const [success, setSuccess] = useState(false);
 
+  const userVerifyEmail = useSelector((state) => state.userVerifyEmail);
+  const { otp: code } = userVerifyEmail;
+
+  const userForgotPassword = useSelector((state) => state.userForgotPassword);
+  const { success: successReset } = userForgotPassword;
+
+  const dispatch = useDispatch();
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    setSuccess(true);
+    if (!otp) {
+      toast.error("Otp is required");
+      return;
+    }
+    if (otp !== code) {
+      toast.error("Invalid Otp");
+      return;
+    }
+    dispatch(forgotPassword(email, password));
+    if (successReset) {
+      toast.success("Password Reset Successfully. Now you can Login");
+      dispatch({ type: USER_VERIFY_EMAIL_RESET });
+      dispatch({ type: USER_FORGOT_PASSWORD_RESET });
+      history.push("/login");
+      setSuccess(false);
+    }
   };
   const handleOtp = (e) => {
     e.preventDefault();
+    toast.success(`otp sent on ${email}`);
+    dispatch(verifyEmail(email));
+    setSuccess(true);
   };
 
   return (
@@ -23,7 +56,7 @@ const ForgotPasswordPage = () => {
         <Row className="justify-content-md-center">
           <Col xs={12} md={6}>
             <h2 className="text-success">Forgot Password ?</h2>
-            <Form onSubmit={success ? handleOtp : handleSubmit}>
+            <Form onSubmit={success ? handleSubmit : handleOtp}>
               <Form.Group controlId="email" className="mt-3">
                 <Form.Label>Email Address</Form.Label>
                 <Form.Control
@@ -60,7 +93,7 @@ const ForgotPasswordPage = () => {
                 type="submit"
                 className="btn btn-success mt-3"
                 disabled={!email}
-                onClick={success ? handleOtp : handleSubmit}
+                onClick={success ? handleSubmit : handleOtp}
               >
                 {success ? "Reset Password" : "Send Otp"}
               </Button>
