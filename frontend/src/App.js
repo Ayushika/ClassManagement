@@ -1,6 +1,8 @@
 import React, { lazy, Suspense } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Container } from "react-bootstrap";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // Components
 import Header from "./components/layout/Header";
@@ -22,6 +24,7 @@ const App = () => {
         }
       >
         <Header />
+        <ToastContainer position="top-center" />
         <main className="py-3">
           <Container>
             <Switch>
