@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../actions/userAction";
 import { Row, Col, Button, Form, Container } from "react-bootstrap";
 
-const LoginPage = () => {
+const LoginPage = ({ history }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -15,7 +15,7 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(login(email, password));
+    dispatch(login(email, password, history));
   };
 
   return (
