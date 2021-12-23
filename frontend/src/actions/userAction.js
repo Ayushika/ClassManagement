@@ -32,7 +32,6 @@ export const login = (email, password, history) => async (dispatch) => {
       config,
     );
 
-    console.log(data);
     dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
 
     /* set data in localstorage without token */
@@ -55,7 +54,6 @@ export const login = (email, password, history) => async (dispatch) => {
       history.push("/instructor/dashboard");
     }
   } catch (error) {
-    console.log(error);
     toast.error(error.response.data);
     dispatch({ type: USER_LOGIN_FAIL, payload: error.response.data });
   }
@@ -71,7 +69,6 @@ export const verifyEmail = (email) => async (dispatch) => {
     );
     dispatch({ type: USER_VERIFY_EMAIL_SUCCESS, payload: data });
   } catch (error) {
-    console.log(error);
     toast.error(error.response.data);
     dispatch({ type: USER_VERIFY_EMAIL_FAIL, payload: error.response.data });
   }
@@ -87,7 +84,6 @@ export const forgotPassword = (email, password) => async (dispatch) => {
     );
     dispatch({ type: USER_FORGOT_PASSWORD_SUCCESS, payload: data });
   } catch (error) {
-    console.log(error);
     toast.error(error.response.data);
     dispatch({ type: USER_FORGOT_PASSWORD_FAIL, payload: error.response.data });
   }
@@ -104,7 +100,6 @@ export const logout = (history) => async (dispatch) => {
     dispatch({ type: USER_LOGOUT });
     history.push("/");
   } catch (error) {
-    console.log(error);
     toast.error(error.response.data);
   }
 };

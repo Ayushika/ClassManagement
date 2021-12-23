@@ -1,3 +1,5 @@
+/** @format */
+
 import express from "express";
 import morgan from "morgan";
 import dotenv from "dotenv";
@@ -7,6 +9,9 @@ import cookieParser from "cookie-parser";
 import connectDB from "./config/db";
 import { notFound, errorHandler } from "./middleware/errMiddleware";
 import UserRoutes from "./routes/UserRoutes";
+import AdminRoutes from "./routes/AdminRoutes";
+import StudentRoutes from "./routes/StudentRoutes";
+import InstructorRoutes from "./routes/InstructorRoutes";
 
 const app = express();
 dotenv.config();
@@ -38,6 +43,9 @@ if (process.env.NODE_ENV === "development") {
 // });
 
 app.use("/api/user", UserRoutes);
+app.use("/api/admin", AdminRoutes);
+app.use("/api/student", StudentRoutes);
+app.use("/api/instructor", InstructorRoutes);
 
 // connecting to the database
 connectDB();
@@ -48,7 +56,7 @@ app.use(errorHandler);
 
 // listen on port
 app.listen(process.env.PORT || 5000, () =>
-  console.log(`Server Running ${process.env.NODE_ENV} mode on port 5000`)
+  console.log(`Server Running ${process.env.NODE_ENV} mode on port 5000`),
 );
 
 // Access Key id -> AKIASBMIZ3GVLQDP3Y3W

@@ -11,9 +11,9 @@ import { mailTemplate } from "../utils/awsServices";
 //@access PRIVATE/ADMIN
 export const registerUser = async (req, res) => {
   const name = "Ayushika";
-  const email = "ayushikabansal7890@gmail.com";
+  const email = "raghav0074.cse19@chitkara.edu.in";
   const phone = 7009904967;
-  const role = "Admin";
+  const role = "Instructor";
   const password = "Raghav1@";
 
   const hashedPassword = await hashPassword(password);

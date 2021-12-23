@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { useState } from "react";
 import Meta from "../../components/Meta";
 import { Row, Col, Button, Form, Container } from "react-bootstrap";
@@ -52,52 +54,47 @@ const ForgotPasswordPage = ({ history }) => {
 
   return (
     <div>
-      <Meta title="Forgot Password ?" />
+      <Meta title='Forgot Password ?' />
       {loadingOtp && <Loading />}
       {loadingForgot && <Loading />}
       <Container>
-        <Row className="justify-content-md-center">
+        <Row className='justify-content-md-center'>
           <Col xs={12} md={6}>
-            <h2 className="text-success">Forgot Password ?</h2>
+            <h3 className='text-success mt-5'>Forgot Password ?</h3>
             <Form onSubmit={success ? handleSubmit : handleOtp}>
-              <Form.Group controlId="email" className="mt-3">
-                <Form.Label>Email Address</Form.Label>
+              <Form.Group controlId='email' className='mt-4'>
                 <Form.Control
-                  type="email"
-                  placeholder="Email Address"
+                  type='email'
+                  placeholder='Enter Email Address'
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  disabled={success}
-                ></Form.Control>
+                  disabled={success}></Form.Control>
               </Form.Group>
               {success && (
                 <>
-                  <Form.Group controlId="otp" className="mt-3">
-                    <Form.Label>Otp</Form.Label>
+                  <Form.Group controlId='otp' className='mt-4'>
                     <Form.Control
-                      type="text"
-                      placeholder="Otp"
+                      type='text'
+                      placeholder='Enter Otp'
                       value={otp}
-                      onChange={(e) => setOtp(e.target.value)}
-                    ></Form.Control>
+                      onChange={(e) => setOtp(e.target.value)}></Form.Control>
                   </Form.Group>
-                  <Form.Group controlId="password" className="mt-3">
-                    <Form.Label>Password</Form.Label>
+                  <Form.Group controlId='password' className='mt-4'>
                     <Form.Control
-                      type="password"
-                      placeholder="Password"
+                      type='password'
+                      placeholder='Enter Password'
                       value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                    ></Form.Control>
+                      onChange={(e) =>
+                        setPassword(e.target.value)
+                      }></Form.Control>
                   </Form.Group>
                 </>
               )}
               <Button
-                type="submit"
-                className="btn btn-success mt-3"
+                type='submit'
+                className='btn btn-success btn-md mt-3'
                 disabled={!email || loadingOtp || loadingForgot}
-                onClick={success ? handleSubmit : handleOtp}
-              >
+                onClick={success ? handleSubmit : handleOtp}>
                 {success ? "Reset Password" : "Send Otp"}
               </Button>
             </Form>

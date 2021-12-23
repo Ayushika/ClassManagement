@@ -14,11 +14,32 @@ export const protect = jwt({
 }); // it will give req.user
 
 export const isAdmin = async (req, res, next) => {
-  console.log("USER : ", req.user);
   const { id } = req.user;
   const user = await userSchema.findById(id).exec();
 
   if (user.role !== "Admin") {
+    return res.status(401).send("UnAuthorized");
+  } else {
+    next();
+  }
+};
+
+export const isStudent = async (req, res, next) => {
+  const { id } = req.user;
+  const user = await userSchema.findById(id).exec();
+
+  if (user.role !== "Student") {
+    return res.status(401).send("UnAuthorized");
+  } else {
+    next();
+  }
+};
+
+export const isInstructor = async (req, res, next) => {
+  const { id } = req.user;
+  const user = await userSchema.findById(id).exec();
+
+  if (user.role !== "Instructor") {
     return res.status(401).send("UnAuthorized");
   } else {
     next();

@@ -10,27 +10,33 @@ import "react-toastify/dist/ReactToastify.css";
 import Header from "./components/layout/Header";
 import Loading from "./components/Loading";
 
+const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
+
 //auth Pages
 const HomePage = lazy(() => import("./pages/HomePage"));
 const LoginPage = lazy(() => import("./pages/auth/LoginPage"));
-const RegisterPage = lazy(() => import("./pages/auth/RegisterPage"));
 const ForgotPasswordPage = lazy(() =>
-  import("./pages/auth/ForgotPasswordPage")
+  import("./pages/auth/ForgotPasswordPage"),
 );
 
-
-const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
 //admin pages
-const AdminDashboardPage = lazy(() => import("./pages/admin/Dashboard"));
 const AdminRoute = lazy(() =>
   import("./components/protectedRoutes/AdminRoute"),
 );
-
-//admin pages
 const AdminDashboardPage = lazy(() => import("./pages/admin/Dashboard"));
+
+//student pages
+const StudentRoute = lazy(() =>
+  import("./components/protectedRoutes/StudentRoute"),
+);
 const StudentDashboardPage = lazy(() => import("./pages/student/Dashboard"));
+
+//instructor pages
+const InstructorRoute = lazy(() =>
+  import("./components/protectedRoutes/InstructorRoute"),
+);
 const InstructorDashboardPage = lazy(() =>
-  import("./pages/instructor/Dashboard")
+  import("./pages/instructor/Dashboard"),
 );
 
 const App = () => {
@@ -38,34 +44,33 @@ const App = () => {
     <Router>
       <Suspense fallback={<Loading />}>
         <Header />
-        <ToastContainer position="top-center" />
-        <main className="py-3">
+        <ToastContainer position='top-center' />
+        <main className='py-3'>
           <Container>
             <Switch>
-              <Route exact path="/" component={HomePage} />
-              <Route exact path="/login" component={LoginPage} />
-              <Route exact path="/register" component={RegisterPage} />
+              <Route exact path='/' component={HomePage} />
+              <Route exact path='/login' component={LoginPage} />
               <Route
                 exact
-                path="/forgot-password"
+                path='/forgot-password'
                 component={ForgotPasswordPage}
               />
               <AdminRoute
                 exact
-                path="/admin/dashboard"
+                path='/admin/dashboard'
                 component={AdminDashboardPage}
               />
-              <Route
+              <StudentRoute
                 exact
-                path="/student/dashboard"
+                path='/student/dashboard'
                 component={StudentDashboardPage}
               />
-              <Route
+              <InstructorRoute
                 exact
-                path="/instructor/dashboard"
+                path='/instructor/dashboard'
                 component={InstructorDashboardPage}
               />
-              <Route exact path="/*" component={NotFoundPage} />
+              <Route exact path='/*' component={NotFoundPage} />
             </Switch>
           </Container>
         </main>

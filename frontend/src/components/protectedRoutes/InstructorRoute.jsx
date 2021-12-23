@@ -5,7 +5,7 @@ import axios from "axios";
 import LoadingToRedirect from "../LoadingToRedirect";
 import { Route } from "react-router-dom";
 
-const AdminRoute = ({ children, ...rest }) => {
+const InstructorRoute = ({ children, ...rest }) => {
   const [ok, setOk] = useState(false);
 
   const config = {
@@ -15,10 +15,10 @@ const AdminRoute = ({ children, ...rest }) => {
     withCredentials: true,
   };
 
-  const isValidAdmin = async () => {
+  const isValidInstructor = async () => {
     try {
       const { data } = await axios.post(
-        "http://localhost:5000/api/admin/isValid",
+        "http://localhost:5000/api/instructor/isValid",
         {},
         config,
       );
@@ -30,10 +30,10 @@ const AdminRoute = ({ children, ...rest }) => {
   };
 
   useEffect(() => {
-    isValidAdmin();
+    isValidInstructor();
   }, []);
 
-  return ok ? <Route {...rest} /> : <LoadingToRedirect />;
+   return ok ? <Route {...rest} /> : <LoadingToRedirect />;
 };
 
-export default AdminRoute;
+export default InstructorRoute;
