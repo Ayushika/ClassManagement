@@ -19,6 +19,9 @@ const ForgotPasswordPage = lazy(() =>
 
 //admin pages
 const AdminDashboardPage = lazy(() => import("./pages/admin/Dashboard"));
+const AdminRoute = lazy(() =>
+  import("./components/protectedRoutes/AdminRoute"),
+);
 
 //admin pages
 const StudentDashboardPage = lazy(() => import("./pages/student/Dashboard"));
@@ -48,7 +51,7 @@ const App = () => {
                 path='/forgot-password'
                 component={ForgotPasswordPage}
               />
-              <Route
+              <AdminRoute
                 exact
                 path='/admin/dashboard'
                 component={AdminDashboardPage}
