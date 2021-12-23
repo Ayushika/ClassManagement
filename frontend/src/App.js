@@ -18,7 +18,13 @@ const ForgotPasswordPage = lazy(() =>
   import("./pages/auth/ForgotPasswordPage")
 );
 
+
 const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
+//admin pages
+const AdminDashboardPage = lazy(() => import("./pages/admin/Dashboard"));
+const AdminRoute = lazy(() =>
+  import("./components/protectedRoutes/AdminRoute"),
+);
 
 //admin pages
 const AdminDashboardPage = lazy(() => import("./pages/admin/Dashboard"));
@@ -44,7 +50,7 @@ const App = () => {
                 path="/forgot-password"
                 component={ForgotPasswordPage}
               />
-              <Route
+              <AdminRoute
                 exact
                 path="/admin/dashboard"
                 component={AdminDashboardPage}

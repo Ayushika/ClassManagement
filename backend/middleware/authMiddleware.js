@@ -1,3 +1,6 @@
+/** @format */
+
+import userSchema from "../models/UserModel";
 import jwt from "express-jwt";
 import dotenv from "dotenv";
 
@@ -9,6 +12,18 @@ export const protect = jwt({
   secret: process.env.JWT_SECRET,
   algorithms: ["HS256"],
 }); // it will give req.user
+
+export const isAdmin = async (req, res, next) => {
+  console.log("USER : ", req.user);
+  const { id } = req.user;
+  const user = await userSchema.findById(id).exec();
+
+  if (user.role !== "Admin") {
+    return res.status(401).send("UnAuthorized");
+  } else {
+    next();
+  }
+};
 
 // import jwt from "jsonwebtoken";
 // import asyncHandler from "express-async-handler";
