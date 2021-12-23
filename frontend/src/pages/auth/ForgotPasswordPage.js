@@ -8,6 +8,7 @@ import {
   USER_FORGOT_PASSWORD_RESET,
   USER_VERIFY_EMAIL_RESET,
 } from "../../constants/userConstants";
+import Loading from "../../components/Loading";
 
 const ForgotPasswordPage = ({ history }) => {
   const [email, setEmail] = useState("");
@@ -16,10 +17,10 @@ const ForgotPasswordPage = ({ history }) => {
   const [success, setSuccess] = useState(false);
 
   const userVerifyEmail = useSelector((state) => state.userVerifyEmail);
-  const { otp: code } = userVerifyEmail;
+  const { otp: code, loading: loadingOtp } = userVerifyEmail;
 
   const userForgotPassword = useSelector((state) => state.userForgotPassword);
-  const { success: successReset } = userForgotPassword;
+  const { success: successReset, loading: loadingForgot } = userForgotPassword;
 
   const dispatch = useDispatch();
 
@@ -52,6 +53,8 @@ const ForgotPasswordPage = ({ history }) => {
   return (
     <div>
       <Meta title="Forgot Password ?" />
+      {loadingOtp && <Loading />}
+      {loadingForgot && <Loading />}
       <Container>
         <Row className="justify-content-md-center">
           <Col xs={12} md={6}>
@@ -92,7 +95,7 @@ const ForgotPasswordPage = ({ history }) => {
               <Button
                 type="submit"
                 className="btn btn-success mt-3"
-                disabled={!email}
+                disabled={!email || loadingOtp || loadingForgot}
                 onClick={success ? handleSubmit : handleOtp}
               >
                 {success ? "Reset Password" : "Send Otp"}
