@@ -19,6 +19,7 @@ const config = {
   headers: {
     "Content-Type": "application/json",
   },
+  withCredentials: true,
 };
 
 export const login = (email, password, history) => async (dispatch) => {
@@ -64,7 +65,7 @@ export const verifyEmail = (email) => async (dispatch) => {
   try {
     dispatch({ type: USER_VERIFY_EMAIL_REQUEST });
     const { data } = await axios.post(
-      "/api/user/verify-email",
+      "http://localhost:5000/api/user/verify-email",
       { email },
       config
     );
@@ -80,7 +81,7 @@ export const forgotPassword = (email, password) => async (dispatch) => {
   try {
     dispatch({ type: USER_FORGOT_PASSWORD_REQUEST });
     const { data } = await axios.post(
-      "/api/user/forgot-password",
+      "http://localhost:5000/api/user/forgot-password",
       { email, password },
       config
     );
@@ -89,13 +90,15 @@ export const forgotPassword = (email, password) => async (dispatch) => {
     console.log(error);
     toast.error(error.response.data);
     dispatch({ type: USER_FORGOT_PASSWORD_FAIL, payload: error.response.data });
+  }
+};
 
 export const logout = (history) => async (dispatch) => {
   try {
     const { data } = await axios.post(
       "http://localhost:5000/api/user/logout",
       {},
-      config,
+      config
     );
     window.localStorage.removeItem("userInfo");
     dispatch({ type: USER_LOGOUT });

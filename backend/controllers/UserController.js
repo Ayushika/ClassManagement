@@ -184,6 +184,6 @@ export const logoutUser = async (req, res) => {
     return res.json({ message: "Successfully logout" });
   } catch (error) {
     console.log(error);
-    return res.status(400).send("Error! try again");
+    return res.status(400).send("Error try again!");
   }
 };
