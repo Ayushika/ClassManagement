@@ -3,7 +3,7 @@ import morgan from "morgan";
 import dotenv from "dotenv";
 import cors from "cors";
 // import csrf from "csurf";
-// import cookieParser from "cookie-parser";
+import cookieParser from "cookie-parser";
 import connectDB from "./config/db";
 import { notFound, errorHandler } from "./middleware/errMiddleware";
 import UserRoutes from "./routes/UserRoutes";
@@ -13,13 +13,20 @@ dotenv.config();
 
 //const csrfProtection = csrf({ cookie: true });
 
-// middleware
-app.use(express.json({ limit: "5mb" }));
-app.use(cors());
+const corsConfig = {
+  origin: true,
+  credentials: true,
+};
+
+app.use(cors(corsConfig));
+app.options("*", cors(corsConfig));
 
 // parse cookies
 // we need this because "cookie" is true in csrfProtection
-//app.use(cookieParser());
+app.use(cookieParser());
+
+// middleware
+app.use(express.json({ limit: "5mb" }));
 
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
