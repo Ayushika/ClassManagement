@@ -10,6 +10,8 @@ import {
 } from "../controllers/InstituteController.js";
 const router = express.Router();
 
+
+router.route("/isvalid").post(protect, isAdmin, currentAdmin);
 router.route("/isValid").post(protect, isAdmin, currentAdmin);
 router.route("/institute/all").post(protect, isAdmin, getAllInstitute);
 router.route("/institute/:slug").delete(protect, isAdmin, deleleInstitute);
