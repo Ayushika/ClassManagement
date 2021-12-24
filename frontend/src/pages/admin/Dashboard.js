@@ -15,60 +15,65 @@ const Dashboard = () => {
 
   return (
     <>
-      {" "}
-      <div className='row justify-content-evenly mt-5 p-5'>
-        <div className='col-md-3'>
+      <h2 className="text-center">Dashboard</h2>
+      <div className="underline"></div>
+
+      <div className="row justify-content-evenly mt-4 p-5">
+        <div className="col-md-3">
           <div
-            className='card border-success mb-3'
-            onClick={() => setShowRegisterModal(true)}>
-            <div className='card-header'>
+            className="card border-success mb-3 pointer"
+            onClick={() => setShowRegisterModal(true)}
+          >
+            <div className="card-header">
               <img
                 src={register}
-                alt='Create'
+                alt="Create"
                 style={{ width: "100%", height: "200px" }}
               />
             </div>
-            <div className='card-body'>
-              <h4 className='blockquote  text-center'>Register</h4>
-              <p className='card-text text-muted text-center'>
+            <div className="card-body">
+              <h4 className="blockquote  text-center">Register</h4>
+              <p className="card-text text-muted text-center">
                 Student | Instructor
               </p>
             </div>
           </div>
         </div>
-        <div className='col-md-3'>
+        <div className="col-md-3">
           <div
-            className='card border-success mb-3'
-            onClick={() => setShowCreateModal(true)}>
-            <div className='card-header'>
+            className="card border-success mb-3 pointer"
+            onClick={() => setShowCreateModal(true)}
+          >
+            <div className="card-header">
               <img
                 src={create}
-                alt='Create'
+                alt="Create"
                 style={{ width: "100%", height: "200px" }}
               />
             </div>
-            <div className='card-body'>
-              <h4 className='blockquote  text-center'>Create</h4>
-              <p className='card-text text-muted text-center'>
+            <div className="card-body">
+              <h4 className="blockquote  text-center">Create</h4>
+              <p className="card-text text-muted text-center">
                 Institute | Batch
               </p>
             </div>
           </div>
         </div>
-        <div className='col-md-3'>
+        <div className="col-md-3">
           <div
-            className='card border-success mb-3'
-            onClick={() => setShowDisplayModal(true)}>
-            <div className='card-header'>
+            className="card border-success mb-3 pointer"
+            onClick={() => setShowDisplayModal(true)}
+          >
+            <div className="card-header">
               <img
                 src={users}
-                alt='User'
+                alt="User"
                 style={{ width: "100%", height: "200px" }}
               />
             </div>
-            <div className='card-body'>
-              <h4 className='blockquote  text-center'>Display</h4>
-              <p className='card-text text-muted text-center'>
+            <div className="card-body">
+              <h4 className="blockquote  text-center">Display</h4>
+              <p className="card-text text-muted text-center">
                 Student | Instructor
               </p>
             </div>
