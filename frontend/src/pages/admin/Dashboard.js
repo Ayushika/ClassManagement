@@ -7,6 +7,7 @@ import DisplayModal from "../../components/modals/DisplayModal";
 import register from "../../images/register.svg";
 import create from "../../images/create.svg";
 import users from "../../images/users.svg";
+import Meta from "../../components/Meta";
 
 const Dashboard = () => {
   const [showRegisterModal, setShowRegisterModal] = useState(false);
@@ -15,6 +16,7 @@ const Dashboard = () => {
 
   return (
     <>
+      <Meta title="ClassRoom : Admin Dashboard" />
       <h2 className="text-center">Dashboard</h2>
       <div className="underline"></div>
 

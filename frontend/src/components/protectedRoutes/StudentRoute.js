@@ -18,7 +18,7 @@ const StudentRoute = ({ children, ...rest }) => {
   const isValidStudent = async () => {
     try {
       const { data } = await axios.post(
-        "http://localhost:5000/api/student/isValid",
+        "http://localhost:5000/api/student/isvalid",
         {},
         config
       );

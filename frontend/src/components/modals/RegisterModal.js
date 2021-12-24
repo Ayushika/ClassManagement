@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Modal, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const RegisterModal = (props) => {
   return (
@@ -22,9 +23,11 @@ const RegisterModal = (props) => {
             <div className="card border-success mb-3 pointer">
               <div className="card-body text-center">
                 <h4 className="blockquote ">Student</h4>
-                <button type="button" className="btn btn-outline-success">
-                  Register
-                </button>
+                <Link to="/admin/student/create">
+                  <button type="button" className="btn btn-outline-success">
+                    Register
+                  </button>
+                </Link>
               </div>
             </div>
           </div>
@@ -32,9 +35,11 @@ const RegisterModal = (props) => {
             <div className="card border-success mb-3 pointer">
               <div className="card-body text-center">
                 <h4 className="blockquote ">Instructor</h4>
-                <button type="button" className="btn btn-outline-success">
-                  Register
-                </button>
+                <Link to="/admin/instructor/create">
+                  <button type="button" className="btn btn-outline-success">
+                    Register
+                  </button>
+                </Link>
               </div>
             </div>
           </div>
