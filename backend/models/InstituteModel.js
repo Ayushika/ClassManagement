@@ -4,8 +4,15 @@ import mongoose from "mongoose";
 const InstituteSchema = new mongoose.Schema(
   {
     name: {
-        type : String,
-        required: true,
+      type: String,
+      required: true,
+      unique: true,
+    },
+    slug: {
+      type: String,
+      unique: true,
+      lowercase: true,
+      index: true,
     },
   },
   { timestamps: true },

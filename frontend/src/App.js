@@ -24,6 +24,9 @@ const AdminRoute = lazy(() =>
   import("./components/protectedRoutes/AdminRoute"),
 );
 const AdminDashboardPage = lazy(() => import("./pages/admin/Dashboard"));
+const Institute = lazy(() => import("./pages/admin/create/Institute"));
+const Branch = lazy(() => import("./pages/admin/create/Branch"));
+const Batch = lazy(() => import("./pages/admin/create/Batch"));
 
 //student pages
 const StudentRoute = lazy(() =>
@@ -60,6 +63,17 @@ const App = () => {
                 path='/admin/dashboard'
                 component={AdminDashboardPage}
               />
+              <AdminRoute
+                exact
+                path='/admin/create/institute'
+                component={Institute}
+              />
+              <AdminRoute
+                exact
+                path='/admin/create/branch'
+                component={Branch}
+              />
+              <AdminRoute exact path='/admin/create/batch' component={Batch} />
               <StudentRoute
                 exact
                 path='/student/dashboard'
