@@ -3,7 +3,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { Navbar, Nav, Container } from "react-bootstrap";
+import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { logout } from "../../actions/userAction";
 import pustak from "../../images/pustak-sm.png";
@@ -24,39 +24,33 @@ const Header = () => {
         <Container>
           <Link to='/' className='custom-link'>
             <Navbar.Brand className='font-bold text-success h1'>
-              <img src={pustak} alt='logo' style={{ width: "32%" }} />
+              Pustak
             </Navbar.Brand>
           </Link>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
             <Nav className='ms-auto'>
               {userInfo && userInfo.email ? (
-                <>
-                  {userInfo.role === "Admin" ? (
+                <NavDropdown
+                  title={userInfo && userInfo.name}
+                  id='adminmenu'
+                  className='custom-link'>
+                  <NavDropdown.Item>
                     <Link
-                      to='/admin/dashboard'
-                      className=' nav-link custom-link'>
+                      className='dropdown-item nav-link custom-link'
+                      to={`/${userInfo.role.toLowerCase()}/dashboard`}>
                       Dashboard
                     </Link>
-                  ) : userInfo.role === "Student" ? (
-                    <Link
-                      to='/student/dashboard'
-                      className=' nav-link custom-link'>
-                      Dashboard
-                    </Link>
-                  ) : userInfo.role === "Instructor" ? (
-                    <Link
-                      to='/instructor/dashboard'
-                      className=' nav-link custom-link'>
-                      Dashboard
-                    </Link>
-                  ) : null}
-                  <div
-                    className='nav-link custom-link pointer'
-                    onClick={() => handleLogout()}>
-                    <i className='fas fa-sign-out-alt'></i> Logout
-                  </div>
-                </>
+                  </NavDropdown.Item>
+
+                  <NavDropdown.Item>
+                    <div
+                      className='dropdown-item nav-link custom-link pointer'
+                      onClick={() => handleLogout()}>
+                      Logout
+                    </div>
+                  </NavDropdown.Item>
+                </NavDropdown>
               ) : (
                 <Link to='/login' className='nav-link custom-link'>
                   <i className='fas fa-user'></i> Login
