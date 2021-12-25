@@ -7,6 +7,12 @@ const BranchSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    slug: {
+      type: String,
+      unique: true,
+      lowercase: true,
+      index: true,
+    },
     institute: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Institute",
