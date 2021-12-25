@@ -17,6 +17,8 @@ const InstructorCreateForm = ({
               style={{ boxShadow: "0px 0 18px rgba(55, 66, 59, 0.08)" }}
             >
               <Form onSubmit={handleSubmit}>
+                <h2>Create Instructor</h2>
+                <div className="underline2"></div>
                 <div className="form-row mt-3">
                   <div className="col">
                     <div className="form-group">
