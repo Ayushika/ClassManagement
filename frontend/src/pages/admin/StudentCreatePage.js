@@ -34,8 +34,6 @@ const StudentCreatePage = () => {
   return (
     <div>
       <Meta title="ClassRoom : Create Student" />
-      <h1 className="text-center">Create Student</h1>
-      <div className="underline" />
       <StudentCreateForm
         handleSubmit={handleSubmit}
         handleChange={handleChange}

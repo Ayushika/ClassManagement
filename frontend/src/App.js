@@ -77,16 +77,17 @@ const App = () => {
                 path="/admin/student/create"
                 component={StudentCreatePage}
               />
-
-                path='/admin/create/institute'
+              <AdminRoute
+                exact
+                path="/admin/create/institute"
                 component={Institute}
               />
               <AdminRoute
                 exact
-                path='/admin/create/branch'
+                path="/admin/create/branch"
                 component={Branch}
               />
-              <AdminRoute exact path='/admin/create/batch' component={Batch} />
+              <AdminRoute exact path="/admin/create/batch" component={Batch} />
 
               <StudentRoute
                 exact
