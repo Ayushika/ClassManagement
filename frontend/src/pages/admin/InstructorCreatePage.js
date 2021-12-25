@@ -26,8 +26,6 @@ const InstructorCreatePage = () => {
   return (
     <div>
       <Meta title="ClassRoom : Create Instructor" />
-      <h1 className="text-center">Create Instructor</h1>
-      <div className="underline" />
       <InstructorCreateForm
         handleSubmit={handleSubmit}
         handleImage={handleImage}
