@@ -16,16 +16,16 @@ const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
 const HomePage = lazy(() => import("./pages/HomePage"));
 const LoginPage = lazy(() => import("./pages/auth/LoginPage"));
 const ForgotPasswordPage = lazy(() =>
-  import("./pages/auth/ForgotPasswordPage")
+  import("./pages/auth/ForgotPasswordPage"),
 );
 
 //admin pages
 const AdminRoute = lazy(() =>
-  import("./components/protectedRoutes/AdminRoute")
+  import("./components/protectedRoutes/AdminRoute"),
 );
 const AdminDashboardPage = lazy(() => import("./pages/admin/Dashboard"));
 const InstructorCreatePage = lazy(() =>
-  import("./pages/admin/InstructorCreatePage")
+  import("./pages/admin/InstructorCreatePage"),
 );
 const StudentCreatePage = lazy(() => import("./pages/admin/StudentCreatePage"));
 const Institute = lazy(() => import("./pages/admin/create/Institute"));
@@ -34,16 +34,16 @@ const Batch = lazy(() => import("./pages/admin/create/Batch"));
 
 //student pages
 const StudentRoute = lazy(() =>
-  import("./components/protectedRoutes/StudentRoute")
+  import("./components/protectedRoutes/StudentRoute"),
 );
 const StudentDashboardPage = lazy(() => import("./pages/student/Dashboard"));
 
 //instructor pages
 const InstructorRoute = lazy(() =>
-  import("./components/protectedRoutes/InstructorRoute")
+  import("./components/protectedRoutes/InstructorRoute"),
 );
 const InstructorDashboardPage = lazy(() =>
-  import("./pages/instructor/Dashboard")
+  import("./pages/instructor/Dashboard"),
 );
 
 const App = () => {
@@ -51,35 +51,37 @@ const App = () => {
     <Router>
       <Suspense fallback={<Loading />}>
         <Header />
-        <ToastContainer position="top-center" />
-        <main className="py-3">
+        <ToastContainer position='top-center' />
+        <main className='py-3'>
           <Container>
             <Switch>
-              <Route exact path="/" component={HomePage} />
-              <Route exact path="/login" component={LoginPage} />
+              <Route exact path='/' component={HomePage} />
+              <Route exact path='/login' component={LoginPage} />
               <Route
                 exact
-                path="/forgot-password"
+                path='/forgot-password'
                 component={ForgotPasswordPage}
               />
               <AdminRoute
                 exact
-                path="/admin/dashboard"
+                path='/admin/dashboard'
                 component={AdminDashboardPage}
               />
               <AdminRoute
                 exact
-                path="/admin/instructor/create"
+                path='/admin/instructor/create'
                 component={InstructorCreatePage}
               />
               <AdminRoute
                 exact
-                path="/admin/student/create"
+                path='/admin/student/create'
                 component={StudentCreatePage}
               />
               <AdminRoute
                 exact
-                path="/admin/create/institute"
+
+                path='/admin/create/institute'
+
                 component={Institute}
               />
               <AdminRoute
@@ -91,15 +93,15 @@ const App = () => {
 
               <StudentRoute
                 exact
-                path="/student/dashboard"
+                path='/student/dashboard'
                 component={StudentDashboardPage}
               />
               <InstructorRoute
                 exact
-                path="/instructor/dashboard"
+                path='/instructor/dashboard'
                 component={InstructorDashboardPage}
               />
-              <Route exact path="/*" component={NotFoundPage} />
+              <Route exact path='/*' component={NotFoundPage} />
             </Switch>
           </Container>
         </main>

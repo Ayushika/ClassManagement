@@ -13,6 +13,11 @@ import {
   getAllInstituteReducer,
   deleteInstituteReducer,
 } from "./reducers/instituteReducer";
+import {
+  createBranchReducer,
+  deleteBranchReducer,
+  getAllBranchReducer,
+} from "./reducers/branchReducer";
 
 const reducer = combineReducers({
   userLogin: userLoginReducer,
@@ -21,6 +26,9 @@ const reducer = combineReducers({
   createInstitute: createInstituteReducer,
   getAllInstitute: getAllInstituteReducer,
   deleteInstitute: deleteInstituteReducer,
+  createBranch: createBranchReducer,
+  getAllBranch: getAllBranchReducer,
+  deleteBranch: deleteBranchReducer,
 });
 
 const userInfoFromStorage = window.localStorage.getItem("userInfo")

@@ -25,7 +25,7 @@ export const getAllInstitute = async (req, res) => {
   }
 };
 
-export const deleleInstitute = async (req, res) => {
+export const deleteInstitute = async (req, res) => {
   try {
     const { slug } = req.params;
     console.log("ID : ", slug);

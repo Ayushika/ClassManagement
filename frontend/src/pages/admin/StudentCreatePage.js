@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+/** @format */
+
+import React, { useState, useEffect } from "react";
 import StudentCreateForm from "../../components/forms/StudentCreateForm";
 import Meta from "../../components/Meta";
 
@@ -33,6 +35,9 @@ const StudentCreatePage = () => {
 
   return (
     <div>
+      <Meta title='ClassRoom : Create Student' />
+      <h1 className='text-center'>Create Student</h1>
+      <div className='underline' />
       <Meta title="ClassRoom : Create Student" />
       <StudentCreateForm
         handleSubmit={handleSubmit}
