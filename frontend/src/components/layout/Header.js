@@ -24,7 +24,11 @@ const Header = () => {
         <Container>
           <Link to='/' className='custom-link'>
             <Navbar.Brand className='font-bold text-success h1'>
-              Pustak
+              <img
+                src={pustak}
+                alt='Pustak'
+                style={{ width: "25%", height: "25%" }}
+              />
             </Navbar.Brand>
           </Link>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />

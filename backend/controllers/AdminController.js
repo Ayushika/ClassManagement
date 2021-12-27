@@ -1,9 +1,22 @@
 /** @format */
-import { uploadTemplate, mailTemplate } from "../utils/awsServices";
+import { mailTemplate } from "../utils/awsServices";
 import userSchema from "../models/UserModel";
+import batchSchema from "../models/BatchModel";
 import { nanoid } from "nanoid";
 const generator = require("generate-password");
 import { hashPassword } from "../utils/bcrypt";
+import AWS from "aws-sdk";
+import dotenv from "dotenv";
+
+dotenv.config();
+const awsConfig = {
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  region: process.env.AWS_REGION,
+  apiVersion: process.env.AWS_API_VERSION,
+};
+
+const S3 = new AWS.S3(awsConfig);
 
 //@desc   Current Admin
 //@routes POST /api/admin/isvalid
@@ -27,7 +40,7 @@ export const uploadImage = async (req, res) => {
 
     const base64Data = new Buffer.from(
       image.replace(/^data:image\/\w+;base64,/, ""),
-      "base64"
+      "base64",
     );
 
     const type = image.split(";")[0].split("/")[1];
@@ -42,8 +55,13 @@ export const uploadImage = async (req, res) => {
       ContentType: `image/${type}`,
     };
 
-    const data = uploadTemplate(params);
-    res.json(data);
+    S3.upload(params, (err, data) => {
+      if (err) {
+        console.log(err);
+        return res.status(400).send("Error,Please Try Again");
+      }
+      res.json(data);
+    });
   } catch (error) {
     console.log(error);
     res.status(400).send("Error,Please Try Again");
@@ -83,11 +101,87 @@ export const registerInstructor = async (req, res) => {
             Charset: "UTF-8",
             Data: `
               <html>
-              <h1>Hey ${name} you are successfully registered as an instructor.</h1>
-              <h2 style="color:red;">Your Password is - ${password}</h2>
+              <h2>Hey ${name}</h2> 
+              <p>Hope this email finds you well. You are successfully registered as an instructor.</p>
+              <p>Your credentials are : </p>
+              <p>Email - <span style="color:red;">${email} </span></p> 
+              <p>Password - <span style="color:red;">${password} </span></p> 
               <i>ClassRoom</i>
               </html>
               `,
+          },
+        },
+        Subject: {
+          Charset: "UTF-8",
+          Data: "Registered Successfully",
+        },
+      },
+    };
+    const emailSent = mailTemplate(params);
+    emailSent
+      .then((data) => {
+        res.json(user);
+      })
+      .catch((err) => console.log(err));
+  } catch (error) {
+    console.log(error);
+    res.status(400).send("Error Try Again,Please check all fields");
+  }
+};
+
+//@desc   Register Student
+//@routes POST /api/admin/student/register
+//@access PRIVATE
+export const registerStudent = async (req, res) => {
+  try {
+    const { name, email, phone, image, institute, section, year, branch } =
+      req.body;
+
+    const batch = await batchSchema
+      .findOne({
+        institute: institute,
+        section: section,
+        year: year,
+        branch: branch,
+      })
+      .exec();
+
+    const password = generator.generate({
+      length: 10,
+      numbers: true,
+      uppercase: false,
+    });
+    const hashedPassword = await hashPassword(password);
+    const user = await new userSchema({
+      name,
+      email,
+      phone,
+      role: "Student",
+      image,
+      batch: batch._id,
+      password: hashedPassword,
+    }).save();
+
+    const params = {
+      Source: process.env.EMAIL_FROM,
+      Destination: {
+        ToAddresses: [email],
+      },
+      ReplyToAddresses: [process.env.EMAIL_FROM],
+      Message: {
+        Body: {
+          Html: {
+            Charset: "UTF-8",
+            Data: `
+                <html>
+                <h2>Hey ${name}</h2>
+                <p>Hope this email finds you well. You are successfully registered as a student.</p>
+                <p>Your credentials are : </p>
+                <p>Email - <span style="color:red;">${email} </span></p>
+                <p>Password - <span style="color:red;">${password} </span></p>
+                <i>ClassRoom</i>
+                </html>
+                `,
           },
         },
         Subject: {

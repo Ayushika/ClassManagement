@@ -26,6 +26,7 @@ import {
 import {
   uploadImageReducer,
   instructorRegisterReducer,
+  studentRegisterReducer,
 } from "./reducers/adminReducer";
 
 const reducer = combineReducers({
@@ -43,6 +44,7 @@ const reducer = combineReducers({
   getAllBatch: getAllBatchReducer,
   uploadImage: uploadImageReducer,
   instructorRegister: instructorRegisterReducer,
+  studentRegister: studentRegisterReducer,
 });
 
 const userInfoFromStorage = window.localStorage.getItem("userInfo")
@@ -58,7 +60,7 @@ const middleware = [thunk];
 const store = createStore(
   reducer,
   initialState,
-  composeWithDevTools(applyMiddleware(...middleware))
+  composeWithDevTools(applyMiddleware(...middleware)),
 );
 
 export default store;

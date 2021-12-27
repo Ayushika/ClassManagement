@@ -2,7 +2,10 @@
 
 import React, { useState } from "react";
 import StudentCreateForm from "../../../components/forms/StudentCreateForm";
+import { upload, registerStudent } from "../../../actions/adminAction";
+import { useDispatch, useSelector } from "react-redux";
 import Meta from "../../../components/Meta";
+import { UPLOAD_IMAGE_RESET } from "../../../constants/adminConstants";
 
 const StudentCreatePage = () => {
   const intialValues = {
@@ -16,8 +19,12 @@ const StudentCreatePage = () => {
     year: "",
   };
 
+  const dispatch = useDispatch();
   const [values, setValues] = useState(intialValues);
   const [preview, setPreview] = useState("");
+
+  const uploadImage = useSelector((state) => state.uploadImage);
+  const { image } = uploadImage;
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
@@ -26,16 +33,21 @@ const StudentCreatePage = () => {
   const handleImage = (e) => {
     let file = e.target.files[0];
     setPreview(window.URL.createObjectURL(file));
+    dispatch(upload("student", file));
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(values);
+    values.image = image;
     setValues(intialValues);
+    dispatch(registerStudent(values));
+    setPreview("");
+    dispatch({ type: UPLOAD_IMAGE_RESET });
   };
 
   return (
     <div>
-      <Meta title="ClassRoom : Create Student" />
+      <Meta title='ClassRoom : Create Student' />
       <StudentCreateForm
         handleSubmit={handleSubmit}
         handleChange={handleChange}

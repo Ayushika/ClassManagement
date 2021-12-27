@@ -1,3 +1,5 @@
+/** @format */
+
 import {
   UPLOAD_IMAGE_FAIL,
   UPLOAD_IMAGE_REQUEST,
@@ -6,6 +8,9 @@ import {
   INSTRUCTOR_REGISTER_REQUEST,
   INSTRUCTOR_REGISTER_SUCCESS,
   INSTRUCTOR_REGISTER_FAIL,
+  STUDENT_REGISTER_REQUEST,
+  STUDENT_REGISTER_SUCCESS,
+  STUDENT_REGISTER_FAIL,
 } from "../constants/adminConstants";
 
 export const uploadImageReducer = (state = { image: {} }, action) => {
@@ -30,6 +35,19 @@ export const instructorRegisterReducer = (state = {}, action) => {
     case INSTRUCTOR_REGISTER_SUCCESS:
       return { loading: false, instructor: action.payload };
     case INSTRUCTOR_REGISTER_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const studentRegisterReducer = (state = {}, action) => {
+  switch (action.type) {
+    case STUDENT_REGISTER_REQUEST:
+      return { loading: true };
+    case STUDENT_REGISTER_SUCCESS:
+      return { loading: false, student: action.payload };
+    case STUDENT_REGISTER_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

@@ -6,6 +6,7 @@ import {
   currentAdmin,
   uploadImage,
   registerInstructor,
+  registerStudent,
 } from "../controllers/AdminController";
 import {
   createInstitute,
@@ -47,5 +48,6 @@ router.route("/instructor/register").post(protect, isAdmin, registerInstructor);
 
 /* STUDENT ROUTES */
 router.route("/student/upload-image").post(protect, isAdmin, uploadImage);
+router.route("/student/register").post(protect, isAdmin, registerStudent);
 
 export default router;

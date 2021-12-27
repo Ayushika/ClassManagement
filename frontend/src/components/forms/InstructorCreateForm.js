@@ -10,7 +10,7 @@ const InstructorCreateForm = ({
   preview,
 }) => {
   return (
-    <div>
+    <>
       <Container className="mt-5">
         <Row className="justify-content-md-center">
           <Col xs={12} md={6}>
@@ -102,7 +102,7 @@ const InstructorCreateForm = ({
           </Col>
         </Row>
       </Container>
-    </div>
+    </>
   );
 };
 
