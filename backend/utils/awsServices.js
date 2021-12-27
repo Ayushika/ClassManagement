@@ -21,7 +21,6 @@ export const uploadTemplate = (params) => {
       console.log(err);
       return res.status(400).send("Error,Please Try Again");
     }
-    console.log(data);
     return data;
   });
 };

@@ -2,7 +2,11 @@
 
 import express from "express";
 import { isAdmin, protect } from "../middleware/authMiddleware";
-import { currentAdmin } from "../controllers/AdminController";
+import {
+  currentAdmin,
+  uploadImage,
+  registerInstructor,
+} from "../controllers/AdminController";
 import {
   createInstitute,
   getAllInstitute,
@@ -13,8 +17,12 @@ import {
   getAllBranch,
   deleteBranch,
 } from "../controllers/BranchController.js";
+import {
+  createBatch,
+  getAllBatch,
+  deleteBatch,
+} from "../controllers/BatchController";
 const router = express.Router();
-
 
 router.route("/isvalid").post(protect, isAdmin, currentAdmin);
 
@@ -27,5 +35,17 @@ router.route("/institute").post(protect, isAdmin, createInstitute);
 router.route("/branch/all").post(protect, isAdmin, getAllBranch);
 router.route("/branch/:slug").delete(protect, isAdmin, deleteBranch);
 router.route("/branch").post(protect, isAdmin, createBranch);
+
+/* BATCH ROUTES */
+router.route("/batch/all").post(protect, isAdmin, getAllBatch);
+router.route("/batch/:id").delete(protect, isAdmin, deleteBatch);
+router.route("/batch").post(protect, isAdmin, createBatch);
+
+/* INSTRUCTOR ROUTES */
+router.route("/instructor/upload-image").post(protect, isAdmin, uploadImage);
+router.route("/instructor/register").post(protect, isAdmin, registerInstructor);
+
+/* STUDENT ROUTES */
+router.route("/student/upload-image").post(protect, isAdmin, uploadImage);
 
 export default router;

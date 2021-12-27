@@ -28,7 +28,6 @@ export const getAllInstitute = async (req, res) => {
 export const deleteInstitute = async (req, res) => {
   try {
     const { slug } = req.params;
-    console.log("ID : ", slug);
     const institute = await instituteSchema.findOneAndDelete({ slug }).exec();
     res.json({ success: true });
   } catch (error) {

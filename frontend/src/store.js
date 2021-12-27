@@ -18,6 +18,15 @@ import {
   deleteBranchReducer,
   getAllBranchReducer,
 } from "./reducers/branchReducer";
+import {
+  createBatchReducer,
+  deleteBatchReducer,
+  getAllBatchReducer,
+} from "./reducers/batchReducer";
+import {
+  uploadImageReducer,
+  instructorRegisterReducer,
+} from "./reducers/adminReducer";
 
 const reducer = combineReducers({
   userLogin: userLoginReducer,
@@ -29,6 +38,11 @@ const reducer = combineReducers({
   createBranch: createBranchReducer,
   getAllBranch: getAllBranchReducer,
   deleteBranch: deleteBranchReducer,
+  createBatch: createBatchReducer,
+  deleteBatch: deleteBatchReducer,
+  getAllBatch: getAllBatchReducer,
+  uploadImage: uploadImageReducer,
+  instructorRegister: instructorRegisterReducer,
 });
 
 const userInfoFromStorage = window.localStorage.getItem("userInfo")
@@ -44,7 +58,7 @@ const middleware = [thunk];
 const store = createStore(
   reducer,
   initialState,
-  composeWithDevTools(applyMiddleware(...middleware)),
+  composeWithDevTools(applyMiddleware(...middleware))
 );
 
 export default store;

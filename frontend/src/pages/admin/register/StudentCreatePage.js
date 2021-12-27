@@ -1,8 +1,8 @@
 /** @format */
 
-import React, { useState, useEffect } from "react";
-import StudentCreateForm from "../../components/forms/StudentCreateForm";
-import Meta from "../../components/Meta";
+import React, { useState } from "react";
+import StudentCreateForm from "../../../components/forms/StudentCreateForm";
+import Meta from "../../../components/Meta";
 
 const StudentCreatePage = () => {
   const intialValues = {
@@ -35,7 +35,7 @@ const StudentCreatePage = () => {
 
   return (
     <div>
-      <Meta title='ClassRoom : Create Student' />
+      <Meta title="ClassRoom : Create Student" />
       <StudentCreateForm
         handleSubmit={handleSubmit}
         handleChange={handleChange}

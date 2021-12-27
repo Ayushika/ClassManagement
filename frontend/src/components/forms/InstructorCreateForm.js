@@ -1,11 +1,13 @@
 import React from "react";
-import { Row, Col, Button, Form, Container } from "react-bootstrap";
+import { Row, Col, Button, Form, Container, Badge } from "react-bootstrap";
+
 const InstructorCreateForm = ({
   handleSubmit,
   handleImage,
   values,
   setValues,
   handleChange,
+  preview,
 }) => {
   return (
     <div>
@@ -30,8 +32,22 @@ const InstructorCreateForm = ({
                           onChange={handleImage}
                           accept="image/*"
                           hidden
+                          disabled={preview !== ""}
                         />
                       </label>
+                      {preview !== "" && (
+                        <Badge pill className="pointer" as="img-badge">
+                          <img
+                            src={preview}
+                            alt="preview"
+                            className="m-2"
+                            style={{
+                              width: "80px",
+                              objectFit: "cover",
+                            }}
+                          />
+                        </Badge>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -45,6 +61,7 @@ const InstructorCreateForm = ({
                       value={values.name}
                       onChange={handleChange}
                       placeholder="John Doe"
+                      required
                     ></Form.Control>
                   </Form.Group>
 
@@ -56,6 +73,7 @@ const InstructorCreateForm = ({
                       name="email"
                       placeholder="name@example.com"
                       onChange={handleChange}
+                      required
                     ></Form.Control>
                   </Form.Group>
                 </Row>
@@ -68,10 +86,15 @@ const InstructorCreateForm = ({
                     placeholder="XXXX-XX"
                     value={values.phone}
                     onChange={handleChange}
+                    required
                   ></Form.Control>
                 </Form.Group>
 
-                <Button type="submit" className=" btn btn-success btn-md mt-4">
+                <Button
+                  type="submit"
+                  className=" btn btn-success btn-md mt-4"
+                  disabled={!values.email || !values.phone || !values.name}
+                >
                   Save
                 </Button>
               </Form>

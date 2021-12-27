@@ -28,7 +28,7 @@ export const createBranch = (name, institute) => async (dispatch) => {
     const { data } = await axios.post(
       "http://localhost:5000/api/admin/branch",
       { name, institute },
-      config,
+      config
     );
 
     dispatch({ type: CREATE_BRANCH_SUCCESS, payload: data });
@@ -46,7 +46,7 @@ export const getAllBranch = () => async (dispatch) => {
     const { data } = await axios.post(
       "http://localhost:5000/api/admin/branch/all",
       {},
-      config,
+      config
     );
 
     dispatch({ type: GET_ALL_BRANCH_SUCCESS, payload: data });
@@ -60,9 +60,9 @@ export const deleteBranch = (slug) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_BRANCH_REQUEST });
 
-    const { data } = await axios.delete(
+    await axios.delete(
       `http://localhost:5000/api/admin/branch/${slug}`,
-      config,
+      config
     );
 
     dispatch({ type: DELETE_BRANCH_SUCCESS });
