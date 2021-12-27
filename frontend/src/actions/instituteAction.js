@@ -28,7 +28,7 @@ export const createInstitute = (name) => async (dispatch) => {
     const { data } = await axios.post(
       "http://localhost:5000/api/admin/institute",
       { name },
-      config,
+      config
     );
 
     dispatch({ type: CREATE_INSTITUTE_SUCCESS, payload: data });
@@ -46,7 +46,7 @@ export const getAllInstitute = () => async (dispatch) => {
     const { data } = await axios.post(
       "http://localhost:5000/api/admin/institute/all",
       {},
-      config,
+      config
     );
 
     dispatch({ type: GET_ALL_INSTITUTE_SUCCESS, payload: data });
@@ -59,10 +59,10 @@ export const getAllInstitute = () => async (dispatch) => {
 export const deleteInstitute = (slug) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_INSTITUTE_REQUEST });
-    
-    const { data } = await axios.delete(
+
+    await axios.delete(
       `http://localhost:5000/api/admin/institute/${slug}`,
-      config,
+      config
     );
 
     dispatch({ type: DELETE_INSTITUTE_SUCCESS });

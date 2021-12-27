@@ -22,37 +22,39 @@ const StudentCreateForm = ({
   useEffect(() => {
     dispatch(getAllInstitute());
     dispatch(getAllBranch());
-  }, []);
+  }, [dispatch]);
 
   return (
-    <Container className='mt-3'>
-      <Row className='justify-content-md-center'>
+    <Container className="mt-3">
+      <Row className="justify-content-md-center">
         <Col xs={12} md={6}>
           <div
-            className='card p-5'
-            style={{ boxShadow: "0px 0 18px rgba(55, 66, 59, 0.08)" }}>
+            className="card p-5"
+            style={{ boxShadow: "0px 0 18px rgba(55, 66, 59, 0.08)" }}
+          >
             <Form onSubmit={handleSubmit}>
               <h2>Create Student</h2>
-              <div className='underline2'></div>
-              <div className='form-row mt-3'>
-                <div className='col'>
-                  <div className='form-group'>
-                    <label className='btn btn-outline-success btn-block'>
+              <div className="underline2"></div>
+              <div className="form-row mt-3">
+                <div className="col">
+                  <div className="form-group">
+                    <label className="btn btn-outline-success btn-block">
                       Upload Image
                       <input
-                        type='file'
-                        name='image'
+                        type="file"
+                        name="image"
                         onChange={handleImage}
-                        accept='image/*'
+                        accept="image/*"
                         hidden
+                        required
                       />
                     </label>
                     {preview !== "" && (
-                      <Badge pill className='pointer' as='img-badge'>
+                      <Badge pill className="pointer" as="img-badge">
                         <img
                           src={preview}
-                          alt='preview'
-                          className='m-2'
+                          alt="preview"
+                          className="m-2"
                           style={{
                             width: "80px",
                             objectFit: "cover",
@@ -64,42 +66,48 @@ const StudentCreateForm = ({
                 </div>
               </div>
 
-              <Row className='mb-4 mt-4'>
-                <Form.Group as={Col} controlId='formGridName'>
+              <Row className="mb-4 mt-4">
+                <Form.Group as={Col} controlId="formGridName">
                   <Form.Label>Name</Form.Label>
                   <Form.Control
-                    type='text'
-                    name='name'
+                    type="text"
+                    name="name"
                     value={values.name}
                     onChange={handleChange}
-                    placeholder='John Doe'></Form.Control>
+                    placeholder="John Doe"
+                    required
+                  ></Form.Control>
                 </Form.Group>
 
-                <Form.Group as={Col} controlId='formGridEmail'>
+                <Form.Group as={Col} controlId="formGridEmail">
                   <Form.Label>Email</Form.Label>
                   <Form.Control
-                    type='email'
+                    type="email"
                     value={values.email}
-                    name='email'
-                    placeholder='name@example.com'
-                    onChange={handleChange}></Form.Control>
+                    name="email"
+                    placeholder="name@example.com"
+                    onChange={handleChange}
+                    required
+                  ></Form.Control>
                 </Form.Group>
               </Row>
 
-              <Form.Group controlId='phone' className='mt-3'>
+              <Form.Group controlId="phone" className="mt-3">
                 <Form.Label>Mobile No.</Form.Label>
                 <Form.Control
-                  type='text'
-                  name='phone'
-                  placeholder='XXXX-XX'
+                  type="text"
+                  name="phone"
+                  placeholder="XXXX-XX"
                   value={values.phone}
-                  onChange={handleChange}></Form.Control>
+                  required
+                  onChange={handleChange}
+                ></Form.Control>
               </Form.Group>
 
-              <Row className='mb-3 mt-4'>
-                <Form.Group as={Col} controlId='formGridInstitute'>
+              <Row className="mb-3 mt-4">
+                <Form.Group as={Col} controlId="formGridInstitute">
                   <Form.Label>Institute</Form.Label>
-                  <Form.Select defaultValue='Select' className='text-muted'>
+                  <Form.Select defaultValue="Select" className="text-muted">
                     <option>Select</option>
                     {institutes &&
                       institutes.map((i) => (
@@ -110,9 +118,9 @@ const StudentCreateForm = ({
                   </Form.Select>
                 </Form.Group>
 
-                <Form.Group as={Col} controlId='formGridBranch'>
+                <Form.Group as={Col} controlId="formGridBranch">
                   <Form.Label>Branch</Form.Label>
-                  <Form.Select defaultValue='Select' className='text-muted'>
+                  <Form.Select defaultValue="Select" className="text-muted">
                     <option>Select</option>
                     {branches &&
                       branches.map((b) => (
@@ -123,24 +131,24 @@ const StudentCreateForm = ({
                   </Form.Select>
                 </Form.Group>
               </Row>
-              <Row className='mb-3 mt-4'>
-                <Form.Group as={Col} controlId='formGridSection'>
+              <Row className="mb-3 mt-4">
+                <Form.Group as={Col} controlId="formGridSection">
                   <Form.Label>Section</Form.Label>
-                  <Form.Select defaultValue='Select' className='text-muted'>
+                  <Form.Select defaultValue="Select" className="text-muted">
                     <option>Select</option>
                     <option>...</option>
                   </Form.Select>
                 </Form.Group>
-                <Form.Group as={Col} controlId='formGridYear'>
+                <Form.Group as={Col} controlId="formGridYear">
                   <Form.Label>Year</Form.Label>
-                  <Form.Select defaultValue='Select' className='text-muted'>
+                  <Form.Select defaultValue="Select" className="text-muted">
                     <option>Select</option>
                     <option>...</option>
                   </Form.Select>
                 </Form.Group>
               </Row>
 
-              <Button type='submit' className=' btn btn-success btn-md mt-2'>
+              <Button type="submit" className=" btn btn-success btn-md mt-2">
                 Save
               </Button>
             </Form>

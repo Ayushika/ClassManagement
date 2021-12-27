@@ -1,7 +1,7 @@
 /** @format */
 
 import React, { useState, useEffect } from "react";
-import { Form, Card, Alert } from "react-bootstrap";
+import { Form, Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
   createInstitute,
@@ -31,30 +31,31 @@ const Institute = () => {
 
   useEffect(() => {
     dispatch(getAllInstitute());
-  }, [institute, deleteSuccess]);
+  }, [institute, deleteSuccess, dispatch]);
 
   return (
     <>
-      <h2 className='text-center'>Institute</h2>
-      <div className='underline'></div>
-      <div className='container'>
-        <div className='row'>
-          <Form className='mt-3 mb-5' onSubmit={handleSubmit}>
-            <Form.Group className='mb-3' controlId='formBasicEmail'>
-              <div className='row justify-content-center'>
-                <div className='col-md-11'>
+      <h2 className="text-center">Institute</h2>
+      <div className="underline"></div>
+      <div className="container">
+        <div className="row">
+          <Form className="mt-3 mb-5" onSubmit={handleSubmit}>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <div className="row justify-content-center">
+                <div className="col-md-11">
                   <Form.Control
-                    type='text'
-                    placeholder='Enter Institute Name'
+                    type="text"
+                    placeholder="Enter Institute Name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                   />
                 </div>
-                <div className='col-md-1'>
+                <div className="col-md-1">
                   <button
-                    type='submit'
-                    className='btn btn-success btn-md'
-                    onClick={(e) => handleSubmit(e)}>
+                    type="submit"
+                    className="btn btn-success btn-md"
+                    onClick={(e) => handleSubmit(e)}
+                  >
                     Create
                   </button>
                 </div>
@@ -63,27 +64,30 @@ const Institute = () => {
           </Form>
         </div>
       </div>
-      <div className='row container'>
+      <div className="row container">
         {institutes &&
           institutes.map((i) => {
             return (
-              <Card key={i._id} className='mb-3 text-muted'>
-                <div className='row p-3'>
-                  <div className='col-md-11'>
-                    <span className='text-muted'>{i.name}</span>
+              <Card key={i._id} className="mb-3 text-muted">
+                <div className="row p-3">
+                  <div className="col-md-11">
+                    <span className="text-muted">{i.name}</span>
                   </div>
-                  <div className='col-md-1'>
+                  <div className="col-md-1">
                     <span
-                      className='btn btn-sm float-right'
-                      onClick={() => handleDelete(i.slug)}>
+                      className="btn btn-sm float-right"
+                      onClick={() => handleDelete(i.slug)}
+                    >
                       <i
-                        className='fas fa-trash text-danger'
-                        style={{ fontSize: "18px" }}></i>
+                        className="fas fa-trash text-danger"
+                        style={{ fontSize: "18px" }}
+                      ></i>
                     </span>
-                    <span className='btn btn-sm float-right'>
+                    <span className="btn btn-sm float-right">
                       <i
-                        className='fas fa-edit text-warning'
-                        style={{ fontSize: "18px" }}></i>
+                        className="fas fa-edit text-warning"
+                        style={{ fontSize: "18px" }}
+                      ></i>
                     </span>
                   </div>
                 </div>

@@ -32,7 +32,7 @@ const UserSchema = new mongoose.Schema(
     },
     image: {},
     // courseId: [{ type: mongoose.Schema.Types.ObjectId, ref: "Course" }],
-    // batchId: { type: mongoose.Schema.Types.ObjectId, ref: "Batch" },
+    batchId: { type: mongoose.Schema.Types.ObjectId, ref: "Batch" },
   },
   { timestamps: true }
 );

@@ -37,24 +37,25 @@ const Branch = () => {
   useEffect(() => {
     dispatch(getAllInstitute());
     dispatch(getAllBranch());
-  }, [institute, deleteSuccess, branch]);
+  }, [institute, deleteSuccess, branch, dispatch]);
 
   return (
     <>
-      <h2 className='text-center'>Branch</h2>
-      <div className='underline'></div>
-      <div className='container'>
-        <div className='row'>
-          <Form className='mt-3 mb-5' onSubmit={handleSubmit}>
-            <Form.Group className='mb-3' controlId='formBasicEmail'>
-              <div className='row justify-content-center'>
-                <div className='col-md-11'>
+      <h2 className="text-center">Branch</h2>
+      <div className="underline"></div>
+      <div className="container">
+        <div className="row">
+          <Form className="mt-3 mb-5" onSubmit={handleSubmit}>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <div className="row justify-content-center">
+                <div className="col-md-11">
                   <Form.Select
-                    className='mb-3'
-                    aria-label='Default select example'
+                    className="mb-3"
+                    aria-label="Default select example"
                     value={institute}
-                    onChange={(e) => setInstitute(e.target.value)}>
-                    <option value='0'>Select Institute</option>
+                    onChange={(e) => setInstitute(e.target.value)}
+                  >
+                    <option value="0">Select Institute</option>
                     {institutes &&
                       institutes.map((i) => (
                         <option key={i._id} value={i._id}>
@@ -63,17 +64,18 @@ const Branch = () => {
                       ))}
                   </Form.Select>
                   <Form.Control
-                    type='text'
-                    placeholder='Enter Branch Name'
+                    type="text"
+                    placeholder="Enter Branch Name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                   />
                 </div>
-                <div className='col-md-1'>
+                <div className="col-md-1">
                   <button
-                    type='submit'
-                    className='btn btn-success btn-md'
-                    onClick={(e) => handleSubmit(e)}>
+                    type="submit"
+                    className="btn btn-success btn-md"
+                    onClick={(e) => handleSubmit(e)}
+                  >
                     Create
                   </button>
                 </div>
@@ -82,27 +84,30 @@ const Branch = () => {
           </Form>
         </div>
       </div>
-      <div className='row container'>
+      <div className="row container">
         {branches &&
           branches.map((i) => {
             return (
-              <Card key={i._id} className='mb-3 text-muted'>
-                <div className='row p-3'>
-                  <div className='col-md-11'>
-                    <span className='text-muted'>{i.name}</span>
+              <Card key={i._id} className="mb-3 text-muted">
+                <div className="row p-3">
+                  <div className="col-md-11">
+                    <span className="text-muted">{i.name}</span>
                   </div>
-                  <div className='col-md-1'>
+                  <div className="col-md-1">
                     <span
-                      className='btn btn-sm float-right'
-                      onClick={() => handleDelete(i.slug)}>
+                      className="btn btn-sm float-right"
+                      onClick={() => handleDelete(i.slug)}
+                    >
                       <i
-                        className='fas fa-trash text-danger'
-                        style={{ fontSize: "18px" }}></i>
+                        className="fas fa-trash text-danger"
+                        style={{ fontSize: "18px" }}
+                      ></i>
                     </span>
-                    <span className='btn btn-sm float-right'>
+                    <span className="btn btn-sm float-right">
                       <i
-                        className='fas fa-edit text-warning'
-                        style={{ fontSize: "18px" }}></i>
+                        className="fas fa-edit text-warning"
+                        style={{ fontSize: "18px" }}
+                      ></i>
                     </span>
                   </div>
                 </div>
