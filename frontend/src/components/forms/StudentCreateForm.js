@@ -25,7 +25,7 @@ const StudentCreateForm = ({
     dispatch(getAllInstitute());
     dispatch(getAllBranch());
     dispatch(getAllBatch());
-  }, [dispatch, values.institute]);
+  }, [dispatch]);
 
   return (
     <Container className='mt-3'>
@@ -111,7 +111,13 @@ const StudentCreateForm = ({
                     className='text-muted'
                     value={values.institute}
                     onChange={(e) =>
-                      setValues({ ...values, institute: e.target.value })
+                      setValues({
+                        ...values,
+                        institute: e.target.value,
+                        section: "",
+                        year: "",
+                        branch: "",
+                      })
                     }>
                     <option value=''>Select</option>
                     {institutes &&
@@ -131,7 +137,12 @@ const StudentCreateForm = ({
                       className='text-muted'
                       value={values.branch}
                       onChange={(e) =>
-                        setValues({ ...values, branch: e.target.value })
+                        setValues({
+                          ...values,
+                          branch: e.target.value,
+                          section: "",
+                          year: "",
+                        })
                       }>
                       <option value=''>Select</option>
                       {branches &&
@@ -155,7 +166,11 @@ const StudentCreateForm = ({
                       className='text-muted'
                       value={values.year}
                       onChange={(e) =>
-                        setValues({ ...values, year: e.target.value })
+                        setValues({
+                          ...values,
+                          year: e.target.value,
+                          section: "",
+                        })
                       }>
                       <option value=''>Select</option>
                       {batches &&
