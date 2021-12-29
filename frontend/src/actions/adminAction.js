@@ -23,7 +23,7 @@ const config = {
   withCredentials: true,
 };
 
-export const upload = (item, file) => async (dispatch) => {
+export const upload = (file) => async (dispatch) => {
   if (file) {
     Resizer.imageFileResizer(
       file,
@@ -36,9 +36,9 @@ export const upload = (item, file) => async (dispatch) => {
         dispatch({ type: UPLOAD_IMAGE_REQUEST });
         axios
           .post(
-            `http://localhost:5000/api/admin/${item}/upload-image`,
+            `http://localhost:5000/api/admin/upload-image`,
             { image: uri },
-            config,
+            config
           )
           .then((res) => {
             dispatch({ type: UPLOAD_IMAGE_SUCCESS, payload: res.data });
@@ -52,7 +52,7 @@ export const upload = (item, file) => async (dispatch) => {
             toast.error("Image Upload Fail,Try Again");
           });
       },
-      "base64",
+      "base64"
     );
   }
 };
@@ -64,7 +64,7 @@ export const registerInstructor = (values, image) => async (dispatch) => {
     let { data } = await axios.post(
       `http://localhost:5000/api/admin/instructor/register`,
       { name, image, phone, email },
-      config,
+      config
     );
     dispatch({ type: INSTRUCTOR_REGISTER_SUCCESS, payload: data });
     toast.success("Register Successfully");
@@ -86,7 +86,7 @@ export const registerStudent = (values) => async (dispatch) => {
     let { data } = await axios.post(
       `http://localhost:5000/api/admin/student/register`,
       { name, image, phone, email, institute, branch, section, year },
-      config,
+      config
     );
     dispatch({ type: STUDENT_REGISTER_SUCCESS, payload: data });
     toast.success("Register Successfully");

@@ -48,6 +48,12 @@ const InstructorDashboardPage = lazy(() =>
   import("./pages/instructor/Dashboard")
 );
 
+// user pages
+const UserRoute = lazy(() => import("./components/protectedRoutes/UserRoute"));
+const UserUpdateProfilePage = lazy(() =>
+  import("./pages/user/UserUpdateProfilePage")
+);
+
 const App = () => {
   return (
     <Router>
@@ -59,6 +65,11 @@ const App = () => {
             <Switch>
               <Route exact path="/" component={HomePage} />
               <Route exact path="/login" component={LoginPage} />
+              <UserRoute
+                exact
+                path="/update-profile/:id"
+                component={UserUpdateProfilePage}
+              />
               <Route
                 exact
                 path="/forgot-password"
