@@ -187,3 +187,43 @@ export const logoutUser = async (req, res) => {
     return res.status(400).send("Error try again!");
   }
 };
+
+//@desc   Current User
+//@routes POST /api/user/isvalid
+//@access PUBLIC
+export const currentUser = async (req, res) => {
+  const { id } = req.user;
+  const user = await userSchema.findById(id).exec();
+  if (!user) {
+    return res.status(401).send("UnAuthorized");
+  }
+  res.json({ success: true });
+};
+
+//@desc   User Details
+//@routes POST /api/user/:id
+//@access PRIVATE
+export const userDetails = async (req, res) => {
+  const { id } = req.params;
+  const user = await userSchema.findById(id).select("-password").exec();
+  if (!user) {
+    return res.status(401).send("User Not Found");
+  }
+  res.json(user);
+};
+
+//@desc   User Update
+//@routes POST /api/user/:id
+//@access PRIVATE
+export const userUpdate = async (req, res) => {
+  const { img, name, phone } = req.body;
+  const { id } = req.user;
+  const user = await userSchema
+    .findByIdAndUpdate(id, { image: img, name, phone }, { new: true })
+    .select("-password")
+    .exec();
+  if (!user) {
+    return res.status(401).send("User Not Found");
+  }
+  res.json(user);
+};

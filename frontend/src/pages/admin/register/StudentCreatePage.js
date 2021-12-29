@@ -33,7 +33,7 @@ const StudentCreatePage = () => {
   const handleImage = (e) => {
     let file = e.target.files[0];
     setPreview(window.URL.createObjectURL(file));
-    dispatch(upload("student", file));
+    dispatch(upload(file));
   };
 
   const handleSubmit = (e) => {
@@ -47,7 +47,7 @@ const StudentCreatePage = () => {
 
   return (
     <div>
-      <Meta title='ClassRoom : Create Student' />
+      <Meta title="ClassRoom : Create Student" />
       <StudentCreateForm
         handleSubmit={handleSubmit}
         handleChange={handleChange}
