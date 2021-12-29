@@ -27,6 +27,8 @@ import {
   uploadImageReducer,
   instructorRegisterReducer,
   studentRegisterReducer,
+  instructorDisplayReducer,
+  studentDisplayReducer,
 } from "./reducers/adminReducer";
 
 const reducer = combineReducers({
@@ -45,6 +47,8 @@ const reducer = combineReducers({
   uploadImage: uploadImageReducer,
   instructorRegister: instructorRegisterReducer,
   studentRegister: studentRegisterReducer,
+  instructorDisplay: instructorDisplayReducer,
+  studentDisplay: studentDisplayReducer,
 });
 
 const userInfoFromStorage = window.localStorage.getItem("userInfo")

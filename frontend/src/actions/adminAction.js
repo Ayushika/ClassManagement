@@ -10,6 +10,12 @@ import {
   STUDENT_REGISTER_FAIL,
   STUDENT_REGISTER_REQUEST,
   STUDENT_REGISTER_SUCCESS,
+  INSTRUCTOR_DISPLAY_FAIL,
+  INSTRUCTOR_DISPLAY_REQUEST,
+  INSTRUCTOR_DISPLAY_SUCCESS,
+  STUDENT_DISPLAY_FAIL,
+  STUDENT_DISPLAY_REQUEST,
+  STUDENT_DISPLAY_SUCCESS,
 } from "../constants/adminConstants";
 
 import Resizer from "react-image-file-resizer";
@@ -97,5 +103,43 @@ export const registerStudent = (values) => async (dispatch) => {
       payload: error.response.data,
     });
     toast.error("Error While Creating,Try Again");
+  }
+};
+
+export const displayStudent = () => async (dispatch) => {
+  try {
+    dispatch({ type: STUDENT_DISPLAY_REQUEST });
+    let { data } = await axios.post(
+      `http://localhost:5000/api/admin/student/display`,
+      {},
+      config,
+    );
+    dispatch({ type: STUDENT_DISPLAY_SUCCESS, payload: data });
+  } catch (error) {
+    console.log(error);
+    dispatch({
+      type: STUDENT_DISPLAY_FAIL,
+      payload: error.response.data,
+    });
+    toast.error("Error !");
+  }
+};
+
+export const displayInstructor = () => async (dispatch) => {
+  try {
+    dispatch({ type: INSTRUCTOR_DISPLAY_REQUEST });
+    let { data } = await axios.post(
+      `http://localhost:5000/api/admin/instructor/display`,
+      {},
+      config,
+    );
+    dispatch({ type: INSTRUCTOR_DISPLAY_SUCCESS, payload: data });
+  } catch (error) {
+    console.log(error);
+    dispatch({
+      type: INSTRUCTOR_DISPLAY_FAIL,
+      payload: error.response.data,
+    });
+    toast.error("Error !");
   }
 };

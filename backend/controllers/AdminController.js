@@ -201,3 +201,22 @@ export const registerStudent = async (req, res) => {
     res.status(400).send("Error Try Again,Please check all fields");
   }
 };
+
+//@desc   Display Student
+//@routes POST /api/admin/student/display
+//@access PRIVATE
+export const displayStudent = async (req, res) => {
+  const students = await userSchema
+    .find({ role: "Student" })
+    .populate("batch")
+    .exec();
+  res.json(students);
+};
+
+//@desc   Display Instructor
+//@routes POST /api/admin/instructor/display
+//@access PRIVATE
+export const displayInstructor = async (req, res) => {
+  const instructors = await userSchema.find({ role: "Instructor" }).exec();
+  res.json(instructors);
+};

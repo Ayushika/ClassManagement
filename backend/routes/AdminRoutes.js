@@ -5,6 +5,8 @@ import { isAdmin, protect } from "../middleware/authMiddleware";
 import {
   currentAdmin,
   uploadImage,
+  displayInstructor,
+  displayStudent,
   registerInstructor,
   registerStudent,
 } from "../controllers/AdminController";
@@ -45,9 +47,11 @@ router.route("/batch").post(protect, isAdmin, createBatch);
 /* INSTRUCTOR ROUTES */
 router.route("/instructor/upload-image").post(protect, isAdmin, uploadImage);
 router.route("/instructor/register").post(protect, isAdmin, registerInstructor);
+router.route("/instructor/display").post(protect, isAdmin, displayInstructor);
 
 /* STUDENT ROUTES */
 router.route("/student/upload-image").post(protect, isAdmin, uploadImage);
 router.route("/student/register").post(protect, isAdmin, registerStudent);
+router.route("/student/display").post(protect, isAdmin, displayStudent);
 
 export default router;
