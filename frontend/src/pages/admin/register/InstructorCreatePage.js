@@ -29,7 +29,7 @@ const InstructorCreatePage = () => {
   const handleImage = (e) => {
     let file = e.target.files[0];
     setPreview(window.URL.createObjectURL(file));
-    dispatch(upload("instructor", file));
+    dispatch(upload(file));
   };
 
   const handleSubmit = (e) => {

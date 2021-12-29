@@ -26,7 +26,7 @@ export const currentAdmin = async (req, res) => {
 };
 
 //@desc   Upload Image
-//@routes POST /api/admin/instructor/upload-image
+//@routes POST /api/admin/upload-image
 //@access PRIVATE
 export const uploadImage = async (req, res) => {
   try {
@@ -40,7 +40,7 @@ export const uploadImage = async (req, res) => {
 
     const base64Data = new Buffer.from(
       image.replace(/^data:image\/\w+;base64,/, ""),
-      "base64",
+      "base64"
     );
 
     const type = image.split(";")[0].split("/")[1];
@@ -75,7 +75,7 @@ export const registerInstructor = async (req, res) => {
   try {
     const { name, email, phone, image } = req.body;
     const password = generator.generate({
-      length: 10,
+      length: 8,
       numbers: true,
       uppercase: false,
     });
@@ -147,7 +147,7 @@ export const registerStudent = async (req, res) => {
       .exec();
 
     const password = generator.generate({
-      length: 10,
+      length: 8,
       numbers: true,
       uppercase: false,
     });

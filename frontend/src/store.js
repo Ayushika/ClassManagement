@@ -7,6 +7,8 @@ import {
   userLoginReducer,
   userVerifyEmailReducer,
   userForgotPasswordReducer,
+  userDetailsReducer,
+  userUpdateReducer,
 } from "./reducers/userReducer";
 import {
   createInstituteReducer,
@@ -35,6 +37,8 @@ const reducer = combineReducers({
   userLogin: userLoginReducer,
   userVerifyEmail: userVerifyEmailReducer,
   userForgotPassword: userForgotPasswordReducer,
+  userDetails: userDetailsReducer,
+  userUpdate: userUpdateReducer,
   createInstitute: createInstituteReducer,
   getAllInstitute: getAllInstituteReducer,
   deleteInstitute: deleteInstituteReducer,
@@ -64,7 +68,7 @@ const middleware = [thunk];
 const store = createStore(
   reducer,
   initialState,
-  composeWithDevTools(applyMiddleware(...middleware)),
+  composeWithDevTools(applyMiddleware(...middleware))
 );
 
 export default store;

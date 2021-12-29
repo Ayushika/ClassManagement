@@ -20,44 +20,55 @@ const Header = () => {
 
   return (
     <header>
-      <Navbar bg='light' expand='lg' id='header'>
+      <Navbar bg="light" expand="lg" id="header">
         <Container>
-          <Link to='/' className='custom-link'>
-            <Navbar.Brand className='font-bold text-success h1'>
+          <Link to="/" className="custom-link">
+            <Navbar.Brand className="font-bold text-success h1">
               <img
                 src={pustak}
-                alt='Pustak'
+                alt="Pustak"
                 style={{ width: "25%", height: "25%" }}
               />
             </Navbar.Brand>
           </Link>
-          <Navbar.Toggle aria-controls='basic-navbar-nav' />
-          <Navbar.Collapse id='basic-navbar-nav'>
-            <Nav className='ms-auto'>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="ms-auto">
               {userInfo && userInfo.email ? (
                 <NavDropdown
                   title={userInfo && userInfo.name}
-                  id='adminmenu'
-                  className='custom-link'>
+                  id="adminmenu"
+                  className="custom-link"
+                >
                   <NavDropdown.Item>
                     <Link
-                      className='dropdown-item nav-link custom-link'
-                      to={`/${userInfo.role.toLowerCase()}/dashboard`}>
+                      className="dropdown-item nav-link custom-link"
+                      to={`/${userInfo.role.toLowerCase()}/dashboard`}
+                    >
                       Dashboard
+                    </Link>
+                  </NavDropdown.Item>
+                  <NavDropdown.Item>
+                    <Link
+                      className="dropdown-item nav-link custom-link"
+                      to={`/update-profile/${userInfo._id}`}
+                    >
+                      Update Profile
                     </Link>
                   </NavDropdown.Item>
 
                   <NavDropdown.Item>
                     <div
-                      className='dropdown-item nav-link custom-link pointer'
-                      onClick={() => handleLogout()}>
+                      className="dropdown-item nav-link custom-link pointer"
+                      onClick={() => handleLogout()}
+                    >
                       Logout
                     </div>
                   </NavDropdown.Item>
                 </NavDropdown>
               ) : (
-                <Link to='/login' className='nav-link custom-link'>
-                  <i className='fas fa-user'></i> Login
+                <Link to="/login" className="nav-link custom-link">
+                  <i className="fas fa-user"></i> Login
                 </Link>
               )}
             </Nav>

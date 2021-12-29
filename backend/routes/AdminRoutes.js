@@ -28,6 +28,7 @@ import {
 const router = express.Router();
 
 router.route("/isvalid").post(protect, isAdmin, currentAdmin);
+router.route("/upload-image").post(protect, uploadImage);
 
 /* INSTITUTE ROUTES */
 router.route("/institute/all").post(protect, isAdmin, getAllInstitute);
@@ -45,12 +46,10 @@ router.route("/batch/:id").delete(protect, isAdmin, deleteBatch);
 router.route("/batch").post(protect, isAdmin, createBatch);
 
 /* INSTRUCTOR ROUTES */
-router.route("/instructor/upload-image").post(protect, isAdmin, uploadImage);
 router.route("/instructor/register").post(protect, isAdmin, registerInstructor);
 router.route("/instructor/display").post(protect, isAdmin, displayInstructor);
 
 /* STUDENT ROUTES */
-router.route("/student/upload-image").post(protect, isAdmin, uploadImage);
 router.route("/student/register").post(protect, isAdmin, registerStudent);
 router.route("/student/display").post(protect, isAdmin, displayStudent);
 
