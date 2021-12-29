@@ -36,14 +36,14 @@ const ForgotPasswordPage = ({ history }) => {
       toast.error("Invalid Otp");
       return;
     }
+
     dispatch(forgotPassword(email, password));
-    if (successReset) {
-      toast.success("Password Reset Successfully. Now you can Login");
-      dispatch({ type: USER_VERIFY_EMAIL_RESET });
-      dispatch({ type: USER_FORGOT_PASSWORD_RESET });
-      history.push("/login");
-      setSuccess(false);
-    }
+    history.push("/login");
+    toast.success("Password Reset Successfully. Now you can Login");
+    dispatch({ type: USER_VERIFY_EMAIL_RESET });
+    dispatch({ type: USER_FORGOT_PASSWORD_RESET });
+
+    setSuccess(false);
   };
   const handleOtp = (e) => {
     e.preventDefault();

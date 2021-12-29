@@ -6,6 +6,7 @@ import { upload, registerStudent } from "../../../actions/adminAction";
 import { useDispatch, useSelector } from "react-redux";
 import Meta from "../../../components/Meta";
 import { UPLOAD_IMAGE_RESET } from "../../../constants/adminConstants";
+import { toast } from "react-toastify";
 
 const StudentCreatePage = () => {
   const intialValues = {
@@ -40,6 +41,19 @@ const StudentCreatePage = () => {
     e.preventDefault();
     values.image = image;
     setValues(intialValues);
+    if (
+      !values.email &&
+      !values.image &&
+      !values.phone &&
+      !values.name &&
+      !values.institute &&
+      !values.branch &&
+      !values.section &&
+      !values.year
+    ) {
+      toast.warning("All Fields are required");
+      return;
+    }
     dispatch(registerStudent(values));
     setPreview("");
     dispatch({ type: UPLOAD_IMAGE_RESET });

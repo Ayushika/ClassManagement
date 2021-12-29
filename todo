@@ -10,5 +10,16 @@ Register Button will only be visible to Admin.
 
 On Admin Dashboard we have two options to register student and register Professor
 
-Redesign the batch component
-when we click on display button admin will enter year 
+--> Redesign the batch component
+--> when we click on display button admin will enter institute then branch, 
+then year and section and user will display at every change 
+--> on clicking on list of users modal with user info will open 
+--> on landing on the instructor dashboard , display all the courses created by him/her with a option to edit them
+--> we have two features on instructor dashboard (in dropdown)
+   a.  create a course (1)
+   b.  see and update a profile
+
+--> on landing on student dashboard all the courses which he/she is enrolled will display
+    iski click pe kuch open hoga   
+-->  we have one features on student dashboard (in dropdown)
+    a.  see and update a profile   
