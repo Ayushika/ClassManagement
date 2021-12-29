@@ -2,11 +2,12 @@
 
 import React, { useState } from "react";
 import StudentCreateForm from "../../../components/forms/StudentCreateForm";
-import { upload, registerStudent } from "../../../actions/adminAction";
+import { registerStudent } from "../../../actions/adminAction";
 import { useDispatch, useSelector } from "react-redux";
 import Meta from "../../../components/Meta";
-import { UPLOAD_IMAGE_RESET } from "../../../constants/adminConstants";
+import { upload } from "../../../actions/userAction";
 import { toast } from "react-toastify";
+import { UPLOAD_IMAGE_RESET } from "../../../constants/userConstants";
 
 const StudentCreatePage = () => {
   const intialValues = {

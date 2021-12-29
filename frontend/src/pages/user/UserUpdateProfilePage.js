@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getUserDetails, updateUserProfile } from "../../actions/userAction";
 import { useDispatch, useSelector } from "react-redux";
 import Meta from "../../components/Meta";
-import { upload } from "../../actions/adminAction";
+import { upload } from "../../actions/userAction";
 import { Row, Col, Button, Form, Container, Badge } from "react-bootstrap";
 import { USER_UPDATE_PROFILE_RESET } from "../../constants/userConstants";
 
@@ -33,12 +33,14 @@ const UserUpdateProfilePage = ({ match, history }) => {
       history.push("/");
     } else if (!user || user._id !== id) dispatch(getUserDetails(id));
     else {
+      console.log(user);
       setImg(user.image);
       setName(user.name);
       setPhone(user.phone);
       setEmail(user.email);
+      setPreview(user && user.image && user.image.Location);
     }
-  }, [id, dispatch, user, success, history]);
+  }, [id, dispatch, user, success, history, image]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -50,6 +52,8 @@ const UserUpdateProfilePage = ({ match, history }) => {
     setPreview(window.URL.createObjectURL(file));
     dispatch(upload(file));
     setImg(image);
+    console.log("New Image", image);
+    console.log("Prev Image", user.image);
   };
 
   return (

@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import InstructorCreateForm from "../../../components/forms/InstructorCreateForm";
 import Meta from "../../../components/Meta";
 import { useSelector, useDispatch } from "react-redux";
-import { upload, registerInstructor } from "../../../actions/adminAction";
+import { registerInstructor } from "../../../actions/adminAction";
+import { upload } from "../../../actions/userAction";
 import { toast } from "react-toastify";
-import { UPLOAD_IMAGE_RESET } from "../../../constants/adminConstants";
+import { UPLOAD_IMAGE_RESET } from "../../../constants/userConstants";
 
 const InstructorCreatePage = () => {
   const intialValues = {

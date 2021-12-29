@@ -19,7 +19,11 @@ import {
   USER_UPDATE_PROFILE_REQUEST,
   USER_UPDATE_PROFILE_SUCCESS,
   USER_UPDATE_PROFILE_FAIL,
+  UPLOAD_IMAGE_REQUEST,
+  UPLOAD_IMAGE_SUCCESS,
+  UPLOAD_IMAGE_FAIL,
 } from "../constants/userConstants";
+import Resizer from "react-image-file-resizer";
 
 const config = {
   headers: {
@@ -152,3 +156,38 @@ export const updateUserProfile =
       });
     }
   };
+
+export const upload = (file) => async (dispatch) => {
+  if (file) {
+    Resizer.imageFileResizer(
+      file,
+      720,
+      720,
+      "JPEG",
+      100,
+      0,
+      (uri) => {
+        dispatch({ type: UPLOAD_IMAGE_REQUEST });
+        axios
+          .post(
+            `http://localhost:5000/api/user/upload-image`,
+            { image: uri },
+            config
+          )
+          .then((res) => {
+            console.log("Actionn ", res.data);
+            dispatch({ type: UPLOAD_IMAGE_SUCCESS, payload: res.data });
+          })
+          .catch((error) => {
+            console.log(error);
+            dispatch({
+              type: UPLOAD_IMAGE_FAIL,
+              payload: error.response.data,
+            });
+            toast.error("Image Upload Fail,Try Again");
+          });
+      },
+      "base64"
+    );
+  }
+};

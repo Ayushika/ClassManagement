@@ -4,7 +4,6 @@ import express from "express";
 import { isAdmin, protect } from "../middleware/authMiddleware";
 import {
   currentAdmin,
-  uploadImage,
   displayInstructor,
   displayStudent,
   registerInstructor,
@@ -28,7 +27,6 @@ import {
 const router = express.Router();
 
 router.route("/isvalid").post(protect, isAdmin, currentAdmin);
-router.route("/upload-image").post(protect, uploadImage);
 
 /* INSTITUTE ROUTES */
 router.route("/institute/all").post(protect, isAdmin, getAllInstitute);

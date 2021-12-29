@@ -9,6 +9,7 @@ import {
   userForgotPasswordReducer,
   userDetailsReducer,
   userUpdateReducer,
+  uploadImageReducer,
 } from "./reducers/userReducer";
 import {
   createInstituteReducer,
@@ -26,7 +27,6 @@ import {
   getAllBatchReducer,
 } from "./reducers/batchReducer";
 import {
-  uploadImageReducer,
   instructorRegisterReducer,
   studentRegisterReducer,
   instructorDisplayReducer,
@@ -39,6 +39,7 @@ const reducer = combineReducers({
   userForgotPassword: userForgotPasswordReducer,
   userDetails: userDetailsReducer,
   userUpdate: userUpdateReducer,
+  uploadImage: uploadImageReducer,
   createInstitute: createInstituteReducer,
   getAllInstitute: getAllInstituteReducer,
   deleteInstitute: deleteInstituteReducer,
@@ -48,7 +49,6 @@ const reducer = combineReducers({
   createBatch: createBatchReducer,
   deleteBatch: deleteBatchReducer,
   getAllBatch: getAllBatchReducer,
-  uploadImage: uploadImageReducer,
   instructorRegister: instructorRegisterReducer,
   studentRegister: studentRegisterReducer,
   instructorDisplay: instructorDisplayReducer,

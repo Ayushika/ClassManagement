@@ -10,10 +10,12 @@ import {
   currentUser,
   userDetails,
   userUpdate,
+  uploadImage,
 } from "../controllers/UserController";
 import { protect } from "../middleware/authMiddleware";
 const router = express.Router();
 
+router.route("/upload-image").post(protect, uploadImage);
 router.route("/register").post(registerUser);
 router.route("/login").post(loginUser);
 router.route("/forgot-password").post(forgotPassword);

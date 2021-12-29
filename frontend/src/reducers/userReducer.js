@@ -20,6 +20,10 @@ import {
   USER_UPDATE_PROFILE_SUCCESS,
   USER_UPDATE_PROFILE_FAIL,
   USER_UPDATE_PROFILE_RESET,
+  UPLOAD_IMAGE_REQUEST,
+  UPLOAD_IMAGE_SUCCESS,
+  UPLOAD_IMAGE_FAIL,
+  UPLOAD_IMAGE_RESET,
 } from "../constants/userConstants";
 
 export const userLoginReducer = (state = {}, action) => {
@@ -90,6 +94,21 @@ export const userUpdateReducer = (state = { user: {} }, action) => {
       return { loading: false, error: action.payload };
     case USER_UPDATE_PROFILE_RESET:
       return {};
+    default:
+      return state;
+  }
+};
+
+export const uploadImageReducer = (state = { image: {} }, action) => {
+  switch (action.type) {
+    case UPLOAD_IMAGE_REQUEST:
+      return { loading: true };
+    case UPLOAD_IMAGE_SUCCESS:
+      return { loading: false, image: action.payload };
+    case UPLOAD_IMAGE_FAIL:
+      return { loading: false, error: action.payload };
+    case UPLOAD_IMAGE_RESET:
+      return { image: {} };
     default:
       return state;
   }
