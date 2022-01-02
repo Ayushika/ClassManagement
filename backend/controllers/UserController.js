@@ -148,7 +148,7 @@ export const forgotPassword = async (req, res) => {
 
     const updateUser = await userSchema.findOneAndUpdate(
       { email },
-      { password: hashedPassword }
+      { password: hashedPassword },
     );
 
     const params = {
@@ -229,6 +229,7 @@ export const userDetails = async (req, res) => {
 //@access PRIVATE
 export const userUpdate = async (req, res) => {
   const { img, name, phone } = req.body;
+  console.log("IMAGE : ", img);
   const { id } = req.user;
   const user = await userSchema
     .findByIdAndUpdate(id, { image: img, name, phone }, { new: true })
@@ -255,7 +256,7 @@ export const uploadImage = async (req, res) => {
 
     const base64Data = new Buffer.from(
       image.replace(/^data:image\/\w+;base64,/, ""),
-      "base64"
+      "base64",
     );
 
     const type = image.split(";")[0].split("/")[1];

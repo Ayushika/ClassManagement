@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { useEffect, useState } from "react";
 import { getUserDetails, updateUserProfile } from "../../actions/userAction";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,14 +16,18 @@ const UserUpdateProfilePage = ({ match, history }) => {
 
   const dispatch = useDispatch();
 
-  const [preview, setPreview] = useState("");
-  const [img, setImg] = useState({});
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
+  const [uploadImg, setUploadImg] = useState("");
 
   const userDetails = useSelector((state) => state.userDetails);
   const { user } = userDetails;
+
+  const [img, setImg] = useState();
+  // user && user.image
+  const [preview, setPreview] = useState();
+  // user && user.image && user.image.Location,
 
   const userUpdate = useSelector((state) => state.userUpdate);
   const { success } = userUpdate;
@@ -33,61 +39,62 @@ const UserUpdateProfilePage = ({ match, history }) => {
       history.push("/");
     } else if (!user || user._id !== id) dispatch(getUserDetails(id));
     else {
-      console.log(user);
-      setImg(user.image);
       setName(user.name);
       setPhone(user.phone);
       setEmail(user.email);
+      setImg(user && user.image);
       setPreview(user && user.image && user.image.Location);
+    }
+    if (image && image.location) {
+      setImg(image);
+      setPreview(image && image.Location);
+      return;
     }
   }, [id, dispatch, user, success, history, image]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateUserProfile(id, img, name, phone));
+    setUploadImg(img);
+    dispatch(updateUserProfile(id, uploadImg, name, phone));
   };
 
   const handleImage = (e) => {
     let file = e.target.files[0];
     setPreview(window.URL.createObjectURL(file));
     dispatch(upload(file));
-    setImg(image);
-    console.log("New Image", image);
-    console.log("Prev Image", user.image);
   };
 
   return (
     <div>
-      <Meta title="ClassRoom : Update Profile" />
-      <Container className="mt-5">
-        <Row className="justify-content-md-center">
+      <Meta title='ClassRoom : Update Profile' />
+      <Container className='mt-5'>
+        <Row className='justify-content-md-center'>
           <Col xs={12} md={6}>
             <div
-              className="card p-5"
-              style={{ boxShadow: "0px 0 18px rgba(55, 66, 59, 0.08)" }}
-            >
+              className='card p-5'
+              style={{ boxShadow: "0px 0 18px rgba(55, 66, 59, 0.08)" }}>
               <Form onSubmit={handleSubmit}>
                 <h2>Update Profile</h2>
-                <div className="underline2"></div>
-                <div className="form-row mt-4">
-                  <div className="col">
-                    <div className="form-group">
-                      <label className="btn btn-outline-success btn-block">
+                <div className='underline2'></div>
+                <div className='form-row mt-4'>
+                  <div className='col'>
+                    <div className='form-group'>
+                      <label className='btn btn-outline-success btn-block'>
                         Upload Image
                         <input
-                          type="file"
-                          name="image"
+                          type='file'
+                          name='image'
                           onChange={handleImage}
-                          accept="image/*"
+                          accept='image/*'
                           hidden
                         />
                       </label>
                       {preview !== "" && (
-                        <Badge pill className="pointer" as="img-badge">
+                        <Badge pill className='pointer' as='img-badge'>
                           <img
                             src={preview}
-                            alt="preview"
-                            className="m-2"
+                            alt='preview'
+                            className='m-2'
                             style={{
                               width: "80px",
                               objectFit: "cover",
@@ -99,53 +106,49 @@ const UserUpdateProfilePage = ({ match, history }) => {
                   </div>
                 </div>
 
-                <Form.Group controlId="formGridId" className="mt-4">
+                <Form.Group controlId='formGridId' className='mt-4'>
                   <Form.Label>Id</Form.Label>
                   <Form.Control
-                    type="text"
+                    type='text'
                     value={id}
-                    name="id"
+                    name='id'
                     disabled
-                    required
-                  ></Form.Control>
+                    required></Form.Control>
                 </Form.Group>
 
-                <Form.Group controlId="formGridEmail" className="mt-4">
+                <Form.Group controlId='formGridEmail' className='mt-4'>
                   <Form.Label>Email</Form.Label>
                   <Form.Control
-                    type="email"
+                    type='email'
                     value={email}
-                    name="email"
+                    name='email'
                     disabled
-                    required
-                  ></Form.Control>
+                    required></Form.Control>
                 </Form.Group>
 
-                <Form.Group controlId="formGridName" className="mt-4">
+                <Form.Group controlId='formGridName' className='mt-4'>
                   <Form.Label>Name</Form.Label>
                   <Form.Control
-                    type="text"
-                    name="name"
+                    type='text'
+                    name='name'
                     value={name}
-                    placeholder="John Doe"
+                    placeholder='John Doe'
                     onChange={(e) => setName(e.target.value)}
-                    required
-                  ></Form.Control>
+                    required></Form.Control>
                 </Form.Group>
 
-                <Form.Group controlId="phone" className="mt-4">
+                <Form.Group controlId='phone' className='mt-4'>
                   <Form.Label>Mobile No.</Form.Label>
                   <Form.Control
-                    type="text"
-                    name="phone"
-                    placeholder="XXXX-XX"
+                    type='text'
+                    name='phone'
+                    placeholder='XXXX-XX'
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    required
-                  ></Form.Control>
+                    required></Form.Control>
                 </Form.Group>
 
-                <Button type="submit" className=" btn btn-success btn-md mt-4">
+                <Button type='submit' className=' btn btn-success btn-md mt-4'>
                   Update
                 </Button>
               </Form>
