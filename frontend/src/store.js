@@ -32,6 +32,7 @@ import {
   instructorDisplayReducer,
   studentDisplayReducer,
 } from "./reducers/adminReducer";
+import { courseCreateReducer } from "./reducers/courseReducer";
 
 const reducer = combineReducers({
   userLogin: userLoginReducer,
@@ -53,6 +54,7 @@ const reducer = combineReducers({
   studentRegister: studentRegisterReducer,
   instructorDisplay: instructorDisplayReducer,
   studentDisplay: studentDisplayReducer,
+  courseCreate: courseCreateReducer,
 });
 
 const userInfoFromStorage = window.localStorage.getItem("userInfo")
@@ -68,7 +70,7 @@ const middleware = [thunk];
 const store = createStore(
   reducer,
   initialState,
-  composeWithDevTools(applyMiddleware(...middleware))
+  composeWithDevTools(applyMiddleware(...middleware)),
 );
 
 export default store;

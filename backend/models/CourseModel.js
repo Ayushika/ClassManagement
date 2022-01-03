@@ -64,12 +64,17 @@ const CourseSchema = new mongoose.Schema(
     },
     image: {},
     instructor: {
-      type: mongoose.Schema.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
-    lessons: [LessonSchema],
-    anouncements: [AnnouncementSchema],
+    batch: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Batch",
+      required: true,
+    },
+    // lessons: [LessonSchema],
+    // anouncements: [AnnouncementSchema],
   },
   { timestamps: true },
 );

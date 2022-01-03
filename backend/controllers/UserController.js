@@ -229,7 +229,7 @@ export const userDetails = async (req, res) => {
 //@access PRIVATE
 export const userUpdate = async (req, res) => {
   const { img, name, phone } = req.body;
-  console.log("IMAGE : ", img);
+  // console.log("IMAGE : ", img);
   const { id } = req.user;
   const user = await userSchema
     .findByIdAndUpdate(id, { image: img, name, phone }, { new: true })
@@ -276,7 +276,6 @@ export const uploadImage = async (req, res) => {
         console.log(err);
         return res.status(400).send("Error,Please Try Again");
       }
-      console.log(data);
       res.json(data);
     });
   } catch (error) {

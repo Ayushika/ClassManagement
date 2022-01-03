@@ -1,17 +1,10 @@
 @todo: 
-1. create a course schema
-2. course create form
-3. show courses in the instructor dashboard
-4. mail to the student added to the course
-
-
-
-
+2. show courses in the instructor dashboard
+3. mail to the student added to the course
 
 On Admin Dashboard we have two options to register student and register Professor
 
 --> Redesign the batch component
-
 
 --> on clicking on list of users modal with user info will open 
 

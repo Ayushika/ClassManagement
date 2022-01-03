@@ -29,17 +29,17 @@ const router = express.Router();
 router.route("/isvalid").post(protect, isAdmin, currentAdmin);
 
 /* INSTITUTE ROUTES */
-router.route("/institute/all").post(protect, isAdmin, getAllInstitute);
+router.route("/institute/all").post(protect,  getAllInstitute);
 router.route("/institute/:slug").delete(protect, isAdmin, deleteInstitute);
 router.route("/institute").post(protect, isAdmin, createInstitute);
 
 /* BRANCH ROUTES */
-router.route("/branch/all").post(protect, isAdmin, getAllBranch);
+router.route("/branch/all").post(protect, getAllBranch);
 router.route("/branch/:slug").delete(protect, isAdmin, deleteBranch);
 router.route("/branch").post(protect, isAdmin, createBranch);
 
 /* BATCH ROUTES */
-router.route("/batch/all").post(protect, isAdmin, getAllBatch);
+router.route("/batch/all").post(protect, getAllBatch);
 router.route("/batch/:id").delete(protect, isAdmin, deleteBatch);
 router.route("/batch").post(protect, isAdmin, createBatch);
 
