@@ -12,6 +12,17 @@ export const currentInstructor = async (req, res) => {
   res.json({ success: true });
 };
 
+//@desc   Get Course
+//@routes POST /api/instructor/course/get
+//@access PRIVATE
+export const courseGet = async (req, res) => {
+  const courses = await courseSchema
+    .find({ instructor: req.user.id })
+    .populate("instructor")
+    .populate("batch");
+  res.json(courses);
+};
+
 //@desc   Create Course
 //@routes POST /api/instructor/course/create
 //@access PRIVATE

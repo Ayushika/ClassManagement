@@ -32,7 +32,10 @@ import {
   instructorDisplayReducer,
   studentDisplayReducer,
 } from "./reducers/adminReducer";
-import { courseCreateReducer } from "./reducers/courseReducer";
+import {
+  courseCreateReducer,
+  courseGetReducer,
+} from "./reducers/courseReducer";
 
 const reducer = combineReducers({
   userLogin: userLoginReducer,
@@ -55,6 +58,7 @@ const reducer = combineReducers({
   instructorDisplay: instructorDisplayReducer,
   studentDisplay: studentDisplayReducer,
   courseCreate: courseCreateReducer,
+  courseGet: courseGetReducer,
 });
 
 const userInfoFromStorage = window.localStorage.getItem("userInfo")
