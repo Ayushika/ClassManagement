@@ -29,7 +29,7 @@ const router = express.Router();
 router.route("/isvalid").post(protect, isAdmin, currentAdmin);
 
 /* INSTITUTE ROUTES */
-router.route("/institute/all").post(protect,  getAllInstitute);
+router.route("/institute/all").post(protect, getAllInstitute);
 router.route("/institute/:slug").delete(protect, isAdmin, deleteInstitute);
 router.route("/institute").post(protect, isAdmin, createInstitute);
 

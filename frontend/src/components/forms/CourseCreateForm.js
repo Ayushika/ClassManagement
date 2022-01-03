@@ -84,7 +84,7 @@ const CourseCreateForm = ({
                 <Form.Group as={Col} controlId='formGridEmail'>
                   <Form.Label>Description</Form.Label>
                   <textarea
-                    class='form-control'
+                    className='form-control'
                     value={values.description}
                     name='description'
                     placeholder='Add Description'

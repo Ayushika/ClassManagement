@@ -31,7 +31,7 @@ const UserSchema = new mongoose.Schema(
       enum: ["Student", "Instructor", "Admin"],
     },
     image: {},
-    // courseId: [{ type: mongoose.Schema.Types.ObjectId, ref: "Course" }],
+    courseId: [{ type: mongoose.Schema.Types.ObjectId, ref: "Course" }],
     batch: { type: mongoose.Schema.Types.ObjectId, ref: "Batch" },
   },
   { timestamps: true },

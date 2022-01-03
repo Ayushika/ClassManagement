@@ -8,6 +8,7 @@ import { courseCreate } from "../../../actions/courseAction";
 import { UPLOAD_IMAGE_RESET } from "../../../constants/userConstants";
 import { upload } from "../../../actions/userAction";
 import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
 
 const Create = () => {
   const intialValues = {
@@ -21,6 +22,7 @@ const Create = () => {
   };
 
   const dispatch = useDispatch();
+  const history = useHistory();
   const [values, setValues] = useState(intialValues);
   const [preview, setPreview] = useState("");
 
@@ -56,6 +58,7 @@ const Create = () => {
     dispatch(courseCreate(values));
     setPreview("");
     dispatch({ type: UPLOAD_IMAGE_RESET });
+    history.push("/instructor/dashboard");
   };
 
   return (
