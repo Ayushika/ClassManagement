@@ -25,7 +25,7 @@ const LessonSchema = new mongoose.Schema(
     },
     video: {},
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 const AnnouncementSchema = new mongoose.Schema(
@@ -38,7 +38,7 @@ const AnnouncementSchema = new mongoose.Schema(
     },
     file: {},
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 const CourseSchema = new mongoose.Schema(
@@ -73,10 +73,10 @@ const CourseSchema = new mongoose.Schema(
       ref: "Batch",
       required: true,
     },
-    // lessons: [LessonSchema],
+    lessons: [LessonSchema],
     // anouncements: [AnnouncementSchema],
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 const Course = mongoose.model("Course", CourseSchema);
