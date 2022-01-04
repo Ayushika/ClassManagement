@@ -228,11 +228,11 @@ export const userDetails = async (req, res) => {
 //@routes POST /api/user/:id
 //@access PRIVATE
 export const userUpdate = async (req, res) => {
-  const { img, name, phone } = req.body;
+  const { name, phone } = req.body;
   // console.log("IMAGE : ", img);
   const { id } = req.user;
   const user = await userSchema
-    .findByIdAndUpdate(id, { image: img, name, phone }, { new: true })
+    .findByIdAndUpdate(id, { name, phone }, { new: true })
     .select("-password")
     .exec();
   if (!user) {
