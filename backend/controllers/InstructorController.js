@@ -4,6 +4,20 @@ import batchSchema from "../models/BatchModel";
 import userSchema from "../models/UserModel";
 import { mailTemplate } from "../utils/awsServices";
 import slugify from "slugify";
+import { nanoid } from "nanoid";
+import dotenv from "dotenv";
+import AWS from "aws-sdk";
+import fs from "fs";
+
+dotenv.config();
+const awsConfig = {
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  region: process.env.AWS_REGION,
+  apiVersion: process.env.AWS_API_VERSION,
+};
+
+const S3 = new AWS.S3(awsConfig);
 
 //@desc   Current Instructor
 //@routes POST /api/instructor/isvalid
@@ -61,8 +75,13 @@ export const courseCreate = async (req, res) => {
   for (let i = 0; i < students.length; i++) {
     const student = await userSchema.findByIdAndUpdate(
       { _id: students[i]._id },
+
       { $push: { courseId: course._id } },
       { new: true },
+
+      { courseId: course._id },
+      { new: true }
+
     );
 
     const params = {
@@ -101,4 +120,61 @@ export const courseCreate = async (req, res) => {
   }
 
   res.json(course);
+};
+
+//@desc   Upload Video
+//@routes POST /api/course/upload-video
+//@access PRIVATE
+export const uploadVideo = async (req, res) => {
+  try {
+    const { video } = req.files;
+    if (!video) {
+      res.status(400).send("No Video");
+    }
+    const params = {
+      Bucket: "class-room",
+      Key: `${nanoid()}.${video.type.split("/")[1]}`, //video/mp4
+      Body: fs.readFileSync(video.path),
+      ACL: "public-read",
+      ContentType: video.type,
+    };
+
+    S3.upload(params, (err, data) => {
+      if (err) {
+        console.log(err);
+        return res.status(400).send("Error,Please Try Again");
+      }
+      res.json(data);
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).send("Error,Please Try Again");
+  }
+};
+
+//@desc   Add Lesson
+//@routes POST /api/course/add-lesson
+//@access PRIVATE
+export const addLesson = async (req, res) => {
+  try {
+    const { title, description, slug, video } = req.body;
+    const course = await courseSchema.findOne({ slug });
+    if (!course) {
+      res.status(400).send("No Course Found");
+    }
+    console.log(video);
+    const lesson = {
+      title: title,
+      description: description,
+      video: video,
+    };
+
+    course.lessons.push(lesson);
+    await course.save();
+
+    res.json(course);
+  } catch (error) {
+    console.log(error);
+    res.status(400).send("Error,Please Try Again");
+  }
 };
