@@ -1,5 +1,8 @@
 /** @format */
 import {
+  COURSE_ADD_LESSON_FAIL,
+  COURSE_ADD_LESSON_REQUEST,
+  COURSE_ADD_LESSON_SUCCESS,
   COURSE_CREATE_FAIL,
   COURSE_CREATE_REQUEST,
   COURSE_CREATE_SUCCESS,
@@ -28,6 +31,19 @@ export const courseGetReducer = (state = { courses: [] }, action) => {
     case COURSE_GET_SUCCESS:
       return { loading: false, courses: action.payload };
     case COURSE_GET_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const courseAddLessonReducer = (state = { lesson: {} }, action) => {
+  switch (action.type) {
+    case COURSE_ADD_LESSON_REQUEST:
+      return { loading: true };
+    case COURSE_ADD_LESSON_SUCCESS:
+      return { loading: false, lesson: action.payload };
+    case COURSE_ADD_LESSON_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;
