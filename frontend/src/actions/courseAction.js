@@ -42,12 +42,12 @@ export const courseCreate = (values) => async (dispatch) => {
   }
 };
 
-export const getCoursesByInstructor = () => async (dispatch) => {
+export const getCourses = (value) => async (dispatch) => {
   try {
     dispatch({ type: COURSE_GET_REQUEST });
 
     const { data } = await axios.post(
-      "http://localhost:5000/api/instructor/course/get",
+      `http://localhost:5000/api/${value}/course/get`,
       {},
       config,
     );

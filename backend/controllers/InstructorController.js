@@ -49,13 +49,19 @@ export const courseCreate = async (req, res) => {
     description,
   }).save();
 
+  const student = await userSchema.findByIdAndUpdate(
+    { _id: req.user.id },
+    { $push: { courseId: course._id } },
+    { new: true },
+  );
+
   const id = batch._id;
   const students = await userSchema.find({ batch: id }).exec();
 
   for (let i = 0; i < students.length; i++) {
     const student = await userSchema.findByIdAndUpdate(
       { _id: students[i]._id },
-      { courseId: course._id },
+      { $push: { courseId: course._id } },
       { new: true },
     );
 

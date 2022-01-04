@@ -6,11 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 import Meta from "../../components/Meta";
 import { upload } from "../../actions/userAction";
 import { Row, Col, Button, Form, Container, Badge } from "react-bootstrap";
-import { USER_UPDATE_PROFILE_RESET } from "../../constants/userConstants";
+import {USER_UPDATE_PROFILE_RESET } from "../../constants/userConstants"
 
 const UserUpdateProfilePage = ({ match, history }) => {
-  const uploadImage = useSelector((state) => state.uploadImage);
-  const { image } = uploadImage;
 
   const { id } = match.params;
 
@@ -19,16 +17,10 @@ const UserUpdateProfilePage = ({ match, history }) => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-  const [uploadImg, setUploadImg] = useState("");
+  const [preview, setPreview] = useState();
 
   const userDetails = useSelector((state) => state.userDetails);
   const { user } = userDetails;
-
-  const [img, setImg] = useState();
-  // user && user.image
-  const [preview, setPreview] = useState();
-  // user && user.image && user.image.Location,
-
   const userUpdate = useSelector((state) => state.userUpdate);
   const { success } = userUpdate;
 
@@ -42,27 +34,17 @@ const UserUpdateProfilePage = ({ match, history }) => {
       setName(user.name);
       setPhone(user.phone);
       setEmail(user.email);
-      setImg(user && user.image);
       setPreview(user && user.image && user.image.Location);
     }
-    if (image && image.location) {
-      setImg(image);
-      setPreview(image && image.Location);
-      return;
-    }
-  }, [id, dispatch, user, success, history, image]);
+    
+  }, [id, dispatch, user, success, history]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setUploadImg(img);
-    dispatch(updateUserProfile(id, uploadImg, name, phone));
+    dispatch(updateUserProfile( name, phone));
   };
 
-  const handleImage = (e) => {
-    let file = e.target.files[0];
-    setPreview(window.URL.createObjectURL(file));
-    dispatch(upload(file));
-  };
+ 
 
   return (
     <div>
@@ -79,17 +61,7 @@ const UserUpdateProfilePage = ({ match, history }) => {
                 <div className='form-row mt-4'>
                   <div className='col'>
                     <div className='form-group'>
-                      <label className='btn btn-outline-success btn-block'>
-                        Upload Image
-                        <input
-                          type='file'
-                          name='image'
-                          onChange={handleImage}
-                          accept='image/*'
-                          hidden
-                        />
-                      </label>
-                      {preview !== "" && (
+                     {preview !== "" && (
                         <Badge pill className='pointer' as='img-badge'>
                           <img
                             src={preview}

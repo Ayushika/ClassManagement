@@ -50,10 +50,18 @@ const Header = () => {
                     <Link
                       className='dropdown-item nav-link custom-link'
                       to={`/update-profile/${userInfo._id}`}>
-                      Update Profile
+                      See Profile
                     </Link>
                   </NavDropdown.Item>
-
+                  {userInfo && userInfo.role.includes("Instructor") && (
+                    <NavDropdown.Item>
+                      <Link
+                        className='dropdown-item nav-link custom-link'
+                       to='/instructor/course/create'>
+                        Create Course
+                      </Link>
+                    </NavDropdown.Item>
+                  )}
                   <NavDropdown.Item>
                     <div
                       className='dropdown-item nav-link custom-link pointer'
