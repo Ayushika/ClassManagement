@@ -34,7 +34,7 @@ const ViewCourse = ({ match }) => {
       return;
     }
     dispatch(addLesson(slug, values));
-    toast.error("Lesson Uploaded Successfully");
+    toast.success("Lesson Uploaded Successfully");
   };
   const handleVideoUpload = async (e) => {
     try {
@@ -93,7 +93,7 @@ const ViewCourse = ({ match }) => {
                     Upload Video
                     <input
                       type="file"
-                      name="image"
+                      name="video"
                       onChange={handleVideoUpload}
                       accept="video/*"
                       hidden

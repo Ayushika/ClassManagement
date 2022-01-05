@@ -5,6 +5,7 @@ import {
   COURSE_ADD_LESSON_SUCCESS,
   COURSE_CREATE_FAIL,
   COURSE_CREATE_REQUEST,
+  COURSE_CREATE_RESET,
   COURSE_CREATE_SUCCESS,
   COURSE_GET_FAIL,
   COURSE_GET_REQUEST,
@@ -16,9 +17,11 @@ export const courseCreateReducer = (state = {}, action) => {
     case COURSE_CREATE_REQUEST:
       return { loading: true };
     case COURSE_CREATE_SUCCESS:
-      return { loading: false, course: action.payload };
+      return { loading: false, course: action.payload, success: true };
     case COURSE_CREATE_FAIL:
       return { loading: false, error: action.payload };
+    case COURSE_CREATE_RESET:
+      return {};
     default:
       return state;
   }

@@ -2,32 +2,33 @@
 
 import mongoose from "mongoose";
 
-const LessonSchema = new mongoose.Schema(
+const lessonSchema = mongoose.Schema(
   {
     title: {
       type: String,
-      trim: true,
-    },
-    slug: {
-      type: String,
-      lowercase: true,
+      required: true,
     },
     description: {
       type: String,
+      required: true,
     },
+
     video: {},
   },
-  { timestamps: true },
+  {
+    timestamps: true,
+  }
 );
 
 const AnnouncementSchema = new mongoose.Schema(
   {
     description: {
       type: String,
+      required: true,
     },
     file: {},
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 const CourseSchema = new mongoose.Schema(
@@ -62,10 +63,10 @@ const CourseSchema = new mongoose.Schema(
       ref: "Batch",
       required: true,
     },
-    lessons: [LessonSchema],
-    // anouncements: [AnnouncementSchema],
+    lessons: [lessonSchema],
+    anouncements: [AnnouncementSchema],
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 const Course = mongoose.model("Course", CourseSchema);

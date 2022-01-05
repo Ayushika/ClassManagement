@@ -2,7 +2,6 @@
 
 import express from "express";
 import {
-  registerUser,
   loginUser,
   forgotPassword,
   verifyEmail,
@@ -16,7 +15,6 @@ import { protect } from "../middleware/authMiddleware";
 const router = express.Router();
 
 router.route("/upload-image").post(protect, uploadImage);
-router.route("/register").post(registerUser);
 router.route("/login").post(loginUser);
 router.route("/forgot-password").post(forgotPassword);
 router.route("/verify-email").post(verifyEmail);

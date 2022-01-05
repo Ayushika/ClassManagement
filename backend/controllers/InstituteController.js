@@ -7,7 +7,16 @@ export const createInstitute = async (req, res) => {
   try {
     const { name } = req.body;
     const slug = slugify(name);
-    const institute = await new instituteSchema({ name, slug }).save();
+    const abbreviation = name.split(" ");
+    let ans = "";
+    for (let i = 0; i < abbreviation.length; i++) {
+      ans += abbreviation[i].substring(0, 1);
+    }
+    const institute = await new instituteSchema({
+      name,
+      slug,
+      abbreviation: ans.toUpperCase(),
+    }).save();
     res.json({ success: true });
   } catch (error) {
     console.log(error);

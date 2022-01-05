@@ -18,27 +18,6 @@ const awsConfig = {
 
 const S3 = new AWS.S3(awsConfig);
 
-//@desc   Register User
-//@routes POST /api/user/register
-//@access PRIVATE/ADMIN
-export const registerUser = async (req, res) => {
-  const name = "Ayushika";
-  const email = "raghav0074.cse19@chitkara.edu.in";
-  const phone = 7009904967;
-  const role = "Instructor";
-  const password = "Raghav1@";
-
-  const hashedPassword = await hashPassword(password);
-  const user = await new userSchema({
-    name,
-    email,
-    phone,
-    role,
-    password: hashedPassword,
-  }).save();
-  res.json(user);
-};
-
 //@desc   Login User
 //@routes POST /api/user/login
 //@access PUBLIC
@@ -148,7 +127,7 @@ export const forgotPassword = async (req, res) => {
 
     const updateUser = await userSchema.findOneAndUpdate(
       { email },
-      { password: hashedPassword },
+      { password: hashedPassword }
     );
 
     const params = {
@@ -265,7 +244,7 @@ export const uploadImage = async (req, res) => {
 
     const base64Data = new Buffer.from(
       image.replace(/^data:image\/\w+;base64,/, ""),
-      "base64",
+      "base64"
     );
 
     const type = image.split(";")[0].split("/")[1];

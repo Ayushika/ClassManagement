@@ -14,8 +14,12 @@ const InstituteSchema = new mongoose.Schema(
       lowercase: true,
       index: true,
     },
+    abbreviation: {
+      type: String,
+      required: true,
+    },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 const Institute = mongoose.model("Institute", InstituteSchema);

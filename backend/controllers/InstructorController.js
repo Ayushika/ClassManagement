@@ -72,7 +72,7 @@ export const courseCreate = async (req, res) => {
     const student = await userSchema.findByIdAndUpdate(
       { _id: req.user.id },
       { $push: { courseId: course._id } },
-      { new: true },
+      { new: true }
     );
 
     const id = batch._id;
@@ -83,7 +83,7 @@ export const courseCreate = async (req, res) => {
         { _id: students[i]._id },
 
         { $push: { courseId: course._id } },
-        { new: true },
+        { new: true }
       );
 
       const params = {
@@ -116,9 +116,12 @@ export const courseCreate = async (req, res) => {
       const emailSent = mailTemplate(params);
       emailSent
         .then((data) => {
-          res.json(user);
+          console.log(data);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          console.log(err);
+          res.status(400).send("Error,Please Try Again");
+        });
     }
 
     res.json(course);

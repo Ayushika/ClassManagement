@@ -3,16 +3,21 @@ import { Link } from "react-router-dom";
 import { getCourses } from "../../actions/courseAction";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "react-bootstrap";
+import { COURSE_CREATE_RESET } from "../../constants/courseConstants";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
 
   const { courses } = useSelector((state) => state.courseGet);
+  const { success } = useSelector((state) => state.courseCreate);
 
   const value = "instructor";
   useEffect(() => {
+    if (success) {
+      dispatch({ type: COURSE_CREATE_RESET });
+    }
     dispatch(getCourses(value));
-  }, [dispatch]);
+  }, [dispatch, success]);
 
   return (
     <div>
