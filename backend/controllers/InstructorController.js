@@ -30,71 +30,73 @@ export const currentInstructor = async (req, res) => {
 //@routes POST /api/instructor/course/get
 //@access PRIVATE
 export const courseGet = async (req, res) => {
-  const courses = await courseSchema
-    .find({ instructor: req.user.id })
-    .populate("instructor")
-    .populate("batch");
-  res.json(courses);
+  try {
+    const courses = await courseSchema
+      .find({ instructor: req.user.id })
+      .populate("instructor")
+      .populate("batch");
+    res.json(courses);
+  } catch (error) {
+    console.log(error);
+    res.status(400).send("Error,Please Try Again");
+  }
 };
 
 //@desc   Create Course
 //@routes POST /api/instructor/course/create
 //@access PRIVATE
 export const courseCreate = async (req, res) => {
-  const { title, description, image, institute, branch, section, year } =
-    req.body;
+  try {
+    const { title, description, image, institute, branch, section, year } =
+      req.body;
 
-  const slug = slugify(title);
-  const batch = await batchSchema
-    .findOne({
-      institute: institute,
-      section: section,
-      year: year,
-      branch: branch,
-    })
-    .exec();
+    const slug = slugify(title);
+    const batch = await batchSchema
+      .findOne({
+        institute: institute,
+        section: section,
+        year: year,
+        branch: branch,
+      })
+      .exec();
 
-  const course = await new courseSchema({
-    instructor: req.user.id,
-    batch,
-    title,
-    slug,
-    image,
-    description,
-  }).save();
+    const course = await new courseSchema({
+      instructor: req.user.id,
+      batch,
+      title,
+      slug,
+      image,
+      description,
+    }).save();
 
-  const student = await userSchema.findByIdAndUpdate(
-    { _id: req.user.id },
-    { $push: { courseId: course._id } },
-    { new: true },
-  );
-
-  const id = batch._id;
-  const students = await userSchema.find({ batch: id }).exec();
-
-  for (let i = 0; i < students.length; i++) {
     const student = await userSchema.findByIdAndUpdate(
-      { _id: students[i]._id },
-
+      { _id: req.user.id },
       { $push: { courseId: course._id } },
       { new: true },
-
-      { courseId: course._id },
-      { new: true }
-
     );
 
-    const params = {
-      Source: process.env.EMAIL_FROM,
-      Destination: {
-        ToAddresses: [students[i].email],
-      },
-      ReplyToAddresses: [process.env.EMAIL_FROM],
-      Message: {
-        Body: {
-          Html: {
-            Charset: "UTF-8",
-            Data: `
+    const id = batch._id;
+    const students = await userSchema.find({ batch: id }).exec();
+
+    for (let i = 0; i < students.length; i++) {
+      const student = await userSchema.findByIdAndUpdate(
+        { _id: students[i]._id },
+
+        { $push: { courseId: course._id } },
+        { new: true },
+      );
+
+      const params = {
+        Source: process.env.EMAIL_FROM,
+        Destination: {
+          ToAddresses: [students[i].email],
+        },
+        ReplyToAddresses: [process.env.EMAIL_FROM],
+        Message: {
+          Body: {
+            Html: {
+              Charset: "UTF-8",
+              Data: `
               <html>
               <h2>Hey ${students[i].name}</h2> 
               <p>Hope this email finds you well.</p>
@@ -103,23 +105,27 @@ export const courseCreate = async (req, res) => {
               <i>ClassRoom</i>
               </html>
               `,
+            },
+          },
+          Subject: {
+            Charset: "UTF-8",
+            Data: `Enrolled in Course - ${title}`,
           },
         },
-        Subject: {
-          Charset: "UTF-8",
-          Data: `Enrolled in Course - ${title}`,
-        },
-      },
-    };
-    const emailSent = mailTemplate(params);
-    emailSent
-      .then((data) => {
-        res.json(user);
-      })
-      .catch((err) => console.log(err));
-  }
+      };
+      const emailSent = mailTemplate(params);
+      emailSent
+        .then((data) => {
+          res.json(user);
+        })
+        .catch((err) => console.log(err));
+    }
 
-  res.json(course);
+    res.json(course);
+  } catch (error) {
+    console.log(error);
+    res.status(400).send("Error,Please Try Again");
+  }
 };
 
 //@desc   Upload Video

@@ -14,7 +14,7 @@ const Dashboard = () => {
   const value = "student";
   useEffect(() => {
     dispatch(getCourses(value));
-  }, []);
+  }, [dispatch]);
 
   return (
     <div>

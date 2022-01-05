@@ -204,12 +204,17 @@ export const logoutUser = async (req, res) => {
 //@routes POST /api/user/isvalid
 //@access PUBLIC
 export const currentUser = async (req, res) => {
-  const { id } = req.user;
-  const user = await userSchema.findById(id).exec();
-  if (!user) {
-    return res.status(401).send("UnAuthorized");
+  try {
+    const { id } = req.user;
+    const user = await userSchema.findById(id).exec();
+    if (!user) {
+      return res.status(401).send("UnAuthorized");
+    }
+    res.json({ success: true });
+  } catch (error) {
+    console.log(error);
+    res.status(400).send("Error,Please Try Again");
   }
-  res.json({ success: true });
 };
 
 //@desc   User Details
@@ -228,17 +233,21 @@ export const userDetails = async (req, res) => {
 //@routes POST /api/user/:id
 //@access PRIVATE
 export const userUpdate = async (req, res) => {
-  const { name, phone } = req.body;
-  // console.log("IMAGE : ", img);
-  const { id } = req.user;
-  const user = await userSchema
-    .findByIdAndUpdate(id, { name, phone }, { new: true })
-    .select("-password")
-    .exec();
-  if (!user) {
-    return res.status(401).send("User Not Found");
+  try {
+    const { name, phone } = req.body;
+    const { id } = req.user;
+    const user = await userSchema
+      .findByIdAndUpdate(id, { name, phone }, { new: true })
+      .select("-password")
+      .exec();
+    if (!user) {
+      return res.status(401).send("User Not Found");
+    }
+    res.json(user);
+  } catch (error) {
+    console.log(error);
+    res.status(400).send("Error,Please Try Again");
   }
-  res.json(user);
 };
 
 //@desc   Upload Image

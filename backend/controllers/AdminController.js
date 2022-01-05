@@ -150,11 +150,16 @@ export const registerStudent = async (req, res) => {
 //@routes POST /api/admin/student/display
 //@access PRIVATE
 export const displayStudent = async (req, res) => {
-  const students = await userSchema
-    .find({ role: "Student" })
-    .populate("batch")
-    .exec();
-  res.json(students);
+  try {
+    const students = await userSchema
+      .find({ role: "Student" })
+      .populate("batch")
+      .exec();
+    res.json(students);
+  } catch (error) {
+    console.log(error);
+    res.status(400).send("Error,Please Try Again");
+  }
 };
 
 //@desc   Display Instructor

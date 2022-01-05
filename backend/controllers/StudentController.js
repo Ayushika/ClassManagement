@@ -14,17 +14,22 @@ export const currentStudent = async (req, res) => {
 //@routes POST /api/student/course/get
 //@access PRIVATE
 export const courseGet = async (req, res) => {
-  const id = req.user.id;
-  const students = await userSchema.findOne({ _id: id }).select("-password");
+  try {
+    const id = req.user.id;
+    const students = await userSchema.findOne({ _id: id }).select("-password");
 
-  const courses = [];
-  for (let i = 0; i < students.courseId.length; i++) {
-    const course = await courseSchema
-      .findById(students.courseId[i])
-      .populate("instructor")
-      .exec();
-    courses.push(course);
+    const courses = [];
+    for (let i = 0; i < students.courseId.length; i++) {
+      const course = await courseSchema
+        .findById(students.courseId[i])
+        .populate("instructor")
+        .exec();
+      courses.push(course);
+    }
+
+    res.json(courses);
+  } catch (error) {
+    console.log(error);
+    res.status(400).send("Error,Please Try Again");
   }
-
-  res.json(courses);
 };
