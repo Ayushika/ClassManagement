@@ -1,22 +1,29 @@
 /** @format */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import Meta from "../../components/Meta";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { login } from "../../actions/userAction";
-import { Row, Col, Button, Form, Container } from "react-bootstrap";
+import { Row, Col, Button, Form, Container, InputGroup } from "react-bootstrap";
 
 const LoginPage = ({ history }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [visible, setVisible] = useState(false);
+  const { userInfo } = useSelector((state) => state.userLogin);
   const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     dispatch(login(email, password, history));
   };
+
+  useEffect(() => {
+    if (userInfo && userInfo.role) {
+      history.push(`/${userInfo.role.toLowerCase()}/dashboard`);
+    }
+  }, [history, userInfo]);
 
   return (
     <div>
@@ -35,12 +42,24 @@ const LoginPage = ({ history }) => {
                 ></Form.Control>
               </Form.Group>
               <Form.Group controlId="password" className="mt-4">
-                <Form.Control
-                  type="password"
-                  placeholder="Enter Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                ></Form.Control>
+                <InputGroup className="mb-3">
+                  <Form.Control
+                    type={visible ? "text" : "password"}
+                    placeholder="Enter Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  ></Form.Control>
+                  <InputGroup.Text
+                    onClick={() => setVisible(!visible)}
+                    className="pointer"
+                  >
+                    {visible ? (
+                      <i className="fas fa-eye"></i>
+                    ) : (
+                      <i className="fas fa-eye-slash"></i>
+                    )}
+                  </InputGroup.Text>
+                </InputGroup>
               </Form.Group>
               <Button type="submit" className=" btn btn-success btn-md mt-3">
                 Sign In

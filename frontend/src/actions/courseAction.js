@@ -7,9 +7,12 @@ import {
   COURSE_CREATE_FAIL,
   COURSE_CREATE_REQUEST,
   COURSE_CREATE_SUCCESS,
-  COURSE_GET_FAIL,
-  COURSE_GET_REQUEST,
-  COURSE_GET_SUCCESS,
+  COURSE_GET_ALL_FAIL,
+  COURSE_GET_ALL_REQUEST,
+  COURSE_GET_ALL_SUCCESS,
+  COURSE_GET_DETAILS_FAIL,
+  COURSE_GET_DETAILS_REQUEST,
+  COURSE_GET_DETAILS_SUCCESS,
 } from "../constants/courseConstants";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -47,18 +50,38 @@ export const courseCreate = (values) => async (dispatch) => {
 
 export const getCourses = (value) => async (dispatch) => {
   try {
-    dispatch({ type: COURSE_GET_REQUEST });
+    dispatch({ type: COURSE_GET_ALL_REQUEST });
 
     const { data } = await axios.post(
-      `http://localhost:5000/api/${value}/course/get`,
+      `http://localhost:5000/api/${value}/course/get/all`,
       {},
       config
     );
 
-    dispatch({ type: COURSE_GET_SUCCESS, payload: data });
+    dispatch({ type: COURSE_GET_ALL_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
-      type: COURSE_GET_FAIL,
+      type: COURSE_GET_ALL_FAIL,
+      payload: error.response.data,
+    });
+    toast.error("Error While Getting Courses ,Try Again");
+  }
+};
+
+export const getCourseDetails = (slug, value) => async (dispatch) => {
+  try {
+    dispatch({ type: COURSE_GET_DETAILS_REQUEST });
+
+    const { data } = await axios.post(
+      `http://localhost:5000/api/${value}/course/get`,
+      { slug },
+      config
+    );
+
+    dispatch({ type: COURSE_GET_DETAILS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: COURSE_GET_DETAILS_FAIL,
       payload: error.response.data,
     });
     toast.error("Error While Getting Courses ,Try Again");

@@ -1,15 +1,17 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Row, Col, Button, Form, Modal } from "react-bootstrap";
 import Meta from "../../../components/Meta";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { addLesson } from "../../../actions/courseAction";
+import { addLesson, getCourseDetails } from "../../../actions/courseAction";
+import ReactPlayer from "react-player";
 
-const ViewCourse = ({ match }) => {
+const CourseDetails = ({ match }) => {
   const { slug } = match.params;
   const [showLessonModal, setShowLessonModal] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [success, setSuccess] = useState(false);
   const intialValues = {
     title: "",
     description: "",
@@ -34,6 +36,7 @@ const ViewCourse = ({ match }) => {
       return;
     }
     dispatch(addLesson(slug, values));
+    setSuccess(true);
     toast.success("Lesson Uploaded Successfully");
   };
   const handleVideoUpload = async (e) => {
@@ -59,10 +62,39 @@ const ViewCourse = ({ match }) => {
     }
   };
 
+  const { course } = useSelector((state) => state.courseGetDetails);
+
+  useEffect(() => {
+    if (!course || !course.title || course.slug !== slug)
+      dispatch(getCourseDetails(slug, "instructor"));
+    console.log(course);
+  }, [slug, dispatch, success, course]);
+
   return (
     <>
       <Meta title={`ClassRoom : ${slug}`} />
-      <h3>Course: {slug}</h3>
+      {course ? (
+        <>
+          <h1>{course.title}</h1>
+          {course.lessons &&
+            course.lessons.length > 0 &&
+            course.lessons.map((c) => (
+              <div key={c._id}>
+                <h4>{c.title}</h4>
+                <p>{c.description}</p>
+                <ReactPlayer
+                  url={c.video.Location}
+                  className="react-player-div"
+                  width="100%"
+                  height="100%"
+                  controls
+                />
+              </div>
+            ))}
+        </>
+      ) : (
+        <></>
+      )}
 
       <Button
         type="button"
@@ -150,4 +182,4 @@ const ViewCourse = ({ match }) => {
   );
 };
 
-export default ViewCourse;
+export default CourseDetails;

@@ -10,10 +10,10 @@ export const currentStudent = async (req, res) => {
   res.json({ success: true });
 };
 
-//@desc   Get Course
-//@routes POST /api/student/course/get
+//@desc   Get All Course
+//@routes POST /api/student/course/get/all
 //@access PRIVATE
-export const courseGet = async (req, res) => {
+export const courseGetAll = async (req, res) => {
   try {
     const id = req.user.id;
     const students = await userSchema.findOne({ _id: id }).select("-password");
@@ -28,6 +28,17 @@ export const courseGet = async (req, res) => {
     }
 
     res.json(courses);
+  } catch (error) {
+    console.log(error);
+    res.status(400).send("Error,Please Try Again");
+  }
+};
+
+//@desc   Get Course
+//@routes POST /api/student/course/get
+//@access PRIVATE
+export const courseGetDetails = async (req, res) => {
+  try {
   } catch (error) {
     console.log(error);
     res.status(400).send("Error,Please Try Again");

@@ -1,7 +1,12 @@
 /** @format */
 
 import React, { lazy, Suspense } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import { Container } from "react-bootstrap";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -51,7 +56,9 @@ const InstructorDashboardPage = lazy(() =>
 );
 
 const CourseCreate = lazy(() => import("./pages/instructor/course/Create"));
-const ViewCourse = lazy(() => import("./pages/instructor/course/ViewCourse"));
+const CourseDetails = lazy(() =>
+  import("./pages/instructor/course/CourseDetails")
+);
 
 // user pages
 const UserRoute = lazy(() => import("./components/protectedRoutes/UserRoute"));
@@ -68,7 +75,9 @@ const App = () => {
         <main className="py-3">
           <Container>
             <Switch>
-              <Route exact path="/" component={HomePage} />
+              <Route exact path="/">
+                <Redirect to="/login" />
+              </Route>
               <Route exact path="/login" component={LoginPage} />
               <Route exact path="/" component={HomePage} />
               <Route exact path="/login" component={LoginPage} />
@@ -138,7 +147,7 @@ const App = () => {
               <InstructorRoute
                 exact
                 path="/instructor/course/:slug"
-                component={ViewCourse}
+                component={CourseDetails}
               />
               <Route exact path="/*" component={NotFoundPage} />
             </Switch>

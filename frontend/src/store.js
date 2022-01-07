@@ -34,8 +34,9 @@ import {
 } from "./reducers/adminReducer";
 import {
   courseCreateReducer,
-  courseGetReducer,
+  courseGetAllReducer,
   courseAddLessonReducer,
+  courseGetDetailsReducer,
 } from "./reducers/courseReducer";
 
 const reducer = combineReducers({
@@ -59,8 +60,9 @@ const reducer = combineReducers({
   instructorDisplay: instructorDisplayReducer,
   studentDisplay: studentDisplayReducer,
   courseCreate: courseCreateReducer,
-  courseGet: courseGetReducer,
+  courseGetAll: courseGetAllReducer,
   courseAddLesson: courseAddLessonReducer,
+  courseGetDetails: courseGetDetailsReducer,
 });
 
 const userInfoFromStorage = window.localStorage.getItem("userInfo")

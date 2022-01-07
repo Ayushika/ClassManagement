@@ -26,16 +26,33 @@ export const currentInstructor = async (req, res) => {
   res.json({ success: true });
 };
 
-//@desc   Get Course
-//@routes POST /api/instructor/course/get
+//@desc   Get All Courses
+//@routes POST /api/instructor/course/get/all
 //@access PRIVATE
-export const courseGet = async (req, res) => {
+export const courseGetAll = async (req, res) => {
   try {
     const courses = await courseSchema
       .find({ instructor: req.user.id })
       .populate("instructor")
       .populate("batch");
     res.json(courses);
+  } catch (error) {
+    console.log(error);
+    res.status(400).send("Error,Please Try Again");
+  }
+};
+
+//@desc   Get Course Details
+//@routes POST /api/instructor/course/get
+//@access PRIVATE
+export const courseGetDetails = async (req, res) => {
+  try {
+    const { slug } = req.body;
+    const course = await courseSchema
+      .findOne({ instructor: req.user.id, slug })
+      .populate("instructor")
+      .populate("batch");
+    res.json(course);
   } catch (error) {
     console.log(error);
     res.status(400).send("Error,Please Try Again");
@@ -145,7 +162,7 @@ export const uploadVideo = async (req, res) => {
       Key: `${nanoid()}.${video.type.split("/")[1]}`, //video/mp4
       Body: fs.readFileSync(video.path),
       ACL: "public-read",
-      ContentType: video.type,
+      ContentType: video.type.split("/")[1],
     };
 
     S3.upload(params, (err, data) => {

@@ -8,7 +8,7 @@ import { COURSE_CREATE_RESET } from "../../constants/courseConstants";
 const Dashboard = () => {
   const dispatch = useDispatch();
 
-  const { courses } = useSelector((state) => state.courseGet);
+  const { courses } = useSelector((state) => state.courseGetAll);
   const { success } = useSelector((state) => state.courseCreate);
 
   const value = "instructor";

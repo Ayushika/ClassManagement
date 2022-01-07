@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Meta from "../../components/Meta";
-import { Row, Col, Button, Form, Container } from "react-bootstrap";
+import { Row, Col, Button, Form, Container, InputGroup } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { verifyEmail, forgotPassword } from "../../actions/userAction";
@@ -17,12 +17,13 @@ const ForgotPasswordPage = ({ history }) => {
   const [password, setPassword] = useState("");
   const [otp, setOtp] = useState("");
   const [success, setSuccess] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   const userVerifyEmail = useSelector((state) => state.userVerifyEmail);
   const { otp: code, loading: loadingOtp } = userVerifyEmail;
 
   const userForgotPassword = useSelector((state) => state.userForgotPassword);
-  const { success: successReset, loading: loadingForgot } = userForgotPassword;
+  const { loading: loadingForgot } = userForgotPassword;
 
   const dispatch = useDispatch();
 
@@ -54,47 +55,62 @@ const ForgotPasswordPage = ({ history }) => {
 
   return (
     <div>
-      <Meta title='Forgot Password ?' />
+      <Meta title="Forgot Password ?" />
       {loadingOtp && <Loading />}
       {loadingForgot && <Loading />}
       <Container>
-        <Row className='justify-content-md-center'>
+        <Row className="justify-content-md-center">
           <Col xs={12} md={6}>
-            <h3 className='text-success mt-5'>Forgot Password ?</h3>
+            <h3 className="text-success mt-5">Forgot Password ?</h3>
             <Form onSubmit={success ? handleSubmit : handleOtp}>
-              <Form.Group controlId='email' className='mt-4'>
+              <Form.Group controlId="email" className="mt-4">
                 <Form.Control
-                  type='email'
-                  placeholder='Enter Email Address'
+                  type="email"
+                  placeholder="Enter Email Address"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  disabled={success}></Form.Control>
+                  disabled={success}
+                ></Form.Control>
               </Form.Group>
               {success && (
                 <>
-                  <Form.Group controlId='otp' className='mt-4'>
+                  <Form.Group controlId="otp" className="mt-4">
                     <Form.Control
-                      type='text'
-                      placeholder='Enter Otp'
+                      type="text"
+                      placeholder="Enter Otp"
                       value={otp}
-                      onChange={(e) => setOtp(e.target.value)}></Form.Control>
+                      onChange={(e) => setOtp(e.target.value)}
+                    ></Form.Control>
                   </Form.Group>
-                  <Form.Group controlId='password' className='mt-4'>
-                    <Form.Control
-                      type='password'
-                      placeholder='Enter Password'
-                      value={password}
-                      onChange={(e) =>
-                        setPassword(e.target.value)
-                      }></Form.Control>
+
+                  <Form.Group controlId="password" className="mt-4">
+                    <InputGroup className="mb-3">
+                      <Form.Control
+                        type={visible ? "text" : "password"}
+                        placeholder="Enter Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                      ></Form.Control>
+                      <InputGroup.Text
+                        onClick={() => setVisible(!visible)}
+                        className="pointer"
+                      >
+                        {visible ? (
+                          <i className="fas fa-eye"></i>
+                        ) : (
+                          <i className="fas fa-eye-slash"></i>
+                        )}
+                      </InputGroup.Text>
+                    </InputGroup>
                   </Form.Group>
                 </>
               )}
               <Button
-                type='submit'
-                className='btn btn-success btn-md mt-3'
+                type="submit"
+                className="btn btn-success btn-md mt-3"
                 disabled={!email || loadingOtp || loadingForgot}
-                onClick={success ? handleSubmit : handleOtp}>
+                onClick={success ? handleSubmit : handleOtp}
+              >
                 {success ? "Reset Password" : "Send Otp"}
               </Button>
             </Form>

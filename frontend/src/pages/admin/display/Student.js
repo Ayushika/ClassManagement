@@ -46,7 +46,7 @@ const Student = () => {
             {institutes &&
               institutes.map((i) => (
                 <option key={i._id} value={i._id}>
-                  {i.name}
+                  {i.abbreviation} ({i.name})
                 </option>
               ))}
           </Form.Select>
