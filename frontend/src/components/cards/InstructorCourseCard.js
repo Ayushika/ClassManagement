@@ -1,10 +1,10 @@
 import React from "react";
 import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
-const StudentCourseCard = ({ course }) => {
+const InstructorCourseCard = ({ course }) => {
   return (
     <Card className="my-3 p-2 rounded pointer">
-      <Link to={`/student/course/${course.slug}`}>
+      <Link to={`/instructor/course/${course.slug}`}>
         <Card.Img
           src={course.image.Location}
           variant="top"
@@ -13,7 +13,7 @@ const StudentCourseCard = ({ course }) => {
       </Link>
       <Card.Body>
         <Link
-          to={`/student/course/${course.slug}`}
+          to={`/instructor/course/${course.slug}`}
           style={{ textDecoration: "none" }}
         >
           <Card.Title as="div">
@@ -21,8 +21,8 @@ const StudentCourseCard = ({ course }) => {
           </Card.Title>
         </Link>
         <Card.Text as="p" className="text-muted">
-          <i className="fas fa-chalkboard-teacher p-1"></i> Instructor:{" "}
-          {course.instructor.name.split(" ")[0]}
+          <i className="fas fa-university p-1"></i> Batch: {course.batch.year} -{" "}
+          {course.batch.section}
         </Card.Text>
         <Card.Text as="p" className="text-muted">
           <i className="fas fa-video p-1"></i> Lessons : {course.lessons.length}
@@ -36,4 +36,4 @@ const StudentCourseCard = ({ course }) => {
   );
 };
 
-export default StudentCourseCard;
+export default InstructorCourseCard;
