@@ -1,10 +1,11 @@
 /** @format */
 
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import notAuthorize from "../images/401.svg";
 
 const LoadingToRedirect = () => {
-  const [count, setCount] = useState(5);
+  const [count, setCount] = useState(10);
   const history = useHistory();
 
   useEffect(() => {
@@ -20,7 +21,22 @@ const LoadingToRedirect = () => {
     return () => clearInterval(interval);
   }, [count, history]);
 
-  return <div className='container text-center gap mt-5'>Loading...</div>;
+  return (
+    <div className="container text-center">
+      <img
+        src={notAuthorize}
+        alt="not Authorize"
+        style={{ width: "100%", height: "400px" }}
+      />
+      <h3>Ohh! Not Authorized</h3>
+      <p style={{ color: "hsl(210, 22%, 49%)" }}>
+        Sorry you have no rights to access this page.
+      </p>
+      <Link to="/" style={{ color: "#02b875" }}>
+        Back To Home
+      </Link>
+    </div>
+  );
 };
 
 export default LoadingToRedirect;

@@ -10,7 +10,7 @@ const NotFoundPage = () => {
       <img
         src={notFound}
         alt="notfound"
-        style={{ width: "100%", height: "400px", objectFit: "cover" }}
+        style={{ width: "100%", height: "400px" }}
       />
       <h3 className="mt-2">Ohh! Page Not Found</h3>
       <p style={{ color: "hsl(210, 22%, 49%)" }}>

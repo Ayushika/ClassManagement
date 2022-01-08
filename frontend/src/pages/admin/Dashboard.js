@@ -8,6 +8,7 @@ import register from "../../images/register.svg";
 import create from "../../images/create.svg";
 import users from "../../images/users.svg";
 import Meta from "../../components/Meta";
+import { Card, Col, Row } from "react-bootstrap";
 
 const Dashboard = () => {
   const [showRegisterModal, setShowRegisterModal] = useState(false);
@@ -20,68 +21,80 @@ const Dashboard = () => {
       <h2 className="text-center">Dashboard</h2>
       <div className="underline"></div>
 
-      <div className="row justify-content-evenly mt-4 p-5">
-        <div className="col-md-3">
-          <div
-            className="card border-success mb-3 pointer"
+      <Row className="justify-content-evenly p-5">
+        <Col sm={12} md={6} lg={4} xl={3}>
+          <Card
+            className="border-success mb-3 pointer"
             onClick={() => setShowRegisterModal(true)}
           >
-            <div className="card-header">
-              <img
+            <Card.Header>
+              <Card.Img
                 src={register}
-                alt="Create"
+                variant="top"
                 style={{ width: "100%", height: "200px" }}
               />
-            </div>
-            <div className="card-body">
-              <h4 className="blockquote  text-center">Register</h4>
-              <p className="card-text text-muted text-center">
+            </Card.Header>
+
+            <Card.Body>
+              <Card.Title as="h5" className="text-dark text-center mb-3">
+                Register
+              </Card.Title>
+
+              <Card.Text as="p" className="text-muted text-center">
                 Student | Instructor
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className="col-md-3">
-          <div
-            className="card border-success mb-3 pointer"
+              </Card.Text>
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col sm={12} md={6} lg={4} xl={3}>
+          <Card
+            className="border-success mb-3 pointer"
             onClick={() => setShowCreateModal(true)}
           >
-            <div className="card-header">
-              <img
+            <Card.Header>
+              <Card.Img
                 src={create}
-                alt="Create"
+                variant="top"
                 style={{ width: "100%", height: "200px" }}
               />
-            </div>
-            <div className="card-body">
-              <h4 className="blockquote  text-center">Create</h4>
-              <p className="card-text text-muted text-center">
+            </Card.Header>
+
+            <Card.Body>
+              <Card.Title as="h5" className="text-dark text-center mb-3">
+                Create
+              </Card.Title>
+
+              <Card.Text as="p" className="text-muted text-center">
                 Institute | Batch
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className="col-md-3">
-          <div
-            className="card border-success mb-3 pointer"
+              </Card.Text>
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col sm={12} md={6} lg={4} xl={3}>
+          <Card
+            className="border-success mb-3 pointer"
             onClick={() => setShowDisplayModal(true)}
           >
-            <div className="card-header">
-              <img
+            <Card.Header>
+              <Card.Img
                 src={users}
-                alt="User"
+                variant="top"
                 style={{ width: "100%", height: "200px" }}
               />
-            </div>
-            <div className="card-body">
-              <h4 className="blockquote  text-center">Display</h4>
-              <p className="card-text text-muted text-center">
+            </Card.Header>
+
+            <Card.Body>
+              <Card.Title as="h5" className="text-dark text-center mb-3">
+                Display
+              </Card.Title>
+
+              <Card.Text as="p" className="text-muted text-center">
                 Student | Instructor
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+              </Card.Text>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
       <RegisterModal
         show={showRegisterModal}
         onHide={() => setShowRegisterModal(false)}

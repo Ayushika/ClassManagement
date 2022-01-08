@@ -1,12 +1,21 @@
 import React from "react";
-import { Row, Col, Button, Form, Container, Badge } from "react-bootstrap";
+import {
+  Row,
+  Col,
+  Button,
+  Form,
+  Container,
+  Badge,
+  Spinner,
+} from "react-bootstrap";
 
 const InstructorCreateForm = ({
   handleSubmit,
   handleImage,
   values,
-  setValues,
+  uploadedButtonText,
   handleChange,
+  uploading,
   preview,
 }) => {
   return (
@@ -25,14 +34,27 @@ const InstructorCreateForm = ({
                   <div className="col">
                     <div className="form-group">
                       <label className="btn btn-outline-success btn-block">
-                        Upload Image
+                        {uploading ? (
+                          <>
+                            <Spinner
+                              as="span"
+                              animation="grow"
+                              size="sm"
+                              role="status"
+                              aria-hidden="true"
+                            />
+                            Uploading..
+                          </>
+                        ) : (
+                          uploadedButtonText
+                        )}
                         <input
                           type="file"
                           name="image"
                           onChange={handleImage}
                           accept="image/*"
                           hidden
-                          disabled={preview !== ""}
+                          disabled={uploading}
                         />
                       </label>
                       {preview !== "" && (

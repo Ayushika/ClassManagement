@@ -64,15 +64,6 @@ h2 {
   box-shadow: 0px 0 18px rgba(55, 66, 59, 0.08);
 }
 
-/* @media screen and (max-width: 1000px) {
-  .home-img {
-    display: none;
-  }
-  .home-desc {
-    padding: 90px;
-  }
-} */
-
 .page {
   display: grid;
   align-items: center;
