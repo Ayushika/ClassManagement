@@ -10,6 +10,8 @@ import {
   addLesson,
   uploadVideo,
   courseGetDetails,
+  uploadAnnouncement,
+  addAnnouncement,
 } from "../controllers/InstructorController";
 const router = express.Router();
 
@@ -21,9 +23,15 @@ router
     formidable({ maxFileSize: 700 * 1024 * 1024 }),
     protect,
     isInstructor,
-    uploadVideo
+    uploadVideo,
   );
+router
+  .route("/course/upload-announcement")
+  .post(protect, isInstructor, uploadAnnouncement);
 router.route("/course/add-lesson").post(protect, isInstructor, addLesson);
+router
+  .route("/course/add-announcement")
+  .post(protect, isInstructor, addAnnouncement);
 router.route("/course/get").post(protect, isInstructor, courseGetDetails);
 router.route("/course/get/all").post(protect, isInstructor, courseGetAll);
 

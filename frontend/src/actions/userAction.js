@@ -158,6 +158,7 @@ export const updateUserProfile =
   };
 
 export const upload = (file) => async (dispatch) => {
+  console.log("Image  : ", file);
   if (file) {
     Resizer.imageFileResizer(
       file,

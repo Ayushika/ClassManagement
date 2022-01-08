@@ -1,20 +1,2 @@
 @todo: 
-2. show courses in the student dashboard  
-
-On Admin Dashboard we have two options to register student and register Professor
-
---> Redesign the batch component
-
---> on clicking on list of users modal with user info will open 
-
---> on landing on the instructor dashboard , display all the courses created by him/her with a option to edit them
-
---> we have two features on instructor dashboard (in dropdown)
-   a.  create a course (1)
-   b.  see and update a profile
-
---> on landing on student dashboard all the courses which he/she is enrolled will display
-    iski click pe kuch open hoga 
-
--->  we have one features on student dashboard (in dropdown)
-    a.  see and update a profile (image left)   
+ 

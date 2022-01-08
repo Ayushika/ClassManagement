@@ -39,6 +39,12 @@ export const courseGetAll = async (req, res) => {
 //@access PRIVATE
 export const courseGetDetails = async (req, res) => {
   try {
+    const { slug } = req.body;
+    const course = await courseSchema
+      .findOne({ slug })
+      .populate("instructor")
+      .populate("batch");
+    res.json(course);
   } catch (error) {
     console.log(error);
     res.status(400).send("Error,Please Try Again");

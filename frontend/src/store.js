@@ -37,6 +37,7 @@ import {
   courseGetAllReducer,
   courseAddLessonReducer,
   courseGetDetailsReducer,
+  courseAddAnnouncementReducer,
 } from "./reducers/courseReducer";
 
 const reducer = combineReducers({
@@ -62,6 +63,7 @@ const reducer = combineReducers({
   courseCreate: courseCreateReducer,
   courseGetAll: courseGetAllReducer,
   courseAddLesson: courseAddLessonReducer,
+  courseAddAnnouncement: courseAddAnnouncementReducer,
   courseGetDetails: courseGetDetailsReducer,
 });
 
@@ -78,7 +80,7 @@ const middleware = [thunk];
 const store = createStore(
   reducer,
   initialState,
-  composeWithDevTools(applyMiddleware(...middleware))
+  composeWithDevTools(applyMiddleware(...middleware)),
 );
 
 export default store;
