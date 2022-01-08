@@ -2,13 +2,21 @@
 
 import React from "react";
 import { Link } from "react-router-dom";
+import notFound from "../images/404.svg";
 
 const NotFoundPage = () => {
   return (
-    <div className='container text-center'>
-      <h2 className='mt-4'>Oops!</h2>
-      <p className='mt-3'>404 | Page Not Found 😥</p>
-      <Link to='/' className='btn btn-success btn-md'>
+    <div className="container text-center">
+      <img
+        src={notFound}
+        alt="notfound"
+        style={{ width: "100%", height: "400px", objectFit: "cover" }}
+      />
+      <h3 className="mt-2">Ohh! Page Not Found</h3>
+      <p style={{ color: "hsl(210, 22%, 49%)" }}>
+        We can't seem to find the page you're looking for
+      </p>
+      <Link to="/" style={{ color: "#02b875" }}>
         Back To Home
       </Link>
     </div>

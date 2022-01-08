@@ -2,6 +2,7 @@
 import { mailTemplate } from "../utils/awsServices";
 import userSchema from "../models/UserModel";
 import batchSchema from "../models/BatchModel";
+import courseSchema from "../models/CourseModel";
 const generator = require("generate-password");
 import { hashPassword } from "../utils/bcrypt";
 
@@ -89,6 +90,12 @@ export const registerStudent = async (req, res) => {
         branch: branch,
       })
       .exec();
+    const courses = await courseSchema.find({ batch: batch._id }).exec();
+
+    let courseId = [];
+    for (let i = 0; i < courses.length; i++) {
+      courseId.push(courses[i]._id);
+    }
 
     const password = generator.generate({
       length: 8,
@@ -104,6 +111,7 @@ export const registerStudent = async (req, res) => {
       image,
       batch: batch._id,
       password: hashedPassword,
+      courseId,
     }).save();
 
     const params = {

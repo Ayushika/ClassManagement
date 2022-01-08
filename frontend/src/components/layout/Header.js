@@ -22,14 +22,7 @@ const Header = () => {
     <header>
       <Navbar bg="light" expand="lg" id="header">
         <Container>
-          <Link
-            to={
-              userInfo && userInfo.role
-                ? `/${userInfo.role.toLowerCase()}/dashboard`
-                : "/login"
-            }
-            className="custom-link"
-          >
+          <Link to="/" className="custom-link">
             <Navbar.Brand className="font-bold text-success h1">
               <img
                 src={pustak}

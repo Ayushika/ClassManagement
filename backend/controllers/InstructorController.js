@@ -86,7 +86,7 @@ export const courseCreate = async (req, res) => {
       description,
     }).save();
 
-    const student = await userSchema.findByIdAndUpdate(
+    const instructor = await userSchema.findByIdAndUpdate(
       { _id: req.user.id },
       { $push: { courseId: course._id } },
       { new: true }
