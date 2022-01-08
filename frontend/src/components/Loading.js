@@ -2,7 +2,7 @@ import React from "react";
 import { Spinner } from "react-bootstrap";
 const Loading = () => {
   return (
-    <div className="col text-center p-5 ">
+    <div className="col text-center mt-5 p-5">
       <Spinner
         animation="border"
         role="status"
@@ -12,9 +12,8 @@ const Loading = () => {
           margin: "auto",
           display: "block",
         }}
-      >
-        <span className="sr-only">Loading...</span>
-      </Spinner>
+        variant="success"
+      ></Spinner>
     </div>
   );
 };
