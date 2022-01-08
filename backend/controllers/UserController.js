@@ -127,7 +127,7 @@ export const forgotPassword = async (req, res) => {
 
     const updateUser = await userSchema.findOneAndUpdate(
       { email },
-      { password: hashedPassword }
+      { password: hashedPassword },
     );
 
     const params = {
@@ -235,7 +235,6 @@ export const userUpdate = async (req, res) => {
 export const uploadImage = async (req, res) => {
   try {
     const { image } = req.body;
-
     if (!image) {
       return res.status(400).send("No Image");
     }
@@ -244,7 +243,7 @@ export const uploadImage = async (req, res) => {
 
     const base64Data = new Buffer.from(
       image.replace(/^data:image\/\w+;base64,/, ""),
-      "base64"
+      "base64",
     );
 
     const type = image.split(";")[0].split("/")[1];

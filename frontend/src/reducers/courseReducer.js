@@ -1,5 +1,8 @@
 /** @format */
 import {
+  COURSE_ADD_ANNOUNCEMENT_FAIL,
+  COURSE_ADD_ANNOUNCEMENT_REQUEST,
+  COURSE_ADD_ANNOUNCEMENT_SUCCESS,
   COURSE_ADD_LESSON_FAIL,
   COURSE_ADD_LESSON_REQUEST,
   COURSE_ADD_LESSON_SUCCESS,
@@ -61,8 +64,24 @@ export const courseAddLessonReducer = (state = { lesson: {} }, action) => {
     case COURSE_ADD_LESSON_REQUEST:
       return { loading: true };
     case COURSE_ADD_LESSON_SUCCESS:
-      return { loading: false, lesson: action.payload };
+      return { loading: false, lesson: action.payload, success: true };
     case COURSE_ADD_LESSON_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const courseAddAnnouncementReducer = (
+  state = { announcement: {} },
+  action,
+) => {
+  switch (action.type) {
+    case COURSE_ADD_ANNOUNCEMENT_REQUEST:
+      return { loading: true };
+    case COURSE_ADD_ANNOUNCEMENT_SUCCESS:
+      return { loading: false, announcement: action.payload, success: true };
+    case COURSE_ADD_ANNOUNCEMENT_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

@@ -1,3 +1,5 @@
+/** @format */
+
 import React from "react";
 import ReactPlayer from "react-player";
 import {
@@ -11,6 +13,7 @@ import {
 } from "react-bootstrap";
 
 const Lesson = ({
+  role,
   course,
   setShowLessonModal,
   handleVideoUpload,
@@ -28,111 +31,114 @@ const Lesson = ({
           <div key={c._id}>
             <Accordion>
               <Accordion.Item eventKey={i}>
-                <Accordion.Header>{c.title}</Accordion.Header>
+                <Accordion.Header>
+                  {c.title} -
+                  <span className='text-muted'> &nbsp;{c.description}</span>
+                </Accordion.Header>
                 <Accordion.Body>
                   <ReactPlayer
                     url={c.video.Location}
-                    className="react-player-div"
-                    width="100%"
-                    height="100%"
+                    className='react-player-div'
+                    width='100%'
+                    height='10%'
                     controls
                   />
-                  <p>{c.description}</p>
                 </Accordion.Body>
               </Accordion.Item>
             </Accordion>
           </div>
         ))}
-      <Button
-        type="button"
-        className="btn btn-success mt-4"
-        onClick={() => setShowLessonModal(true)}
-      >
-        Add Lesson +
-      </Button>
+      {role !== "student" && (
+        <>
+          <Button
+            type='button'
+            className='btn btn-success mt-4'
+            onClick={() => setShowLessonModal(true)}>
+            Add Lesson +
+          </Button>
 
-      <Modal
-        show={showLessonModal}
-        onHide={() => setShowLessonModal(false)}
-        size="md"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
-        <Form onSubmit={handleSubmit}>
-          <Modal.Header closeButton>
-            <Modal.Title id="contained-modal-title-vcenter">
-              <i className="fas fa-photo-video"></i>
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <div className="form-row mt-3">
-              <div className="col">
-                <div className="form-group">
-                  <label className="btn btn-outline-success btn-block">
-                    Upload Video
-                    <input
-                      type="file"
-                      name="video"
-                      onChange={handleVideoUpload}
-                      accept="video/*"
-                      hidden
-                      required
-                    />
-                  </label>
-                  {progress > 0 && (
-                    <ProgressBar
-                      striped
-                      variant="success"
-                      now={progress}
-                      label={`${progress}%`}
-                    />
-                  )}
+          <Modal
+            show={showLessonModal}
+            onHide={() => setShowLessonModal(false)}
+            size='md'
+            aria-labelledby='contained-modal-title-vcenter'
+            centered>
+            <Form onSubmit={handleSubmit}>
+              <Modal.Header closeButton>
+                <Modal.Title id='contained-modal-title-vcenter'>
+                  <i className='fas fa-photo-video'></i>
+                </Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <div className='form-row mt-3'>
+                  <div className='col'>
+                    <div className='form-group'>
+                      <label className='btn btn-outline-success btn-block'>
+                        Upload Video
+                        <input
+                          type='file'
+                          name='video'
+                          onChange={handleVideoUpload}
+                          accept='video/*'
+                          hidden
+                          required
+                        />
+                      </label>
+                      {progress > 0 && (
+                        <ProgressBar
+                          striped
+                          variant='success'
+                          now={progress}
+                          label={`${progress}%`}
+                        />
+                      )}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <Row>
-              <Col xs={12} md={12}>
-                <Form.Group controlId="title" className="mt-3">
-                  <Form.Control
-                    type="text"
-                    name="title"
-                    placeholder="Title"
-                    value={values.title}
-                    onChange={handleChange}
-                    required
-                  ></Form.Control>
-                </Form.Group>
-                <Form.Group as={Col} controlId="formGridEmail" className="mt-3">
-                  <textarea
-                    className="form-control"
-                    value={values.description}
-                    name="description"
-                    placeholder="Add Description"
-                    onChange={handleChange}
-                    required
-                  ></textarea>
-                </Form.Group>
-              </Col>
-            </Row>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button
-              onClick={() => setShowLessonModal(false)}
-              className="btn btn-success"
-              type="submit"
-              disabled={!values.video}
-            >
-              Upload
-            </Button>
-            <Button
-              onClick={() => setShowLessonModal(false)}
-              className="btn btn-success"
-            >
-              Close
-            </Button>
-          </Modal.Footer>
-        </Form>
-      </Modal>
+                <Row>
+                  <Col xs={12} md={12}>
+                    <Form.Group controlId='title' className='mt-3'>
+                      <Form.Control
+                        type='text'
+                        name='title'
+                        placeholder='Title'
+                        value={values.title}
+                        onChange={handleChange}
+                        required></Form.Control>
+                    </Form.Group>
+                    <Form.Group
+                      as={Col}
+                      controlId='formGridEmail'
+                      className='mt-3'>
+                      <textarea
+                        className='form-control'
+                        value={values.description}
+                        name='description'
+                        placeholder='Add Description'
+                        onChange={handleChange}
+                        required></textarea>
+                    </Form.Group>
+                  </Col>
+                </Row>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button
+                  onClick={() => setShowLessonModal(false)}
+                  className='btn btn-success'
+                  type='submit'
+                  disabled={!values.video}>
+                  Upload
+                </Button>
+                <Button
+                  onClick={() => setShowLessonModal(false)}
+                  className='btn btn-success'>
+                  Close
+                </Button>
+              </Modal.Footer>
+            </Form>
+          </Modal>
+        </>
+      )}
     </div>
   );
 };

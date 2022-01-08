@@ -89,7 +89,7 @@ export const courseCreate = async (req, res) => {
     const instructor = await userSchema.findByIdAndUpdate(
       { _id: req.user.id },
       { $push: { courseId: course._id } },
-      { new: true }
+      { new: true },
     );
 
     const id = batch._id;
@@ -100,7 +100,7 @@ export const courseCreate = async (req, res) => {
         { _id: students[i]._id },
 
         { $push: { courseId: course._id } },
-        { new: true }
+        { new: true },
       );
 
       const params = {
@@ -178,6 +178,44 @@ export const uploadVideo = async (req, res) => {
   }
 };
 
+//@desc   Upload Announcement
+//@routes POST /api/course/upload-announcement
+//@access PRIVATE
+export const uploadAnnouncement = async (req, res) => {
+  try {
+    const { file } = req.body;
+
+    if (!file) {
+      return res.status(400).send("No file");
+    }
+    const base64Data = new Buffer.from(
+      file.replace(/^data:application\/\w+;base64,/, ""),
+      "base64",
+    );
+
+    const type = file.split(";")[0].split("/")[1];
+    const params = {
+      Bucket: "class-room",
+      Key: `${nanoid()}.${type}`,
+      Body: base64Data,
+      ACL: "public-read",
+      ContentEncoding: "base64",
+      ContentType: `application/${type}`,
+    };
+
+    S3.upload(params, (err, data) => {
+      if (err) {
+        console.log(err);
+        return res.status(400).send("Error,Please Try Again");
+      }
+      res.json(data);
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).send("Error,Please Try Again");
+  }
+};
+
 //@desc   Add Lesson
 //@routes POST /api/course/add-lesson
 //@access PRIVATE
@@ -196,6 +234,32 @@ export const addLesson = async (req, res) => {
     };
 
     course.lessons.push(lesson);
+    await course.save();
+
+    res.json(course);
+  } catch (error) {
+    console.log(error);
+    res.status(400).send("Error,Please Try Again");
+  }
+};
+
+//@desc   Add Announcement
+//@routes POST /api/course/add-announcement
+//@access PRIVATE
+export const addAnnouncement = async (req, res) => {
+  try {
+    const { description, slug, file } = req.body;
+    const course = await courseSchema.findOne({ slug });
+    if (!course) {
+      res.status(400).send("No Course Found");
+    }
+
+    const announcement = {
+      description: description,
+      file: file,
+    };
+
+    course.anouncements.push(announcement);
     await course.save();
 
     res.json(course);

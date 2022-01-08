@@ -12,6 +12,9 @@ import {
   COURSE_GET_ALL_SUCCESS,
   COURSE_GET_DETAILS_FAIL,
   COURSE_GET_DETAILS_REQUEST,
+  COURSE_ADD_ANNOUNCEMENT_REQUEST,
+  COURSE_ADD_ANNOUNCEMENT_FAIL,
+  COURSE_ADD_ANNOUNCEMENT_SUCCESS,
   COURSE_GET_DETAILS_SUCCESS,
 } from "../constants/courseConstants";
 import { toast } from "react-toastify";
@@ -34,7 +37,7 @@ export const courseCreate = (values) => async (dispatch) => {
     const { data } = await axios.post(
       "http://localhost:5000/api/instructor/course/create",
       { title, description, image, institute, branch, section, year },
-      config
+      config,
     );
 
     dispatch({ type: COURSE_CREATE_SUCCESS, payload: data });
@@ -55,7 +58,7 @@ export const getCourses = (value) => async (dispatch) => {
     const { data } = await axios.post(
       `http://localhost:5000/api/${value}/course/get/all`,
       {},
-      config
+      config,
     );
 
     dispatch({ type: COURSE_GET_ALL_SUCCESS, payload: data });
@@ -75,7 +78,7 @@ export const getCourseDetails = (slug, value) => async (dispatch) => {
     const { data } = await axios.post(
       `http://localhost:5000/api/${value}/course/get`,
       { slug },
-      config
+      config,
     );
 
     dispatch({ type: COURSE_GET_DETAILS_SUCCESS, payload: data });
@@ -97,7 +100,7 @@ export const addLesson = (slug, values) => async (dispatch) => {
     const { data } = await axios.post(
       `http://localhost:5000/api/instructor/course/add-lesson`,
       { title, description, video, slug },
-      config
+      config,
     );
     console.log(data);
     dispatch({ type: COURSE_ADD_LESSON_SUCCESS, payload: data });
@@ -109,3 +112,26 @@ export const addLesson = (slug, values) => async (dispatch) => {
     toast.error("Error While Adding Lesson ,Try Again");
   }
 };
+
+export const addAnnouncement =
+  (slug, announcementValues) => async (dispatch) => {
+    try {
+      const { description, file } = announcementValues;
+      console.log("Desc", description);
+      dispatch({ type: COURSE_ADD_ANNOUNCEMENT_REQUEST });
+
+      const { data } = await axios.post(
+        `http://localhost:5000/api/instructor/course/add-announcement`,
+        { description, file, slug },
+        config,
+      );
+      console.log(data);
+      dispatch({ type: COURSE_ADD_ANNOUNCEMENT_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({
+        type: COURSE_ADD_ANNOUNCEMENT_FAIL,
+        payload: error.response.data,
+      });
+      toast.error("Error While Adding Announcement ,Try Again");
+    }
+  };
