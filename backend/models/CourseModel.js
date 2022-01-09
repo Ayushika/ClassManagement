@@ -12,12 +12,15 @@ const lessonSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-
+    uploadedAt: {
+      type: Date,
+      default: Date.now(),
+    },
     video: {},
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 const AnnouncementSchema = new mongoose.Schema(
@@ -26,9 +29,13 @@ const AnnouncementSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    uploadedAt: {
+      type: Date,
+      default: Date.now(),
+    },
     file: {},
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const CourseSchema = new mongoose.Schema(
@@ -64,9 +71,9 @@ const CourseSchema = new mongoose.Schema(
       required: true,
     },
     lessons: [lessonSchema],
-    anouncements: [AnnouncementSchema],
+    announcements: [AnnouncementSchema],
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const Course = mongoose.model("Course", CourseSchema);

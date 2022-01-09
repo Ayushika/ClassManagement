@@ -16,14 +16,14 @@ const Announcement = ({
 }) => {
   return (
     <div>
-      {course && course.anouncements && course.anouncements.length <= 0 && (
+      {course && course.announcements && course.announcements.length <= 0 && (
         <p className='text-muted' style={{ letterSpacing: ".75px" }}>
           No Announcements yet
         </p>
       )}
-      {course.anouncements &&
-        course.anouncements.length > 0 &&
-        course.anouncements.map((c, i) => (
+      {course.announcements &&
+        course.announcements.length > 0 &&
+        course.announcements.map((c, i) => (
           <div key={c._id} className='mt-2'>
             <Card>
               <Card.Body>{c.description}</Card.Body>
