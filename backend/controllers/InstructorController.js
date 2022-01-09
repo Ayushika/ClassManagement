@@ -89,7 +89,7 @@ export const courseCreate = async (req, res) => {
     const instructor = await userSchema.findByIdAndUpdate(
       { _id: req.user.id },
       { $push: { courseId: course._id } },
-      { new: true }
+      { new: true },
     );
 
     const id = batch._id;
@@ -100,7 +100,7 @@ export const courseCreate = async (req, res) => {
         { _id: students[i]._id },
 
         { $push: { courseId: course._id } },
-        { new: true }
+        { new: true },
       );
 
       const params = {
@@ -190,7 +190,7 @@ export const uploadAnnouncement = async (req, res) => {
     }
     const base64Data = new Buffer.from(
       file.replace(/^data:application\/\w+;base64,/, ""),
-      "base64"
+      "base64",
     );
 
     const type = file.split(";")[0].split("/")[1];
@@ -226,7 +226,7 @@ export const addLesson = async (req, res) => {
     if (!course) {
       res.status(400).send("No Course Found");
     }
-    console.log(video);
+
     const lesson = {
       title: title,
       description: description,
@@ -235,6 +235,49 @@ export const addLesson = async (req, res) => {
 
     course.lessons.push(lesson);
     await course.save();
+
+    const batch = course.batch._id;
+
+    const students = await userSchema.find({ batch: batch });
+
+    for (let i = 0; i < students.length; i++) {
+      const params = {
+        Source: process.env.EMAIL_FROM,
+        Destination: {
+          ToAddresses: [students[i].email],
+        },
+        ReplyToAddresses: [process.env.EMAIL_FROM],
+        Message: {
+          Body: {
+            Html: {
+              Charset: "UTF-8",
+              Data: `
+              <html>
+              <h2>Hey ${students[i].name}</h2> 
+              <p>Hope this email finds you well.</p>
+              <p>Your course - ${course.title} has a new Lesson - ${title}</p>
+              <p>Login to see the activity</p>
+              <i>ClassRoom</i>
+              </html>
+              `,
+            },
+          },
+          Subject: {
+            Charset: "UTF-8",
+            Data: `New Lesson Added - ${course.title}`,
+          },
+        },
+      };
+      const emailSent = mailTemplate(params);
+      emailSent
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((err) => {
+          console.log(err);
+          res.status(400).send("Error,Please Try Again");
+        });
+    }
 
     res.json(course);
   } catch (error) {
@@ -261,6 +304,49 @@ export const addAnnouncement = async (req, res) => {
 
     course.announcements.push(announcement);
     await course.save();
+
+    const batch = course.batch._id;
+
+    const students = await userSchema.find({ batch: batch });
+
+    for (let i = 0; i < students.length; i++) {
+      const params = {
+        Source: process.env.EMAIL_FROM,
+        Destination: {
+          ToAddresses: [students[i].email],
+        },
+        ReplyToAddresses: [process.env.EMAIL_FROM],
+        Message: {
+          Body: {
+            Html: {
+              Charset: "UTF-8",
+              Data: `
+              <html>
+              <h2>Hey ${students[i].name}</h2> 
+              <p>Hope this email finds you well.</p>
+              <p>Your course - ${course.title} has a new announcement</p>
+              <p>Login to see the activity</p>
+              <i>ClassRoom</i>
+              </html>
+              `,
+            },
+          },
+          Subject: {
+            Charset: "UTF-8",
+            Data: `New Announcement - ${course.title}`,
+          },
+        },
+      };
+      const emailSent = mailTemplate(params);
+      emailSent
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((err) => {
+          console.log(err);
+          res.status(400).send("Error,Please Try Again");
+        });
+    }
 
     res.json(course);
   } catch (error) {

@@ -37,7 +37,10 @@ const CourseDetails = ({ match }) => {
             <Tab eventKey='lesson' title='Lesson'>
               <Lesson course={course} role={role} />
             </Tab>
-            <Tab eventKey='announcement' title='Announcement'>
+            <Tab
+              eventKey='announcement'
+              title='Announcement'
+             >
               <Announcement course={course} role={role} />
             </Tab>
           </Tabs>

@@ -17,7 +17,6 @@ export const courseGetAll = async (req, res) => {
   try {
     const id = req.user.id;
     const students = await userSchema.findOne({ _id: id }).select("-password");
-
     const courses = [];
     for (let i = 0; i < students.courseId.length; i++) {
       const course = await courseSchema

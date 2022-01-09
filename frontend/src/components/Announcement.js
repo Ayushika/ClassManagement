@@ -26,9 +26,16 @@ const Announcement = ({
         course.announcements.map((c, i) => (
           <div key={c._id} className='mt-2'>
             <Card>
-              <Card.Body>{c.description}</Card.Body>
+              <Card.Body>
+                {c.description}
+                <span className='text-muted text-end'>
+                  &nbsp;({c.uploadedAt.substring(0, 10)})
+                </span>
+              </Card.Body>
               {c.file && (
-                <iframe src={c.file.Location} style={{ height: "50%" }} />
+                <a href={c.file.Location} target='_blank'>
+                  <Button variant='outline-success' className="mx-3 mb-3">See Document</Button>
+                </a>
               )}
             </Card>
           </div>

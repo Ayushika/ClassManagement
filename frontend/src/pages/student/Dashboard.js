@@ -18,7 +18,7 @@ const Dashboard = () => {
 
   return (
     <div>
-      <h3 className="text-center text-success">Courses</h3>
+      <h3 className='text-center text-success'>Courses</h3>
 
       <Row>
         {courses &&
