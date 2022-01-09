@@ -29,7 +29,7 @@ const InstructorCourseCard = ({ course }) => {
           </Card.Text>
           <Card.Text as="p" className="text-muted">
             <i className="fas fa-file-pdf p-1"></i> Announcements:{" "}
-            {course.anouncements.length}
+            {course.announcements.length}
           </Card.Text>
         </Card.Body>
       </Card>

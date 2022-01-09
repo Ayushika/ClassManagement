@@ -89,7 +89,7 @@ export const courseCreate = async (req, res) => {
     const instructor = await userSchema.findByIdAndUpdate(
       { _id: req.user.id },
       { $push: { courseId: course._id } },
-      { new: true },
+      { new: true }
     );
 
     const id = batch._id;
@@ -100,7 +100,7 @@ export const courseCreate = async (req, res) => {
         { _id: students[i]._id },
 
         { $push: { courseId: course._id } },
-        { new: true },
+        { new: true }
       );
 
       const params = {
@@ -190,7 +190,7 @@ export const uploadAnnouncement = async (req, res) => {
     }
     const base64Data = new Buffer.from(
       file.replace(/^data:application\/\w+;base64,/, ""),
-      "base64",
+      "base64"
     );
 
     const type = file.split(";")[0].split("/")[1];
@@ -259,7 +259,7 @@ export const addAnnouncement = async (req, res) => {
       file: file,
     };
 
-    course.anouncements.push(announcement);
+    course.announcements.push(announcement);
     await course.save();
 
     res.json(course);
