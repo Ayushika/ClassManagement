@@ -90,7 +90,7 @@ export const courseCreate = async (req, res) => {
     const instructor = await userSchema.findByIdAndUpdate(
       { _id: req.user.id },
       { $push: { courseId: course._id } },
-      { new: true },
+      { new: true }
     );
 
     const id = batch._id;
@@ -101,7 +101,7 @@ export const courseCreate = async (req, res) => {
         { _id: students[i]._id },
 
         { $push: { courseId: course._id } },
-        { new: true },
+        { new: true }
       );
 
       const params = {
@@ -191,7 +191,7 @@ export const uploadAnnouncement = async (req, res) => {
     }
     const base64Data = new Buffer.from(
       file.replace(/^data:application\/\w+;base64,/, ""),
-      "base64",
+      "base64"
     );
 
     const type = file.split(";")[0].split("/")[1];
@@ -287,6 +287,44 @@ export const addLesson = async (req, res) => {
   }
 };
 
+//@desc   Delete Lesson
+//@routes POST /api/instructor/course/delete-lesson
+//@access PRIVATE
+export const deleteLesson = async (req, res) => {
+  try {
+    const { courseId, id } = req.body;
+
+    const course = await courseSchema.findOne({ _id: courseId }).exec();
+
+    if (!course) {
+      return res.status(400).send("No course Found");
+    }
+
+    const lId = new mongoose.Types.ObjectId(id);
+
+    await course.lessons.pull(lId);
+    await course.save();
+
+    // const params = {
+    //   Bucket: image.Bucket,
+    //   Key: image.Key,
+    // };
+
+    // S3.deleteObject(params, (err, data) => {
+    //   if (err) {
+    //     console.log(err);
+    //     return res.status(400).send("Error,Please Try Again");
+    //   }
+    //   res.send({ success: true });
+    // });
+
+    res.json({ course });
+  } catch (error) {
+    console.log(error);
+    res.status(400).send("Error,Please Try Again");
+  }
+};
+
 //@desc   Add Announcement
 //@routes POST /api/course/add-announcement
 //@access PRIVATE
@@ -356,6 +394,9 @@ export const addAnnouncement = async (req, res) => {
   }
 };
 
+//@desc   Delete Announcement
+//@routes POST /api/instructor/course/delete-announcement
+//@access PRIVATE
 export const deleteAnnouncement = async (req, res) => {
   try {
     const { courseId, id } = req.body;

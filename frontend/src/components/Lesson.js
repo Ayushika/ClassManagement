@@ -2,6 +2,8 @@
 
 import React from "react";
 import ReactPlayer from "react-player";
+import { deleteLesson } from "../actions/courseAction";
+import { useDispatch } from "react-redux";
 import {
   Accordion,
   Button,
@@ -11,6 +13,7 @@ import {
   Row,
   ProgressBar,
 } from "react-bootstrap";
+import { COURSE_DELETE_LESSON_RESET } from "../constants/courseConstants";
 
 const Lesson = ({
   role,
@@ -23,14 +26,18 @@ const Lesson = ({
   values,
   handleChange,
 }) => {
-  const handleDelete = () => {
+  const dispatch = useDispatch();
+  const handleDelete = (courseId, lessonId) => {
     if (window.confirm("Are you sure you want to delete ?")) {
+      dispatch(deleteLesson(courseId, lessonId));
+      dispatch({ type: COURSE_DELETE_LESSON_RESET });
     }
   };
+
   return (
     <div>
       {course && course.lessons && course.lessons.length <= 0 && (
-        <p className='text-muted' style={{ letterSpacing: ".75px" }}>
+        <p className="text-muted" style={{ letterSpacing: ".75px" }}>
           No Lessons yet
         </p>
       )}
@@ -43,25 +50,27 @@ const Lesson = ({
                 <Accordion.Header>
                   {role !== "student" && (
                     <span
-                      className='btn btn-sm m-1'
-                      onClick={() => handleDelete()}>
+                      className="btn btn-sm m-1"
+                      onClick={() => handleDelete(course._id, c._id)}
+                    >
                       <i
-                        className='fas fa-trash text-danger'
-                        style={{ fontSize: "16px" }}></i>
+                        className="fas fa-trash text-danger"
+                        style={{ fontSize: "16px" }}
+                      ></i>
                     </span>
                   )}
                   {c.title} -
-                  <span className='text-muted'> &nbsp;{c.description} - </span>
-                  <span className='text-muted'>
+                  <span className="text-muted"> &nbsp;{c.description} - </span>
+                  <span className="text-muted">
                     &nbsp;({c.uploadedAt.substring(0, 10)})
                   </span>
                 </Accordion.Header>
                 <Accordion.Body>
                   <ReactPlayer
                     url={c.video.Location}
-                    className='react-player-div'
-                    width='100%'
-                    height='10%'
+                    className="react-player-div"
+                    width="100%"
+                    height="10%"
                     controls
                   />
                 </Accordion.Body>
@@ -72,35 +81,37 @@ const Lesson = ({
       {role !== "student" && (
         <>
           <Button
-            type='button'
-            className='btn btn-success mt-4'
-            onClick={() => setShowLessonModal(true)}>
+            type="button"
+            className="btn btn-success mt-4"
+            onClick={() => setShowLessonModal(true)}
+          >
             Add Lesson +
           </Button>
 
           <Modal
             show={showLessonModal}
             onHide={() => setShowLessonModal(false)}
-            size='md'
-            aria-labelledby='contained-modal-title-vcenter'
-            centered>
+            size="md"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+          >
             <Form onSubmit={handleSubmit}>
               <Modal.Header closeButton>
-                <Modal.Title id='contained-modal-title-vcenter'>
-                  <i className='fas fa-photo-video'></i>
+                <Modal.Title id="contained-modal-title-vcenter">
+                  <i className="fas fa-photo-video"></i>
                 </Modal.Title>
               </Modal.Header>
               <Modal.Body>
-                <div className='form-row mt-3'>
-                  <div className='col'>
-                    <div className='form-group'>
-                      <label className='btn btn-outline-success btn-block'>
+                <div className="form-row mt-3">
+                  <div className="col">
+                    <div className="form-group">
+                      <label className="btn btn-outline-success btn-block">
                         Upload Video
                         <input
-                          type='file'
-                          name='video'
+                          type="file"
+                          name="video"
                           onChange={handleVideoUpload}
-                          accept='video/*'
+                          accept="video/*"
                           hidden
                           required
                         />
@@ -108,7 +119,7 @@ const Lesson = ({
                       {progress > 0 && (
                         <ProgressBar
                           striped
-                          variant='success'
+                          variant="success"
                           now={progress}
                           label={`${progress}%`}
                         />
@@ -118,26 +129,29 @@ const Lesson = ({
                 </div>
                 <Row>
                   <Col xs={12} md={12}>
-                    <Form.Group controlId='title' className='mt-3'>
+                    <Form.Group controlId="title" className="mt-3">
                       <Form.Control
-                        type='text'
-                        name='title'
-                        placeholder='Title'
+                        type="text"
+                        name="title"
+                        placeholder="Title"
                         value={values.title}
                         onChange={handleChange}
-                        required></Form.Control>
+                        required
+                      ></Form.Control>
                     </Form.Group>
                     <Form.Group
                       as={Col}
-                      controlId='formGridEmail'
-                      className='mt-3'>
+                      controlId="formGridEmail"
+                      className="mt-3"
+                    >
                       <textarea
-                        className='form-control'
+                        className="form-control"
                         value={values.description}
-                        name='description'
-                        placeholder='Add Description'
+                        name="description"
+                        placeholder="Add Description"
                         onChange={handleChange}
-                        required></textarea>
+                        required
+                      ></textarea>
                     </Form.Group>
                   </Col>
                 </Row>
@@ -145,14 +159,16 @@ const Lesson = ({
               <Modal.Footer>
                 <Button
                   onClick={() => setShowLessonModal(false)}
-                  className='btn btn-success'
-                  type='submit'
-                  disabled={!values.video}>
+                  className="btn btn-success"
+                  type="submit"
+                  disabled={!values.video}
+                >
                   Upload
                 </Button>
                 <Button
                   onClick={() => setShowLessonModal(false)}
-                  className='btn btn-success'>
+                  className="btn btn-success"
+                >
                   Close
                 </Button>
               </Modal.Footer>

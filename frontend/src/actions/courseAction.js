@@ -19,6 +19,9 @@ import {
   DELETE_ANNOUNCEMENT_FAIL,
   DELETE_ANNOUNCEMENT_REQUEST,
   DELETE_ANNOUNCEMENT_SUCCESS,
+  COURSE_DELETE_LESSON_FAIL,
+  COURSE_DELETE_LESSON_SUCCESS,
+  COURSE_DELETE_LESSON_REQUEST,
 } from "../constants/courseConstants";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -40,7 +43,7 @@ export const courseCreate = (values) => async (dispatch) => {
     const { data } = await axios.post(
       "http://localhost:5000/api/instructor/course/create",
       { title, description, image, institute, branch, section, year },
-      config,
+      config
     );
 
     dispatch({ type: COURSE_CREATE_SUCCESS, payload: data });
@@ -61,7 +64,7 @@ export const getCourses = (value) => async (dispatch) => {
     const { data } = await axios.post(
       `http://localhost:5000/api/${value}/course/get/all`,
       {},
-      config,
+      config
     );
 
     dispatch({ type: COURSE_GET_ALL_SUCCESS, payload: data });
@@ -81,7 +84,7 @@ export const getCourseDetails = (slug, value) => async (dispatch) => {
     const { data } = await axios.post(
       `http://localhost:5000/api/${value}/course/get`,
       { slug },
-      config,
+      config
     );
 
     dispatch({ type: COURSE_GET_DETAILS_SUCCESS, payload: data });
@@ -103,7 +106,7 @@ export const addLesson = (slug, values) => async (dispatch) => {
     const { data } = await axios.post(
       `http://localhost:5000/api/instructor/course/add-lesson`,
       { title, description, video, slug },
-      config,
+      config
     );
     console.log(data);
     dispatch({ type: COURSE_ADD_LESSON_SUCCESS, payload: data });
@@ -126,7 +129,7 @@ export const addAnnouncement =
       const { data } = await axios.post(
         `http://localhost:5000/api/instructor/course/add-announcement`,
         { description, file, slug },
-        config,
+        config
       );
       console.log(data);
       dispatch({ type: COURSE_ADD_ANNOUNCEMENT_SUCCESS, payload: data });
@@ -141,7 +144,6 @@ export const addAnnouncement =
 
 export const deleteAnnouncement = (courseId, id) => async (dispatch) => {
   try {
-    console.log("Course : ", courseId);
     dispatch({ type: DELETE_ANNOUNCEMENT_REQUEST });
 
     await axios.delete(
@@ -152,7 +154,7 @@ export const deleteAnnouncement = (courseId, id) => async (dispatch) => {
         },
         withCredentials: true,
         data: { courseId: courseId, id: id },
-      },
+      }
     );
     dispatch({ type: DELETE_ANNOUNCEMENT_SUCCESS });
     toast.success("Deleted ✔");
@@ -162,5 +164,30 @@ export const deleteAnnouncement = (courseId, id) => async (dispatch) => {
       payload: error.response.data,
     });
     toast.error("Error While Deleting Announcement ,Try Again");
+  }
+};
+
+export const deleteLesson = (courseId, id) => async (dispatch) => {
+  try {
+    dispatch({ type: COURSE_DELETE_LESSON_REQUEST });
+
+    await axios.delete(
+      `http://localhost:5000/api/instructor/course/delete-lesson`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+        data: { courseId: courseId, id: id },
+      }
+    );
+    dispatch({ type: COURSE_DELETE_LESSON_SUCCESS });
+    toast.success("Deleted ✔");
+  } catch (error) {
+    dispatch({
+      type: COURSE_DELETE_LESSON_FAIL,
+      payload: error.response.data,
+    });
+    toast.error("Error While Deleting Lesson ,Try Again");
   }
 };
