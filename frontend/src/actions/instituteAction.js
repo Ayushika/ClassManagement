@@ -12,6 +12,9 @@ import {
   GET_ALL_INSTITUTE_FAIL,
   GET_ALL_INSTITUTE_REQUEST,
   GET_ALL_INSTITUTE_SUCCESS,
+  UPDATE_INSTITUTE_REQUEST,
+  UPDATE_INSTITUTE_FAIL,
+  UPDATE_INSTITUTE_SUCCESS,
 } from "../constants/instituteConstants";
 
 const config = {
@@ -28,7 +31,7 @@ export const createInstitute = (name) => async (dispatch) => {
     const { data } = await axios.post(
       "http://localhost:5000/api/admin/institute",
       { name },
-      config
+      config,
     );
 
     dispatch({ type: CREATE_INSTITUTE_SUCCESS, payload: data });
@@ -46,7 +49,7 @@ export const getAllInstitute = () => async (dispatch) => {
     const { data } = await axios.post(
       "http://localhost:5000/api/admin/institute/all",
       {},
-      config
+      config,
     );
 
     dispatch({ type: GET_ALL_INSTITUTE_SUCCESS, payload: data });
@@ -62,7 +65,7 @@ export const deleteInstitute = (slug) => async (dispatch) => {
 
     await axios.delete(
       `http://localhost:5000/api/admin/institute/${slug}`,
-      config
+      config,
     );
 
     dispatch({ type: DELETE_INSTITUTE_SUCCESS });
@@ -70,5 +73,24 @@ export const deleteInstitute = (slug) => async (dispatch) => {
   } catch (error) {
     toast.error(error.response.data);
     dispatch({ type: DELETE_INSTITUTE_FAIL, payload: error.response.data });
+  }
+};
+
+export const updateInstitute = (id, name) => async (dispatch) => {
+  try {
+    dispatch({ type: UPDATE_INSTITUTE_REQUEST });
+
+    await axios.put(
+      `http://localhost:5000/api/admin/institute/`,
+      { id, name },
+      config,
+    );
+
+    dispatch({ type: UPDATE_INSTITUTE_SUCCESS });
+    toast.success(`Updated ✔`);
+    dispatch(getAllInstitute());
+  } catch (error) {
+    toast.error(error.response.data);
+    dispatch({ type: UPDATE_INSTITUTE_FAIL, payload: error.response.data });
   }
 };

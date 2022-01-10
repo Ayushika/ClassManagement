@@ -1,6 +1,7 @@
 /** @format */
 
 import axios from "axios";
+import { displayInstructor, displayStudent } from "./adminAction";
 import { toast } from "react-toastify";
 import {
   USER_LOGIN_REQUEST,
@@ -195,7 +196,7 @@ export const upload = (file) => async (dispatch) => {
   }
 };
 
-export const deleteUser = (id) => async (dispatch) => {
+export const deleteUser = (id, role) => async (dispatch) => {
   try {
     dispatch({ type: USER_DELETE_REQUEST });
 
@@ -207,6 +208,12 @@ export const deleteUser = (id) => async (dispatch) => {
     });
     dispatch({ type: USER_DELETE_SUCCESS });
     toast.success("Deleted ✔");
+
+    if (role == "student") {
+      dispatch(displayStudent());
+    } else {
+      dispatch(displayInstructor());
+    }
   } catch (error) {
     dispatch({
       type: USER_DELETE_FAIL,

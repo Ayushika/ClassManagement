@@ -30,7 +30,8 @@ const Student = () => {
 
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete ?")) {
-      dispatch(deleteUser(id));
+      const role = "student";
+      dispatch(deleteUser(id, role));
     }
   };
 

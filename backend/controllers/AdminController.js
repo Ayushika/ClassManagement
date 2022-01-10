@@ -90,6 +90,7 @@ export const registerStudent = async (req, res) => {
         branch: branch,
       })
       .exec();
+      
     const courses = await courseSchema.find({ batch: batch._id }).exec();
 
     let courseId = [];

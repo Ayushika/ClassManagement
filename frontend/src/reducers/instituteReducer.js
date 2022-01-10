@@ -10,6 +10,9 @@ import {
   GET_ALL_INSTITUTE_FAIL,
   GET_ALL_INSTITUTE_REQUEST,
   GET_ALL_INSTITUTE_SUCCESS,
+  UPDATE_INSTITUTE_FAIL,
+  UPDATE_INSTITUTE_REQUEST,
+  UPDATE_INSTITUTE_SUCCESS
 } from "../constants/instituteConstants";
 
 export const createInstituteReducer = (state = {}, action) => {
@@ -45,6 +48,19 @@ export const deleteInstituteReducer = (state = {}, action) => {
     case DELETE_INSTITUTE_SUCCESS:
       return { loading: false, deleteSuccess: true };
     case DELETE_INSTITUTE_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const updateInstituteReducer = (state = {}, action) => {
+  switch (action.type) {
+    case UPDATE_INSTITUTE_REQUEST:
+      return { loading: true };
+    case UPDATE_INSTITUTE_SUCCESS:
+      return { loading: false };
+    case UPDATE_INSTITUTE_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;
