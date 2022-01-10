@@ -66,3 +66,29 @@ export const deleteBatch = async (req, res) => {
     res.status(400).send("Error While Deleting Batch");
   }
 };
+
+//@desc  Update Batch
+//@routes PUT /api/admin/batch
+//@access PRIVATE/ADMIN
+export const updateBatch = async (req, res) => {
+  try {
+    const { id, institute, branch, section, year } = req.body;
+
+    if (!institute || !branch || !section || !year) {
+      return res.status(400).send("Select All Fields");
+    }
+
+    const batch = await batchSchema
+      .findOneAndUpdate(
+        { _id: id },
+        { institute, branch, section, year },
+        { new: true }
+      )
+      .exec();
+
+    res.json({ success: true });
+  } catch (error) {
+    console.log(error);
+    res.status(400).send("Error While Creating");
+  }
+};

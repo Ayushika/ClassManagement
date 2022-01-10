@@ -28,6 +28,7 @@ import {
   createBatchReducer,
   deleteBatchReducer,
   getAllBatchReducer,
+  updateBatchReducer,
 } from "./reducers/batchReducer";
 import {
   instructorRegisterReducer,
@@ -62,7 +63,7 @@ const reducer = combineReducers({
   createBatch: createBatchReducer,
   deleteBatch: deleteBatchReducer,
   getAllBatch: getAllBatchReducer,
-  updateBranch : updateBranchReducer,
+  updateBranch: updateBranchReducer,
   instructorRegister: instructorRegisterReducer,
   studentRegister: studentRegisterReducer,
   instructorDisplay: instructorDisplayReducer,
@@ -75,6 +76,7 @@ const reducer = combineReducers({
   courseDeleteAnnouncement: courseDeleteAnnouncementReducer,
   userDelete: userDeleteReducer,
   courseDeleteLesson: courseDeleteLessonReducer,
+  updateBatch: updateBatchReducer,
 });
 
 const userInfoFromStorage = window.localStorage.getItem("userInfo")
@@ -90,7 +92,7 @@ const middleware = [thunk];
 const store = createStore(
   reducer,
   initialState,
-  composeWithDevTools(applyMiddleware(...middleware)),
+  composeWithDevTools(applyMiddleware(...middleware))
 );
 
 export default store;

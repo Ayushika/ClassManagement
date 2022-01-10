@@ -11,6 +11,7 @@ import {
   USER_VERIFY_EMAIL_RESET,
 } from "../../constants/userConstants";
 import Loading from "../../components/Loading";
+import forgot from "../../images/forgot.svg";
 
 const ForgotPasswordPage = ({ history }) => {
   const [email, setEmail] = useState("");
@@ -59,9 +60,9 @@ const ForgotPasswordPage = ({ history }) => {
       {loadingOtp && <Loading />}
       {loadingForgot && <Loading />}
       <Container>
-        <Row className="justify-content-md-center">
-          <Col xs={12} md={6}>
-            <h3 className="text-success mt-5">Forgot Password ?</h3>
+        <Row>
+          <Col sm={12} md={4} lg={4} xl={4} className="my-auto ms-auto">
+            <h3 className="text-success">Forgot Password ?</h3>
 
             <Form onSubmit={success ? handleSubmit : handleOtp}>
               <Form.Group controlId="email" className="mt-4">
@@ -122,6 +123,17 @@ const ForgotPasswordPage = ({ history }) => {
                 {success ? "Reset Password" : "Send Otp"}
               </Button>
             </Form>
+          </Col>
+          <Col
+            sm={12}
+            md={6}
+            lg={6}
+            xl={6}
+            //style={{ backgroundColor: "#F3F1F6" }}
+            style={{ marginTop: "3rem" }}
+            className="ms-auto"
+          >
+            <img src={forgot} alt="signIn" className="login-img" />
           </Col>
         </Row>
       </Container>
