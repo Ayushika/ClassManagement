@@ -1,8 +1,8 @@
 @todo: 
  
 1. batch update -rm
-   file upload / video upload (progress) and (loading)  jb 
-   loading ho ri ho then sb kuch or disable ho jaye - rm
 
-1  branch/ institute update button - ab 
+
+1. Handle institute jbb delete ho toh all students get deleted .
+   Same with branch
 

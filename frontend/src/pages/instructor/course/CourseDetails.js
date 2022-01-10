@@ -13,14 +13,15 @@ import {
 } from "../../../actions/courseAction";
 import Lesson from "../../../components/Lesson";
 import Announcement from "../../../components/Announcement";
-import { COURSE_ADD_ANNOUNCEMENT_RESET } from "../../../constants/courseConstants";
 
 const CourseDetails = ({ match }) => {
   const { slug } = match.params;
   const [showLessonModal, setShowLessonModal] = useState(false);
   const [showAnnouncementModal, setShowAnnouncementModal] = useState(false);
-  const [progress, setProgress] = useState(0);
+  //const [progress, setProgress] = useState(0);
   const [key, setKey] = useState("lesson");
+  const [uploading, setUploading] = useState(false);
+  const [uploaded, setUploaded] = useState(false);
   const role = "instructor";
 
   const intialValues = {
@@ -51,12 +52,14 @@ const CourseDetails = ({ match }) => {
       return;
     }
     dispatch(addLesson(slug, values));
-
+    setUploaded(false);
     toast.success("Lesson Uploaded Successfully");
   };
 
   const handleVideoUpload = async (e) => {
     try {
+      setUploading(true);
+      setUploaded(false);
       const file = e.target.files[0];
       const videoData = new FormData();
       videoData.append("video", file);
@@ -69,24 +72,30 @@ const CourseDetails = ({ match }) => {
             "Content-Type": "application/json",
           },
           withCredentials: true,
-          onUploadProgress: (progressEvent) => {
-            const { loaded, total } = progressEvent;
-            //let percent = Math.floor((loaded * 100) / total);
-            setProgress(Math.floor((loaded * 100) / total));
-          },
+          // onUploadProgress: (progressEvent) => {
+          //   const { loaded, total } = progressEvent;
+          //   const percentage = Math.floor(
+          //     ((loaded / 1000) * 100) / (total / 1000)
+          //   );
+          //   setProgress(percentage);
+          // },
         }
       );
       console.log(data);
-      setProgress(0);
+      //setProgress(0);
       setValues({ ...values, video: data });
+      setUploading(false);
+      setUploaded(true);
     } catch (error) {
       console.log(error);
+      setUploading(false);
       toast.error("Video Uploading Failed");
     }
   };
 
   const handleFileUpload = async (e) => {
     try {
+      setUploading(true);
       var fileToLoad = e.target.files[0];
       var fileReader = new FileReader();
       fileReader.onload = async (fileLoadedEvent) => {
@@ -103,10 +112,12 @@ const CourseDetails = ({ match }) => {
           }
         );
         setAnnouncementValues({ ...announcementValues, file: data });
+        setUploading(false);
       };
       fileReader.readAsDataURL(fileToLoad);
     } catch (error) {
       console.log(error);
+      setUploading(false);
       toast.error("File Uploading Failed");
     }
   };
@@ -147,7 +158,9 @@ const CourseDetails = ({ match }) => {
                 handleVideoUpload={handleVideoUpload}
                 showLessonModal={showLessonModal}
                 handleSubmit={handleSubmit}
-                progress={progress}
+                //progress={progress}
+                uploading={uploading}
+                uploaded={uploaded}
                 values={values}
                 handleChange={handleChange}
               />
@@ -162,6 +175,7 @@ const CourseDetails = ({ match }) => {
                 handleAnnouncementSubmit={handleAnnouncementSubmit}
                 setAnnouncementValues={setAnnouncementValues}
                 showAnnouncementModal={showAnnouncementModal}
+                uploading={uploading}
               />
             </Tab>
           </Tabs>
