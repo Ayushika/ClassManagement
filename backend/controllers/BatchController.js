@@ -2,6 +2,7 @@
 
 import batchSchema from "../models/BatchModel";
 import userSchema from "../models/UserModel";
+import courseSchema from "../models/CourseModel";
 
 //@desc   Create Batch
 //@routes POST /api/admin/batch
@@ -53,10 +54,26 @@ export const deleteBatch = async (req, res) => {
     const batch = await batchSchema.findByIdAndDelete(id).exec();
 
     const users = await userSchema.find({ batch: batch._id }).exec();
+    const courses = await courseSchema.find({ batch: batch._id }).exec();
 
     for (let i = 0; i < users.length; i++) {
       const user = await userSchema
         .findOneAndDelete({ batch: batch._id })
+        .exec();
+    }
+
+    for (let i = 0; i < courses.length; i++) {
+      const course = await courseSchema
+        .findOneAndDelete({ batch: batch._id })
+        .populate("instructor")
+        .exec();
+
+      const instructor = await userSchema
+        .findOneAndUpdate(
+          { _id: course.instructor._id },
+          { $pull: { courseId: course._id } },
+          { new: true },
+        )
         .exec();
     }
 
@@ -82,7 +99,7 @@ export const updateBatch = async (req, res) => {
       .findOneAndUpdate(
         { _id: id },
         { institute, branch, section, year },
-        { new: true }
+        { new: true },
       )
       .exec();
 

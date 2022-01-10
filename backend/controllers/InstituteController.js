@@ -50,57 +50,64 @@ export const getAllInstitute = async (req, res) => {
 export const deleteInstitute = async (req, res) => {
   try {
     const { slug } = req.params;
-    //const institute = await instituteSchema.findOneAndDelete({ slug }).exec();
-    const institute = await instituteSchema.findOne({ slug }).exec();
+    const institute = await instituteSchema.findOneAndDelete({ slug }).exec();
     const id = institute._id;
 
     const branches = await branchSchema.find({ institute: id }).exec();
-    // for (let i = 0; i < branches.length; i++) {
-    //   const branch = await branchSchema
-    //     .findByIdAndDelete({ _id: branches[i]._id })
-    //     .exec();
-    // }
+    for (let i = 0; i < branches.length; i++) {
+      const branch = await branchSchema
+        .findByIdAndDelete({ _id: branches[i]._id })
+        .exec();
+    }
 
     const batches = await batchSchema.find({ institute: id }).exec();
-    // for (let i = 0; i < batches.length; i++) {
-    //   const batch = await batchSchema
-    //     .findByIdAndDelete({ _id: batches[i]._id })
-    //     .exec();
-    // }
+    for (let i = 0; i < batches.length; i++) {
+      const batch = await batchSchema
+        .findByIdAndDelete({ _id: batches[i]._id })
+        .exec();
+    }
 
     let students = [];
     let courses = [];
+    let instructors = [];
 
     for (let i = 0; i < batches.length; i++) {
       const student = await userSchema.find({ batch: batches[i]._id }).exec();
       const course = await courseSchema.find({ batch: batches[i]._id }).exec();
       if (student) {
         for (let j = 0; j < student.length; j++) {
-          students.push(student[i]._id);
+          students.push(student[j]._id);
         }
       }
+
       if (course) {
         for (let j = 0; j < course.length; j++) {
-          courses.push(course[i]._id);
+          courses.push(course[j]._id);
+          instructors.push(course[j].instructor);
         }
       }
     }
 
-    // for (let i = 0; i < students.length; i++) {
-    //   const student = await userSchema
-    //     .findByIdAndDelete({ _id: students[i]._id })
-    //     .exec();
-    // }
+    for (let i = 0; i < instructors.length; i++) {
+      const instructor = await userSchema.findByIdAndUpdate(
+        { _id: instructors[i] },
+        { $pull: { courseId: courses[i] } },
+        { new: true },
+      );
+    }
 
-    // for (let i = 0; i < courses.length; i++) {
-    //   const course = await courseSchema
-    //     .findByIdAndDelete({ _id: courses[i]._id })
-    //     .exec();
-    // }
-    console.log("Student------------------", students);
-    console.log("Course------------------------", courses);
-    console.log("Batch------------------------", batches);
-    console.log("Branch------------------------", branches);
+    for (let i = 0; i < students.length; i++) {
+      const student = await userSchema
+        .findByIdAndDelete({ _id: students[i] })
+        .exec();
+    }
+
+    for (let i = 0; i < courses.length; i++) {
+      const course = await courseSchema
+        .findByIdAndDelete({ _id: courses[i] })
+        .exec();
+    }
+
     res.json({ success: true });
   } catch (error) {
     console.log(error);
@@ -126,7 +133,7 @@ export const updateInstitute = async (req, res) => {
       .findOneAndUpdate(
         { _id: id },
         { name, slug, abbreviation: ans.toUpperCase() },
-        { new: true }
+        { new: true },
       )
       .exec();
 

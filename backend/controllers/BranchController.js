@@ -2,6 +2,7 @@
 
 import branchSchema from "../models/BranchModel";
 import batchSchema from "../models/BatchModel";
+import courseSchema from "../models/CourseModel";
 import userSchema from "../models/UserModel";
 import slugify from "slugify";
 
@@ -56,17 +57,43 @@ export const deleteBranch = async (req, res) => {
     }
 
     let students = [];
+    let courses = [];
+    let instructors = [];
 
     for (let i = 0; i < batches.length; i++) {
-      const student = await userSchema
-        .findOne({ batch: batches[i]._id })
-        .exec();
-      if (student) students.push(student);
+      const student = await userSchema.find({ batch: batches[i]._id }).exec();
+      const course = await courseSchema.find({ batch: batches[i]._id }).exec();
+      if (student) {
+        for (let j = 0; j < student.length; j++) {
+          students.push(student[j]._id);
+        }
+      }
+
+      if (course) {
+        for (let j = 0; j < course.length; j++) {
+          courses.push(course[j]._id);
+          instructors.push(course[j].instructor);
+        }
+      }
+    }
+
+    for (let i = 0; i < instructors.length; i++) {
+      const instructor = await userSchema.findByIdAndUpdate(
+        { _id: instructors[i] },
+        { $pull: { courseId: courses[i] } },
+        { new: true },
+      );
     }
 
     for (let i = 0; i < students.length; i++) {
       const student = await userSchema
-        .findOneAndDelete({ _id: students[i]._id })
+        .findByIdAndDelete({ _id: students[i] })
+        .exec();
+    }
+
+    for (let i = 0; i < courses.length; i++) {
+      const course = await courseSchema
+        .findByIdAndDelete({ _id: courses[i] })
         .exec();
     }
 

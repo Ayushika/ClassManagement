@@ -90,7 +90,7 @@ export const courseCreate = async (req, res) => {
     const instructor = await userSchema.findByIdAndUpdate(
       { _id: req.user.id },
       { $push: { courseId: course._id } },
-      { new: true }
+      { new: true },
     );
 
     const id = batch._id;
@@ -101,7 +101,7 @@ export const courseCreate = async (req, res) => {
         { _id: students[i]._id },
 
         { $push: { courseId: course._id } },
-        { new: true }
+        { new: true },
       );
 
       const params = {
@@ -191,7 +191,7 @@ export const uploadAnnouncement = async (req, res) => {
     }
     const base64Data = new Buffer.from(
       file.replace(/^data:application\/\w+;base64,/, ""),
-      "base64"
+      "base64",
     );
 
     const type = file.split(";")[0].split("/")[1];
@@ -288,7 +288,7 @@ export const addLesson = async (req, res) => {
 };
 
 //@desc   Delete Lesson
-//@routes POST /api/instructor/course/delete-lesson
+//@routes DELETE /api/instructor/course/delete-lesson
 //@access PRIVATE
 export const deleteLesson = async (req, res) => {
   try {
@@ -395,7 +395,7 @@ export const addAnnouncement = async (req, res) => {
 };
 
 //@desc   Delete Announcement
-//@routes POST /api/instructor/course/delete-announcement
+//@routes DELETE /api/instructor/course/delete-announcement
 //@access PRIVATE
 export const deleteAnnouncement = async (req, res) => {
   try {
@@ -412,6 +412,44 @@ export const deleteAnnouncement = async (req, res) => {
     await course.announcements.pull(aId);
     await course.save();
     res.json({ course });
+  } catch (error) {
+    console.log(error);
+    res.status(400).send("Error,Please Try Again");
+  }
+};
+
+//@desc   Delete Course
+//@routes DELETE /api/instructor/course/delete
+//@access PRIVATE
+export const courseDelete = async (req, res) => {
+  try {
+    const { courseId, instructor } = req.body;
+
+    const course = await courseSchema
+      .findByIdAndDelete({ _id: courseId })
+      .exec();
+    const batch = course && course.batch;
+
+    const newInstructor = await userSchema
+      .findByIdAndUpdate(
+        { _id: instructor },
+        { $pull: { courseId: course._id } },
+        { new: true },
+      )
+      .exec();
+
+    const users = await userSchema.find({ batch: batch }).exec();
+    for (let i = 0; i < users.length; i++) {
+      const user = await userSchema
+        .findByIdAndUpdate(
+          { _id: users[i]._id },
+          { $pull: { courseId: course._id } },
+          { new: true },
+        )
+        .exec();
+    }
+
+    res.json({ success: true });
   } catch (error) {
     console.log(error);
     res.status(400).send("Error,Please Try Again");

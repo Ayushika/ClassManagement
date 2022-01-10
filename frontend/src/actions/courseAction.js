@@ -23,6 +23,9 @@ import {
   COURSE_DELETE_LESSON_FAIL,
   COURSE_DELETE_LESSON_SUCCESS,
   COURSE_DELETE_LESSON_REQUEST,
+  COURSE_DELETE_FAIL,
+  COURSE_DELETE_REQUEST,
+  COURSE_DELETE_SUCCESS,
 } from "../constants/courseConstants";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -171,7 +174,7 @@ export const deleteAnnouncement = (courseId, id, slug) => async (dispatch) => {
   }
 };
 
-export const deleteLesson = (courseId, id , slug) => async (dispatch) => {
+export const deleteLesson = (courseId, id, slug) => async (dispatch) => {
   try {
     dispatch({ type: COURSE_DELETE_LESSON_REQUEST });
 
@@ -187,12 +190,35 @@ export const deleteLesson = (courseId, id , slug) => async (dispatch) => {
     );
     dispatch({ type: COURSE_DELETE_LESSON_SUCCESS });
     toast.success("Deleted ✔");
-     dispatch(getCourseDetails(slug, "instructor"));
+    dispatch(getCourseDetails(slug, "instructor"));
   } catch (error) {
     dispatch({
       type: COURSE_DELETE_LESSON_FAIL,
       payload: error.response.data,
     });
     toast.error("Error While Deleting Lesson ,Try Again");
+  }
+};
+
+export const deleteCourse = (id, instructor) => async (dispatch) => {
+  try {
+    dispatch({ type: COURSE_DELETE_REQUEST });
+
+    await axios.delete(`http://localhost:5000/api/instructor/course/delete`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+      data: { courseId: id, instructor: instructor },
+    });
+    dispatch({ type: COURSE_DELETE_SUCCESS });
+    toast.success("Deleted ✔");
+    dispatch(getCourses("instructor"));
+  } catch (error) {
+    dispatch({
+      type: COURSE_DELETE_FAIL,
+      payload: error.response.data,
+    });
+    toast.error("Error While Deleting Course ,Try Again");
   }
 };

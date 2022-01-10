@@ -1,6 +1,5 @@
 @todo: 
  
-1. course deletion
-2. Instructor Course Delete - student ke courses se bhi delete or Instructor ke courses m  pull
-3. batch / institute / branch ke related courses delete student delete 
-4. multiple years
+1. remove duplicate years
+2. pagination on dashboard(student , instructor)
+3. axios interceptors (logout automatically)

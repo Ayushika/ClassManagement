@@ -44,6 +44,7 @@ import {
   courseAddAnnouncementReducer,
   courseDeleteAnnouncementReducer,
   courseDeleteLessonReducer,
+  courseDeleteReducer,
 } from "./reducers/courseReducer";
 
 const reducer = combineReducers({
@@ -76,6 +77,7 @@ const reducer = combineReducers({
   courseDeleteAnnouncement: courseDeleteAnnouncementReducer,
   userDelete: userDeleteReducer,
   courseDeleteLesson: courseDeleteLessonReducer,
+  courseDelete: courseDeleteReducer,
   updateBatch: updateBatchReducer,
 });
 
@@ -92,7 +94,7 @@ const middleware = [thunk];
 const store = createStore(
   reducer,
   initialState,
-  composeWithDevTools(applyMiddleware(...middleware))
+  composeWithDevTools(applyMiddleware(...middleware)),
 );
 
 export default store;

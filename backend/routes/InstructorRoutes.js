@@ -14,18 +14,21 @@ import {
   addAnnouncement,
   deleteAnnouncement,
   deleteLesson,
+  courseDelete,
 } from "../controllers/InstructorController";
 const router = express.Router();
 
 router.route("/isvalid").post(protect, isInstructor, currentInstructor);
 router.route("/course/create").post(protect, isInstructor, courseCreate);
+
+router.route("/course/delete").delete(protect, isInstructor, courseDelete);
 router
   .route("/course/upload-video")
   .post(
     formidable({ maxFileSize: 700 * 1024 * 1024 }),
     protect,
     isInstructor,
-    uploadVideo
+    uploadVideo,
   );
 router
   .route("/course/upload-announcement")
