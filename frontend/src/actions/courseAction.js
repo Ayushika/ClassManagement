@@ -16,13 +16,11 @@ import {
   COURSE_ADD_ANNOUNCEMENT_FAIL,
   COURSE_ADD_ANNOUNCEMENT_SUCCESS,
   COURSE_GET_DETAILS_SUCCESS,
-  COURSE_DELETE_ANNOUNCEMENT_FAIL,
-  COURSE_DELETE_ANNOUNCEMENT_REQUEST,
-  COURSE_DELETE_ANNOUNCEMENT_SUCCESS,
   COURSE_ADD_ANNOUNCEMENT_RESET,
-  DELETE_ANNOUNCEMENT_FAIL,
-  DELETE_ANNOUNCEMENT_REQUEST,
-  DELETE_ANNOUNCEMENT_SUCCESS,
+  COURSE_DELETE_LESSON_RESET,
+  COURSE_DELETE_ANNOUNCEMENT_FAIL,
+  COURSE_DELETE_ANNOUNCEMENT_SUCCESS,
+  COURSE_DELETE_ANNOUNCEMENT_REQUEST,
   COURSE_DELETE_LESSON_FAIL,
   COURSE_DELETE_LESSON_SUCCESS,
   COURSE_DELETE_LESSON_REQUEST,
@@ -47,7 +45,7 @@ export const courseCreate = (values) => async (dispatch) => {
     const { data } = await axios.post(
       "http://localhost:5000/api/instructor/course/create",
       { title, description, image, institute, branch, section, year },
-      config
+      config,
     );
 
     dispatch({ type: COURSE_CREATE_SUCCESS, payload: data });
@@ -68,7 +66,7 @@ export const getCourses = (value) => async (dispatch) => {
     const { data } = await axios.post(
       `http://localhost:5000/api/${value}/course/get/all`,
       {},
-      config
+      config,
     );
 
     dispatch({ type: COURSE_GET_ALL_SUCCESS, payload: data });
@@ -88,7 +86,7 @@ export const getCourseDetails = (slug, value) => async (dispatch) => {
     const { data } = await axios.post(
       `http://localhost:5000/api/${value}/course/get`,
       { slug },
-      config
+      config,
     );
 
     dispatch({ type: COURSE_GET_DETAILS_SUCCESS, payload: data });
@@ -110,7 +108,7 @@ export const addLesson = (slug, values) => async (dispatch) => {
     const { data } = await axios.post(
       `http://localhost:5000/api/instructor/course/add-lesson`,
       { title, description, video, slug },
-      config
+      config,
     );
 
     dispatch({ type: COURSE_ADD_LESSON_SUCCESS, payload: data });
@@ -134,7 +132,7 @@ export const addAnnouncement =
       const { data } = await axios.post(
         `http://localhost:5000/api/instructor/course/add-announcement`,
         { description, file, slug },
-        config
+        config,
       );
 
       dispatch({ type: COURSE_ADD_ANNOUNCEMENT_SUCCESS, payload: data });
@@ -151,7 +149,6 @@ export const addAnnouncement =
 export const deleteAnnouncement = (courseId, id, slug) => async (dispatch) => {
   try {
     dispatch({ type: COURSE_DELETE_ANNOUNCEMENT_REQUEST });
-    dispatch({ type: DELETE_ANNOUNCEMENT_REQUEST });
 
     await axios.delete(
       `http://localhost:5000/api/instructor/course/delete-announcement`,
@@ -161,7 +158,7 @@ export const deleteAnnouncement = (courseId, id, slug) => async (dispatch) => {
         },
         withCredentials: true,
         data: { courseId: courseId, id: id },
-      }
+      },
     );
     dispatch({ type: COURSE_DELETE_ANNOUNCEMENT_SUCCESS });
     toast.success("Deleted ✔");
@@ -175,7 +172,7 @@ export const deleteAnnouncement = (courseId, id, slug) => async (dispatch) => {
   }
 };
 
-export const deleteLesson = (courseId, id) => async (dispatch) => {
+export const deleteLesson = (courseId, id , slug) => async (dispatch) => {
   try {
     dispatch({ type: COURSE_DELETE_LESSON_REQUEST });
 
@@ -187,10 +184,11 @@ export const deleteLesson = (courseId, id) => async (dispatch) => {
         },
         withCredentials: true,
         data: { courseId: courseId, id: id },
-      }
+      },
     );
     dispatch({ type: COURSE_DELETE_LESSON_SUCCESS });
     toast.success("Deleted ✔");
+     dispatch(getCourseDetails(slug, "instructor"));
   } catch (error) {
     dispatch({
       type: COURSE_DELETE_LESSON_FAIL,
