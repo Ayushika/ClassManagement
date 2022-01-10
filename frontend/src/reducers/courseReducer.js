@@ -20,6 +20,13 @@ import {
   COURSE_DELETE_ANNOUNCEMENT_SUCCESS,
   COURSE_DELETE_ANNOUNCEMENT_FAIL,
   COURSE_ADD_ANNOUNCEMENT_RESET,
+  DELETE_ANNOUNCEMENT_REQUEST,
+  DELETE_ANNOUNCEMENT_SUCCESS,
+  DELETE_ANNOUNCEMENT_FAIL,
+  COURSE_DELETE_LESSON_REQUEST,
+  COURSE_DELETE_LESSON_SUCCESS,
+  COURSE_DELETE_LESSON_FAIL,
+  COURSE_DELETE_LESSON_RESET,
 } from "../constants/courseConstants";
 
 export const courseCreateReducer = (state = {}, action) => {
@@ -78,7 +85,7 @@ export const courseAddLessonReducer = (state = { lesson: {} }, action) => {
 
 export const courseAddAnnouncementReducer = (
   state = { announcement: {} },
-  action,
+  action
 ) => {
   switch (action.type) {
     case COURSE_ADD_ANNOUNCEMENT_REQUEST:
@@ -102,6 +109,21 @@ export const courseDeleteAnnouncementReducer = (state = {}, action) => {
       return { loading: false };
     case COURSE_DELETE_ANNOUNCEMENT_FAIL:
       return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const courseDeleteLessonReducer = (state = {}, action) => {
+  switch (action.type) {
+    case COURSE_DELETE_LESSON_REQUEST:
+      return { loading: true };
+    case COURSE_DELETE_LESSON_SUCCESS:
+      return { loading: false };
+    case COURSE_DELETE_LESSON_FAIL:
+      return { loading: false, error: action.payload };
+    case COURSE_DELETE_LESSON_RESET:
+      return {};
     default:
       return state;
   }

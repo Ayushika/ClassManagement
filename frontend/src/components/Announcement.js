@@ -1,9 +1,11 @@
 /** @format */
 
-import React, { useEffect } from "react";
+import React from "react";
 import { Button, Col, Form, Modal, Row, Card } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteAnnouncement, getCourseDetails } from "../actions/courseAction";
+import { useDispatch } from "react-redux";
+import { deleteAnnouncement } from "../actions/courseAction";
 
 const Announcement = ({
   role,
@@ -27,29 +29,31 @@ const Announcement = ({
   return (
     <div>
       {course && course.announcements && course.announcements.length <= 0 && (
-        <p className='text-muted' style={{ letterSpacing: ".75px" }}>
+        <p className="text-muted" style={{ letterSpacing: ".75px" }}>
           No Announcements yet
         </p>
       )}
       {course.announcements &&
         course.announcements.length > 0 &&
         course.announcements.map((c, i) => (
-          <div key={c._id} className='mt-2'>
+          <div key={c._id} className="mt-2">
             <Card>
               <Card.Body>
                 {c.description}
-                <span className='text-muted text-end'>
+                <span className="text-muted text-end">
                   &nbsp;({c.uploadedAt.substring(0, 10)})
                 </span>
 
                 {role !== "student" && (
                   <span
                     style={{ marginLeft: "90%", marginTop: "-53px" }}
-                    className='btn btn-sm'
-                    onClick={() => handleDelete(course._id, c._id)}>
+                    className="btn btn-sm"
+                    onClick={() => handleDelete(course._id, c._id)}
+                  >
                     <i
-                      className='fas fa-trash text-danger'
-                      style={{ fontSize: "16px" }}></i>
+                      className="fas fa-trash text-danger"
+                      style={{ fontSize: "16px" }}
+                    ></i>
                   </span>
                 )}
               </Card.Body>
@@ -59,6 +63,11 @@ const Announcement = ({
                   target='_blank'
                   style={{ marginTop: "-14px" }}>
                   <Button variant='outline-success' className='mx-3 mb-4'>
+                  target="_blank"
+                  style={{ marginTop: "-14px" }}
+                  rel="noreferrer"
+                >
+                  <Button variant="outline-success" className="mx-3 mb-4">
                     See Document
                   </Button>
                 </a>
@@ -69,34 +78,36 @@ const Announcement = ({
       {role !== "student" && (
         <>
           <Button
-            type='button'
-            className='btn btn-success mt-4'
-            onClick={() => setShowAnnouncementModal(true)}>
+            type="button"
+            className="btn btn-success mt-4"
+            onClick={() => setShowAnnouncementModal(true)}
+          >
             Add Announcement +
           </Button>
           <Modal
             show={showAnnouncementModal}
             onHide={() => setShowAnnouncementModal(false)}
-            size='md'
-            aria-labelledby='contained-modal-title-vcenter'
-            centered>
+            size="md"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+          >
             <Form onSubmit={handleAnnouncementSubmit}>
               <Modal.Header closeButton>
-                <Modal.Title id='contained-modal-title-vcenter'>
-                  <i className='fas fa-file-pdf'></i>
+                <Modal.Title id="contained-modal-title-vcenter">
+                  <i className="fas fa-file-pdf"></i>
                 </Modal.Title>
               </Modal.Header>
               <Modal.Body>
-                <div className='form-row mt-3'>
-                  <div className='col'>
-                    <div className='form-group'>
-                      <label className='btn btn-outline-success btn-block'>
+                <div className="form-row mt-3">
+                  <div className="col">
+                    <div className="form-group">
+                      <label className="btn btn-outline-success btn-block">
                         Upload File
                         <input
-                          type='file'
-                          name='file'
+                          type="file"
+                          name="file"
                           onChange={handleFileUpload}
-                          accept='.pdf'
+                          accept=".pdf"
                           hidden
                         />
                       </label>
@@ -115,20 +126,22 @@ const Announcement = ({
                   <Col xs={12} md={12}>
                     <Form.Group
                       as={Col}
-                      controlId='formGridEmail'
-                      className='mt-3'>
+                      controlId="formGridEmail"
+                      className="mt-3"
+                    >
                       <textarea
-                        className='form-control'
+                        className="form-control"
                         value={announcementValues.description}
-                        name='description'
-                        placeholder='Add Description'
+                        name="description"
+                        placeholder="Add Description"
                         onChange={(e) =>
                           setAnnouncementValues({
                             ...announcementValues,
                             description: e.target.value,
                           })
                         }
-                        required></textarea>
+                        required
+                      ></textarea>
                     </Form.Group>
                   </Col>
                 </Row>
@@ -136,13 +149,15 @@ const Announcement = ({
               <Modal.Footer>
                 <Button
                   onClick={() => setShowAnnouncementModal(false)}
-                  className='btn btn-success'
-                  type='submit'>
+                  className="btn btn-success"
+                  type="submit"
+                >
                   Upload
                 </Button>
                 <Button
                   onClick={() => setShowAnnouncementModal(false)}
-                  className='btn btn-success'>
+                  className="btn btn-success"
+                >
                   Close
                 </Button>
               </Modal.Footer>
