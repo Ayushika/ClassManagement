@@ -40,7 +40,7 @@ const CourseDetails = ({ match }) => {
   };
   const [values, setValues] = useState(intialValues);
   const [announcementValues, setAnnouncementValues] = useState(
-    initialAnnouncementValues,
+    initialAnnouncementValues
   );
 
   const handleSubmit = (e) => {
@@ -73,7 +73,7 @@ const CourseDetails = ({ match }) => {
             //let percent = Math.floor((loaded * 100) / total);
             setProgress(Math.floor((loaded * 100) / total));
           },
-        },
+        }
       );
       console.log(data);
       setProgress(0);
@@ -99,7 +99,7 @@ const CourseDetails = ({ match }) => {
               "Content-Type": "application/json",
             },
             withCredentials: true,
-          },
+          }
         );
         setAnnouncementValues({ ...announcementValues, file: data });
       };
@@ -112,7 +112,7 @@ const CourseDetails = ({ match }) => {
 
   const handleAnnouncementSubmit = (e) => {
     e.preventDefault();
-    console.log("value",announcementValues)
+    console.log("value", announcementValues);
     dispatch(addAnnouncement(slug, announcementValues));
     toast.success("Announcement Uploaded Successfully");
   };
@@ -129,15 +129,16 @@ const CourseDetails = ({ match }) => {
       <Meta title={`ClassRoom : ${slug}`} />
       {course && (
         <>
-          <h4 className='text-center'>{course.title}</h4>
-          <div className='underline'></div>
+          <h4 className="text-center">{course.title}</h4>
+          <div className="underline"></div>
 
           <Tabs
-            id='controlled-tab-example'
+            id="controlled-tab-example"
             activeKey={key}
             onSelect={(k) => setKey(k)}
-            className='mb-3'>
-            <Tab eventKey='lesson' title='Lesson'>
+            className="mb-3"
+          >
+            <Tab eventKey="lesson" title="Lesson">
               <Lesson
                 course={course}
                 role={role}
@@ -150,7 +151,7 @@ const CourseDetails = ({ match }) => {
                 handleChange={handleChange}
               />
             </Tab>
-            <Tab eventKey='announcement' title='Announcement'>
+            <Tab eventKey="announcement" title="Announcement">
               <Announcement
                 role={role}
                 course={course}
