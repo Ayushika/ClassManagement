@@ -23,12 +23,8 @@ const Header = () => {
       <Navbar bg="light" expand="lg" id="header">
         <Container>
           <Link to="/" className="custom-link">
-            <Navbar.Brand className="font-bold text-success h1">
-              <img
-                src={pustak}
-                alt="Pustak"
-                style={{ width: "25%", height: "25%" }}
-              />
+            <Navbar.Brand className="font-bold  h1">
+              <img src={pustak} alt="Pustak" style={{ width: "125px" }} />
             </Navbar.Brand>
           </Link>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />

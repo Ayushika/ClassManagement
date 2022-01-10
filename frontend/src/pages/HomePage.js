@@ -35,7 +35,9 @@ const HomePage = () => {
               : "Login to acess your account"}
           </Link>
         </div>
-        <img src={home} alt="home" className="home-img main-img" />
+        <div style={{ marginTop: "3rem" }}>
+          <img src={home} alt="home" className="home-img" />
+        </div>
       </div>
     </>
   );
