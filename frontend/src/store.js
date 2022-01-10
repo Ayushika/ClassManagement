@@ -38,6 +38,7 @@ import {
   courseAddLessonReducer,
   courseGetDetailsReducer,
   courseAddAnnouncementReducer,
+  courseDeleteAnnouncementReducer,
 } from "./reducers/courseReducer";
 
 const reducer = combineReducers({
@@ -65,6 +66,7 @@ const reducer = combineReducers({
   courseAddLesson: courseAddLessonReducer,
   courseAddAnnouncement: courseAddAnnouncementReducer,
   courseGetDetails: courseGetDetailsReducer,
+  courseDeleteAnnouncement: courseDeleteAnnouncementReducer,
 });
 
 const userInfoFromStorage = window.localStorage.getItem("userInfo")

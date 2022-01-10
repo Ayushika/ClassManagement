@@ -12,6 +12,7 @@ import {
   courseGetDetails,
   uploadAnnouncement,
   addAnnouncement,
+  deleteAnnouncement,
 } from "../controllers/InstructorController";
 const router = express.Router();
 
@@ -32,6 +33,9 @@ router.route("/course/add-lesson").post(protect, isInstructor, addLesson);
 router
   .route("/course/add-announcement")
   .post(protect, isInstructor, addAnnouncement);
+router
+  .route("/course/delete-announcement")
+  .delete(protect, isInstructor, deleteAnnouncement);
 router.route("/course/get").post(protect, isInstructor, courseGetDetails);
 router.route("/course/get/all").post(protect, isInstructor, courseGetAll);
 
