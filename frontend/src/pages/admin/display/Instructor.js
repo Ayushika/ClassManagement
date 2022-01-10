@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { displayInstructor } from "../../../actions/adminAction";
 import { useSelector, useDispatch } from "react-redux";
 import { Row, Container } from "react-bootstrap";
+import { deleteUser } from "../../../actions/userAction";
 
 const Instructor = () => {
   const dispatch = useDispatch();
@@ -11,7 +12,7 @@ const Instructor = () => {
 
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete ?")) {
-      // dispatch(deleteUser(id));
+      dispatch(deleteUser(id));
     }
   };
 

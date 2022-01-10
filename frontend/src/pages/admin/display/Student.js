@@ -7,6 +7,7 @@ import { getAllBatch } from "../../../actions/batchAction";
 import { getAllBranch } from "../../../actions/branchAction";
 import { getAllInstitute } from "../../../actions/instituteAction";
 import { Row, Col, Form, Container } from "react-bootstrap";
+import { deleteUser } from "../../../actions/userAction";
 
 const Student = () => {
   const [institute, setInstitute] = useState("");
@@ -29,7 +30,7 @@ const Student = () => {
 
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete ?")) {
-      // dispatch(deleteUser(id));
+      dispatch(deleteUser(id));
     }
   };
 

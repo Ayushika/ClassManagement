@@ -9,6 +9,7 @@ import {
   currentUser,
   userDetails,
   userUpdate,
+  deleteUser,
   uploadImage,
 } from "../controllers/UserController";
 import { protect } from "../middleware/authMiddleware";
@@ -21,6 +22,6 @@ router.route("/verify-email").post(verifyEmail);
 router.route("/isvalid").post(protect, currentUser);
 router.route("/logout").post(logoutUser);
 router.route("/update-profile").put(protect, userUpdate);
-router.route("/:id").post(protect, userDetails);
+router.route("/:id").post(protect, userDetails).delete(protect, deleteUser);
 
 export default router;

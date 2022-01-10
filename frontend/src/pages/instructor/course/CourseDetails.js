@@ -13,6 +13,7 @@ import {
 } from "../../../actions/courseAction";
 import Lesson from "../../../components/Lesson";
 import Announcement from "../../../components/Announcement";
+import { COURSE_ADD_ANNOUNCEMENT_RESET } from "../../../constants/courseConstants";
 
 const CourseDetails = ({ match }) => {
   const { slug } = match.params;
@@ -112,7 +113,6 @@ const CourseDetails = ({ match }) => {
 
   const handleAnnouncementSubmit = (e) => {
     e.preventDefault();
-    console.log("value",announcementValues)
     dispatch(addAnnouncement(slug, announcementValues));
     toast.success("Announcement Uploaded Successfully");
   };
@@ -122,7 +122,7 @@ const CourseDetails = ({ match }) => {
   useEffect(() => {
     if (!course || !course.title || course.slug !== slug)
       dispatch(getCourseDetails(slug, "instructor"));
-  }, [slug, dispatch, course]);
+  }, [dispatch, slug, course]);
 
   return (
     <>

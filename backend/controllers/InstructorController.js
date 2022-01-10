@@ -349,7 +349,7 @@ export const addAnnouncement = async (req, res) => {
         });
     }
 
-    res.json(course);
+    res.json(announcement);
   } catch (error) {
     console.log(error);
     res.status(400).send("Error,Please Try Again");

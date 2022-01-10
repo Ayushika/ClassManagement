@@ -3,7 +3,7 @@
 import React, { useEffect } from "react";
 import { Button, Col, Form, Modal, Row, Card } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteAnnouncement } from "../actions/courseAction";
+import { deleteAnnouncement, getCourseDetails } from "../actions/courseAction";
 
 const Announcement = ({
   role,
@@ -19,7 +19,8 @@ const Announcement = ({
 
   const handleDelete = (courseId, id) => {
     if (window.confirm("Are you sure you want to delete ?")) {
-      dispatch(deleteAnnouncement(courseId, id));
+      const slug = course && course.slug;
+      dispatch(deleteAnnouncement(courseId, id, slug));
     }
   };
 
@@ -56,7 +57,7 @@ const Announcement = ({
                 <a
                   href={c.file.Location}
                   target='_blank'
-                  style={{  marginTop: "-14px" }}>
+                  style={{ marginTop: "-14px" }}>
                   <Button variant='outline-success' className='mx-3 mb-4'>
                     See Document
                   </Button>

@@ -9,6 +9,7 @@ import {
   userForgotPasswordReducer,
   userDetailsReducer,
   userUpdateReducer,
+  userDeleteReducer,
   uploadImageReducer,
 } from "./reducers/userReducer";
 import {
@@ -67,6 +68,7 @@ const reducer = combineReducers({
   courseAddAnnouncement: courseAddAnnouncementReducer,
   courseGetDetails: courseGetDetailsReducer,
   courseDeleteAnnouncement: courseDeleteAnnouncementReducer,
+  userDelete: userDeleteReducer,
 });
 
 const userInfoFromStorage = window.localStorage.getItem("userInfo")

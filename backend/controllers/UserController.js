@@ -270,3 +270,15 @@ export const uploadImage = async (req, res) => {
     res.status(400).send("Error,Please Try Again");
   }
 };
+
+//@desc   Delete User
+//@routes DELETE /api/user/:id
+//@access PRIVATE
+export const deleteUser = async (req, res) => {
+  const { id } = req.params;
+  const user = await userSchema.findByIdAndDelete(id).exec();
+  if (!user) {
+    return res.status(401).send("User Not Found");
+  }
+  res.json(user);
+};

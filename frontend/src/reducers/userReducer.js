@@ -24,6 +24,9 @@ import {
   UPLOAD_IMAGE_SUCCESS,
   UPLOAD_IMAGE_FAIL,
   UPLOAD_IMAGE_RESET,
+  USER_DELETE_FAIL,
+  USER_DELETE_REQUEST,
+  USER_DELETE_SUCCESS,
 } from "../constants/userConstants";
 
 export const userLoginReducer = (state = {}, action) => {
@@ -109,6 +112,19 @@ export const uploadImageReducer = (state = { image: {} }, action) => {
       return { loading: false, error: action.payload };
     case UPLOAD_IMAGE_RESET:
       return { image: {} };
+    default:
+      return state;
+  }
+};
+
+export const userDeleteReducer = (state = {}, action) => {
+  switch (action.type) {
+    case USER_DELETE_REQUEST:
+      return { loading: true };
+    case USER_DELETE_SUCCESS:
+      return { loading: false };
+    case USER_DELETE_FAIL:
+      return { loading: false, error: action.payload };
     default:
       return state;
   }

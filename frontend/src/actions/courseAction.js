@@ -16,9 +16,10 @@ import {
   COURSE_ADD_ANNOUNCEMENT_FAIL,
   COURSE_ADD_ANNOUNCEMENT_SUCCESS,
   COURSE_GET_DETAILS_SUCCESS,
-  DELETE_ANNOUNCEMENT_FAIL,
-  DELETE_ANNOUNCEMENT_REQUEST,
-  DELETE_ANNOUNCEMENT_SUCCESS,
+  COURSE_DELETE_ANNOUNCEMENT_FAIL,
+  COURSE_DELETE_ANNOUNCEMENT_REQUEST,
+  COURSE_DELETE_ANNOUNCEMENT_SUCCESS,
+  COURSE_ADD_ANNOUNCEMENT_RESET,
 } from "../constants/courseConstants";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -105,8 +106,9 @@ export const addLesson = (slug, values) => async (dispatch) => {
       { title, description, video, slug },
       config,
     );
-    console.log(data);
+
     dispatch({ type: COURSE_ADD_LESSON_SUCCESS, payload: data });
+    dispatch(getCourseDetails(slug, "instructor"));
   } catch (error) {
     dispatch({
       type: COURSE_ADD_LESSON_FAIL,
@@ -120,7 +122,7 @@ export const addAnnouncement =
   (slug, announcementValues) => async (dispatch) => {
     try {
       const { description, file } = announcementValues;
-      console.log("Desc", description);
+
       dispatch({ type: COURSE_ADD_ANNOUNCEMENT_REQUEST });
 
       const { data } = await axios.post(
@@ -128,8 +130,9 @@ export const addAnnouncement =
         { description, file, slug },
         config,
       );
-      console.log(data);
+
       dispatch({ type: COURSE_ADD_ANNOUNCEMENT_SUCCESS, payload: data });
+      dispatch(getCourseDetails(slug, "instructor"));
     } catch (error) {
       dispatch({
         type: COURSE_ADD_ANNOUNCEMENT_FAIL,
@@ -139,10 +142,9 @@ export const addAnnouncement =
     }
   };
 
-export const deleteAnnouncement = (courseId, id) => async (dispatch) => {
+export const deleteAnnouncement = (courseId, id, slug) => async (dispatch) => {
   try {
-    console.log("Course : ", courseId);
-    dispatch({ type: DELETE_ANNOUNCEMENT_REQUEST });
+    dispatch({ type: COURSE_DELETE_ANNOUNCEMENT_REQUEST });
 
     await axios.delete(
       `http://localhost:5000/api/instructor/course/delete-announcement`,
@@ -154,11 +156,12 @@ export const deleteAnnouncement = (courseId, id) => async (dispatch) => {
         data: { courseId: courseId, id: id },
       },
     );
-    dispatch({ type: DELETE_ANNOUNCEMENT_SUCCESS });
+    dispatch({ type: COURSE_DELETE_ANNOUNCEMENT_SUCCESS });
     toast.success("Deleted ✔");
+    dispatch(getCourseDetails(slug, "instructor"));
   } catch (error) {
     dispatch({
-      type: DELETE_ANNOUNCEMENT_FAIL,
+      type: COURSE_DELETE_ANNOUNCEMENT_FAIL,
       payload: error.response.data,
     });
     toast.error("Error While Deleting Announcement ,Try Again");
