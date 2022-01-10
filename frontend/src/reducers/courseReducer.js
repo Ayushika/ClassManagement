@@ -19,10 +19,6 @@ import {
   COURSE_DELETE_ANNOUNCEMENT_REQUEST,
   COURSE_DELETE_ANNOUNCEMENT_SUCCESS,
   COURSE_DELETE_ANNOUNCEMENT_FAIL,
-  COURSE_ADD_ANNOUNCEMENT_RESET,
-  DELETE_ANNOUNCEMENT_REQUEST,
-  DELETE_ANNOUNCEMENT_SUCCESS,
-  DELETE_ANNOUNCEMENT_FAIL,
   COURSE_DELETE_LESSON_REQUEST,
   COURSE_DELETE_LESSON_SUCCESS,
   COURSE_DELETE_LESSON_FAIL,
@@ -85,7 +81,7 @@ export const courseAddLessonReducer = (state = { lesson: {} }, action) => {
 
 export const courseAddAnnouncementReducer = (
   state = { announcement: {} },
-  action
+  action,
 ) => {
   switch (action.type) {
     case COURSE_ADD_ANNOUNCEMENT_REQUEST:
@@ -94,8 +90,6 @@ export const courseAddAnnouncementReducer = (
       return { loading: false, announcement: action.payload, success: true };
     case COURSE_ADD_ANNOUNCEMENT_FAIL:
       return { loading: false, error: action.payload };
-    case COURSE_ADD_ANNOUNCEMENT_RESET:
-      return { loading: false, success: false };
     default:
       return state;
   }
