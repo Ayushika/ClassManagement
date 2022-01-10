@@ -12,12 +12,14 @@ import {
 import {
   createInstitute,
   getAllInstitute,
+  updateInstitute,
   deleteInstitute,
 } from "../controllers/InstituteController.js";
 import {
   createBranch,
   getAllBranch,
   deleteBranch,
+  updateBranch,
 } from "../controllers/BranchController.js";
 import {
   createBatch,
@@ -31,12 +33,18 @@ router.route("/isvalid").post(protect, isAdmin, currentAdmin);
 /* INSTITUTE ROUTES */
 router.route("/institute/all").post(protect, getAllInstitute);
 router.route("/institute/:slug").delete(protect, isAdmin, deleteInstitute);
-router.route("/institute").post(protect, isAdmin, createInstitute);
+router
+  .route("/institute")
+  .post(protect, isAdmin, createInstitute)
+  .put(protect, isAdmin, updateInstitute);
 
 /* BRANCH ROUTES */
 router.route("/branch/all").post(protect, getAllBranch);
 router.route("/branch/:slug").delete(protect, isAdmin, deleteBranch);
-router.route("/branch").post(protect, isAdmin, createBranch);
+router
+  .route("/branch")
+  .post(protect, isAdmin, createBranch)
+  .put(protect, isAdmin, updateBranch);
 
 /* BATCH ROUTES */
 router.route("/batch/all").post(protect, getAllBatch);

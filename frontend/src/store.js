@@ -16,10 +16,12 @@ import {
   createInstituteReducer,
   getAllInstituteReducer,
   deleteInstituteReducer,
+  updateInstituteReducer,
 } from "./reducers/instituteReducer";
 import {
   createBranchReducer,
   deleteBranchReducer,
+  updateBranchReducer,
   getAllBranchReducer,
 } from "./reducers/branchReducer";
 import {
@@ -53,12 +55,14 @@ const reducer = combineReducers({
   createInstitute: createInstituteReducer,
   getAllInstitute: getAllInstituteReducer,
   deleteInstitute: deleteInstituteReducer,
+  updateInstitute: updateInstituteReducer,
   createBranch: createBranchReducer,
   getAllBranch: getAllBranchReducer,
   deleteBranch: deleteBranchReducer,
   createBatch: createBatchReducer,
   deleteBatch: deleteBatchReducer,
   getAllBatch: getAllBatchReducer,
+  updateBranch : updateBranchReducer,
   instructorRegister: instructorRegisterReducer,
   studentRegister: studentRegisterReducer,
   instructorDisplay: instructorDisplayReducer,
@@ -86,7 +90,7 @@ const middleware = [thunk];
 const store = createStore(
   reducer,
   initialState,
-  composeWithDevTools(applyMiddleware(...middleware))
+  composeWithDevTools(applyMiddleware(...middleware)),
 );
 
 export default store;

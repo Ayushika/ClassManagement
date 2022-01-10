@@ -1,4 +1,7 @@
+/** @format */
+
 import batchSchema from "../models/BatchModel";
+import userSchema from "../models/UserModel";
 
 //@desc   Create Batch
 //@routes POST /api/admin/batch
@@ -48,6 +51,15 @@ export const deleteBatch = async (req, res) => {
     const { id } = req.params;
 
     const batch = await batchSchema.findByIdAndDelete(id).exec();
+
+    const users = await userSchema.find({ batch: batch._id }).exec();
+
+    for (let i = 0; i < users.length; i++) {
+      const user = await userSchema
+        .findOneAndDelete({ batch: batch._id })
+        .exec();
+    }
+
     res.json({ success: true });
   } catch (error) {
     console.log(error);

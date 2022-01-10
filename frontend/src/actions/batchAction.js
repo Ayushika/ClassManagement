@@ -29,7 +29,7 @@ export const createBatch =
       const { data } = await axios.post(
         "http://localhost:5000/api/admin/batch",
         { institute, branch, section, year },
-        config
+        config,
       );
 
       dispatch({ type: CREATE_BATCH_SUCCESS, payload: data });
@@ -47,13 +47,13 @@ export const getAllBatch = () => async (dispatch) => {
     const { data } = await axios.post(
       "http://localhost:5000/api/admin/batch/all",
       {},
-      config
+      config,
     );
 
     dispatch({ type: GET_ALL_BATCH_SUCCESS, payload: data });
   } catch (error) {
-    toast.error(error.response.data);
-    dispatch({ type: GET_ALL_BATCH_FAIL, payload: error.response.data });
+    toast.error(error.response);
+    dispatch({ type: GET_ALL_BATCH_FAIL, payload: error.response });
   }
 };
 
