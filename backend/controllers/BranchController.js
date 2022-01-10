@@ -2,6 +2,7 @@
 
 import branchSchema from "../models/BranchModel";
 import batchSchema from "../models/BatchModel";
+import userSchema from "../models/UserModel";
 import slugify from "slugify";
 
 //@desc   Create Branch
@@ -51,6 +52,21 @@ export const deleteBranch = async (req, res) => {
     for (let i = 0; i < batches.length; i++) {
       const batch = await batchSchema
         .findOneAndDelete({ _id: batches[i]._id })
+        .exec();
+    }
+
+    let students = [];
+
+    for (let i = 0; i < batches.length; i++) {
+      const student = await userSchema
+        .findOne({ batch: batches[i]._id })
+        .exec();
+      if (student) students.push(student);
+    }
+
+    for (let i = 0; i < students.length; i++) {
+      const student = await userSchema
+        .findOneAndDelete({ _id: students[i]._id })
         .exec();
     }
 

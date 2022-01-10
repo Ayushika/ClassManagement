@@ -32,7 +32,7 @@ export const registerInstructor = (values, image) => async (dispatch) => {
     let { data } = await axios.post(
       `http://localhost:5000/api/admin/instructor/register`,
       { name, image, phone, email },
-      config
+      config,
     );
     dispatch({ type: INSTRUCTOR_REGISTER_SUCCESS, payload: data });
     toast.success("Register Successfully");
@@ -54,7 +54,7 @@ export const registerStudent = (values) => async (dispatch) => {
     let { data } = await axios.post(
       `http://localhost:5000/api/admin/student/register`,
       { name, image, phone, email, institute, branch, section, year },
-      config
+      config,
     );
     dispatch({ type: STUDENT_REGISTER_SUCCESS, payload: data });
     toast.success("Register Successfully");
@@ -74,7 +74,7 @@ export const displayStudent = () => async (dispatch) => {
     let { data } = await axios.post(
       `http://localhost:5000/api/admin/student/display`,
       {},
-      config
+      config,
     );
     dispatch({ type: STUDENT_DISPLAY_SUCCESS, payload: data });
   } catch (error) {
@@ -93,7 +93,7 @@ export const displayInstructor = () => async (dispatch) => {
     let { data } = await axios.post(
       `http://localhost:5000/api/admin/instructor/display`,
       {},
-      config
+      config,
     );
     dispatch({ type: INSTRUCTOR_DISPLAY_SUCCESS, payload: data });
   } catch (error) {
