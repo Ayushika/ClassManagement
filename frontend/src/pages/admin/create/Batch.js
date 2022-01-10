@@ -1,7 +1,7 @@
 /** @format */
 
 import React, { useState, useEffect } from "react";
-import { Form, Card } from "react-bootstrap";
+import { Button, Form, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllInstitute } from "../../../actions/instituteAction";
 import { getAllBranch } from "../../../actions/branchAction";
@@ -9,6 +9,7 @@ import {
   createBatch,
   deleteBatch,
   getAllBatch,
+  updateBatch,
 } from "../../../actions/batchAction";
 
 const Batch = () => {
@@ -17,12 +18,19 @@ const Batch = () => {
 
   const [institute, setInstitute] = useState("");
   const [branch, setBranch] = useState("");
+  const [editBatchId, setEditBatchId] = useState("");
+  const [editBranchId, setEditBranchId] = useState("");
+  const [editInstituteId, setEditInstituteId] = useState("");
+
+  const [editYear, setEditYear] = useState("");
+  const [editSection, setEditSection] = useState("");
 
   const { branches } = useSelector((state) => state.getAllBranch);
   const { batch } = useSelector((state) => state.createBatch);
   const { institutes } = useSelector((state) => state.getAllInstitute);
   const { batches } = useSelector((state) => state.getAllBatch);
   const { deleteSuccess } = useSelector((state) => state.deleteBatch);
+  const [showModal, setShowModal] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -56,22 +64,51 @@ const Batch = () => {
     }
   };
 
+  const handleEdit = (institute, branch, year, section, id) => {
+    setShowModal(true);
+    setEditInstituteId(institute);
+    setEditBranchId(branch);
+    setEditYear(year);
+    setEditSection(section);
+    setEditBatchId(id);
+  };
+
+  const handleEditSubmit = (e) => {
+    e.preventDefault();
+    dispatch(
+      updateBatch(
+        editInstituteId,
+        editBranchId,
+        editSection,
+        editYear,
+        editBatchId
+      )
+    );
+    setShowModal(false);
+  };
+
   return (
     <>
-      <h2 className='text-center'>Batch</h2>
-      <div className='underline'></div>
-      <div className='container'>
-        <div className='row'>
-          <Form className='mt-3 mb-5' onSubmit={handleSubmit}>
-            <Form.Group className='mb-3' controlId='formBasicEmail'>
-              <div className='row justify-content-center'>
-                <div className='col-md-11'>
+      <h2 className="text-center">Batch</h2>
+      <div className="underline"></div>
+      <div className="container">
+        <div className="row">
+          <Form className="mt-3 mb-5" onSubmit={handleSubmit}>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <div className="row justify-content-center">
+                <div className="col-md-11">
                   <Form.Select
-                    className='mb-3'
-                    aria-label='Default select example'
+                    className="mb-3"
+                    aria-label="Default select example"
                     value={institute}
-                    onChange={(e) => setInstitute(e.target.value)}>
-                    <option value=''>Select Institute</option>
+                    onChange={(e) => {
+                      setInstitute(e.target.value);
+                      setBranch("");
+                      setYear("");
+                      setSection("");
+                    }}
+                  >
+                    <option value="">Select Institute</option>
                     {institutes &&
                       institutes.map((i) => (
                         <option key={i._id} value={i._id}>
@@ -82,11 +119,16 @@ const Batch = () => {
 
                   {institute !== "" && (
                     <Form.Select
-                      className='mb-3'
-                      aria-label='Default select example'
+                      className="mb-3"
+                      aria-label="Default select example"
                       value={branch}
-                      onChange={(e) => setBranch(e.target.value)}>
-                      <option value=''>Select Branch</option>
+                      onChange={(e) => {
+                        setBranch(e.target.value);
+                        setYear("");
+                        setSection("");
+                      }}
+                    >
+                      <option value="">Select Branch</option>
                       {branches &&
                         branches
                           .filter((b) => b.institute._id === institute)
@@ -100,11 +142,15 @@ const Batch = () => {
 
                   {institute !== "" && branch !== "" && (
                     <Form.Select
-                      className='mb-3'
-                      aria-label='Default select example'
+                      className="mb-3"
+                      aria-label="Default select example"
                       value={year}
-                      onChange={(e) => setYear(e.target.value)}>
-                      <option value=''>Select Year</option>
+                      onChange={(e) => {
+                        setYear(e.target.value);
+                        setSection("");
+                      }}
+                    >
+                      <option value="">Select Year</option>
                       {years.map((i, indx) => (
                         <option key={indx} value={i}>
                           {i}
@@ -114,18 +160,19 @@ const Batch = () => {
                   )}
                   {institute !== "" && branch !== "" && year !== "" && (
                     <Form.Control
-                      type='text'
-                      placeholder='Enter Section Name'
+                      type="text"
+                      placeholder="Enter Section Name"
                       value={section}
                       onChange={(e) => setSection(e.target.value)}
                     />
                   )}
                 </div>
-                <div className='col-md-1'>
+                <div className="col-md-1">
                   <button
-                    type='submit'
-                    className='btn btn-success btn-md'
-                    onClick={handleSubmit}>
+                    type="submit"
+                    className="btn btn-success btn-md"
+                    onClick={handleSubmit}
+                  >
                     Create
                   </button>
                 </div>
@@ -134,18 +181,18 @@ const Batch = () => {
           </Form>
         </div>
       </div>
-      <div className='row container'>
-        <div className='table-responsive'>
-          <table className='table table-bordered'>
+      <div className="row container">
+        <div className="table-responsive">
+          <table className="table table-bordered">
             <thead>
               <tr>
-                <th scope='col'>S. no</th>
-                <th scope='col'>Institute</th>
-                <th scope='col'>Branch</th>
-                <th scope='col'>Year</th>
-                <th scope='col'>Section</th>
-                <th scope='col'>Edit</th>
-                <th scope='col'>Delete</th>
+                <th scope="col">S. no</th>
+                <th scope="col">Institute</th>
+                <th scope="col">Branch</th>
+                <th scope="col">Year</th>
+                <th scope="col">Section</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
               </tr>
             </thead>
             <tbody>
@@ -153,27 +200,39 @@ const Batch = () => {
                 batches.map((i, index) => {
                   return (
                     <tr key={i._id}>
-                      <th scope='row'>{index + 1}</th>
+                      <th scope="row">{index + 1}</th>
                       <td>{i.institute && i.institute.name}</td>
                       <td>{i.branch && i.branch.name}</td>
                       <td>{i.year}</td>
                       <td>{i.section}</td>
                       <td>
                         <span
-                          className='btn btn-sm'
-                          onClick={() => handleDelete(i.slug)}>
+                          className="btn btn-sm"
+                          onClick={() =>
+                            handleEdit(
+                              i.institute._id,
+                              i.branch._id,
+                              i.year,
+                              i.section,
+                              i._id
+                            )
+                          }
+                        >
                           <i
-                            className='fas fa-edit text-warning'
-                            style={{ fontSize: "14px" }}></i>
+                            className="fas fa-edit text-warning"
+                            style={{ fontSize: "14px" }}
+                          ></i>
                         </span>
                       </td>
                       <td>
                         <span
-                          className='btn btn-sm'
-                          onClick={() => handleDelete(i._id)}>
+                          className="btn btn-sm"
+                          onClick={() => handleDelete(i._id)}
+                        >
                           <i
-                            className='fas fa-trash text-danger'
-                            style={{ fontSize: "14px" }}></i>
+                            className="fas fa-trash text-danger"
+                            style={{ fontSize: "14px" }}
+                          ></i>
                         </span>
                       </td>
                     </tr>
@@ -183,6 +242,101 @@ const Batch = () => {
           </table>
         </div>
       </div>
+
+      <Modal
+        show={showModal}
+        onHide={() => setShowModal(false)}
+        size="md"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Form onSubmit={handleEditSubmit}>
+          <Modal.Header closeButton>
+            <Modal.Title id="contained-modal-title-vcenter">
+              <i className="fas fa-edit"></i>
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <div className="row justify-content-center">
+                <div className="col-md-12">
+                  <Form.Select
+                    className="mb-3"
+                    aria-label="Default select example"
+                    value={editInstituteId}
+                    onChange={(e) => {
+                      setEditInstituteId(e.target.value);
+                      setEditBranchId("");
+                      setEditYear("");
+                      setEditSection("");
+                    }}
+                  >
+                    <option value="">Select Institute</option>
+                    {institutes &&
+                      institutes.map((i) => (
+                        <option key={i._id} value={i._id}>
+                          {i.name}
+                        </option>
+                      ))}
+                  </Form.Select>
+                  <Form.Select
+                    className="mb-3"
+                    aria-label="Default select example"
+                    value={editBranchId}
+                    onChange={(e) => {
+                      setEditBranchId(e.target.value);
+                      setEditYear("");
+                      setEditSection("");
+                    }}
+                  >
+                    <option value="">Select Branch</option>
+                    {branches &&
+                      branches
+                        .filter((b) => b.institute._id === editInstituteId)
+                        .map((i) => (
+                          <option key={i._id} value={i._id}>
+                            {i.name}
+                          </option>
+                        ))}
+                  </Form.Select>
+
+                  <Form.Select
+                    className="mb-3"
+                    aria-label="Default select example"
+                    value={editYear}
+                    onChange={(e) => {
+                      setEditYear(e.target.value);
+                      setEditSection("");
+                    }}
+                  >
+                    <option value="">Select Year</option>
+                    {years.map((i, indx) => (
+                      <option key={indx} value={i}>
+                        {i}
+                      </option>
+                    ))}
+                  </Form.Select>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter Section Name"
+                    value={editSection}
+                    onChange={(e) => setEditSection(e.target.value)}
+                  />
+                </div>
+              </div>
+            </Form.Group>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              onClick={(e) => handleEditSubmit(e)}
+              className="btn btn-success"
+              type="submit"
+            >
+              Update
+            </Button>
+          </Modal.Footer>
+        </Form>
+      </Modal>
     </>
   );
 };

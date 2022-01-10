@@ -10,6 +10,9 @@ import {
   GET_ALL_BATCH_FAIL,
   GET_ALL_BATCH_REQUEST,
   GET_ALL_BATCH_SUCCESS,
+  UPDATE_BATCH_REQUEST,
+  UPDATE_BATCH_SUCCESS,
+  UPDATE_BATCH_FAIL,
 } from "../constants/batchConstants";
 
 export const createBatchReducer = (state = {}, action) => {
@@ -45,6 +48,19 @@ export const deleteBatchReducer = (state = {}, action) => {
     case DELETE_BATCH_SUCCESS:
       return { loading: false, deleteSuccess: true };
     case DELETE_BATCH_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const updateBatchReducer = (state = {}, action) => {
+  switch (action.type) {
+    case UPDATE_BATCH_REQUEST:
+      return { loading: true };
+    case UPDATE_BATCH_SUCCESS:
+      return { loading: false };
+    case UPDATE_BATCH_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

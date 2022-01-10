@@ -25,6 +25,7 @@ import {
   createBatch,
   getAllBatch,
   deleteBatch,
+  updateBatch,
 } from "../controllers/BatchController";
 const router = express.Router();
 
@@ -49,7 +50,10 @@ router
 /* BATCH ROUTES */
 router.route("/batch/all").post(protect, getAllBatch);
 router.route("/batch/:id").delete(protect, isAdmin, deleteBatch);
-router.route("/batch").post(protect, isAdmin, createBatch);
+router
+  .route("/batch")
+  .post(protect, isAdmin, createBatch)
+  .put(protect, isAdmin, updateBatch);
 
 /* INSTRUCTOR ROUTES */
 router.route("/instructor/register").post(protect, isAdmin, registerInstructor);

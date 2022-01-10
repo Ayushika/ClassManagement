@@ -12,6 +12,9 @@ import {
   GET_ALL_BATCH_FAIL,
   GET_ALL_BATCH_REQUEST,
   GET_ALL_BATCH_SUCCESS,
+  UPDATE_BATCH_FAIL,
+  UPDATE_BATCH_REQUEST,
+  UPDATE_BATCH_SUCCESS,
 } from "../constants/batchConstants";
 
 const config = {
@@ -29,7 +32,7 @@ export const createBatch =
       const { data } = await axios.post(
         "http://localhost:5000/api/admin/batch",
         { institute, branch, section, year },
-        config,
+        config
       );
 
       dispatch({ type: CREATE_BATCH_SUCCESS, payload: data });
@@ -47,7 +50,7 @@ export const getAllBatch = () => async (dispatch) => {
     const { data } = await axios.post(
       "http://localhost:5000/api/admin/batch/all",
       {},
-      config,
+      config
     );
 
     dispatch({ type: GET_ALL_BATCH_SUCCESS, payload: data });
@@ -70,3 +73,23 @@ export const deleteBatch = (id) => async (dispatch) => {
     dispatch({ type: DELETE_BATCH_FAIL, payload: error.response.data });
   }
 };
+
+export const updateBatch =
+  (institute, branch, section, year, id) => async (dispatch) => {
+    try {
+      dispatch({ type: UPDATE_BATCH_REQUEST });
+
+      await axios.put(
+        "http://localhost:5000/api/admin/batch",
+        { id, institute, branch, section, year },
+        config
+      );
+
+      dispatch({ type: UPDATE_BATCH_SUCCESS });
+      toast.success(`Updated ✔`);
+      dispatch(getAllBatch());
+    } catch (error) {
+      toast.error(error.response.data);
+      dispatch({ type: UPDATE_BATCH_FAIL, payload: error.response.data });
+    }
+  };
