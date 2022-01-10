@@ -4,6 +4,7 @@ import instituteSchema from "../models/InstituteModel";
 import branchSchema from "../models/BranchModel";
 import batchSchema from "../models/BatchModel";
 import userSchema from "../models/UserModel";
+import courseSchema from "../models/CourseModel";
 import slugify from "slugify";
 
 //@desc  Create Institute
@@ -49,39 +50,57 @@ export const getAllInstitute = async (req, res) => {
 export const deleteInstitute = async (req, res) => {
   try {
     const { slug } = req.params;
-    const institute = await instituteSchema.findOneAndDelete({ slug }).exec();
-
+    //const institute = await instituteSchema.findOneAndDelete({ slug }).exec();
+    const institute = await instituteSchema.findOne({ slug }).exec();
     const id = institute._id;
 
     const branches = await branchSchema.find({ institute: id }).exec();
-    for (let i = 0; i < branches.length; i++) {
-      const branch = await branchSchema
-        .findOneAndDelete({ _id: branches[i]._id })
-        .exec();
-    }
+    // for (let i = 0; i < branches.length; i++) {
+    //   const branch = await branchSchema
+    //     .findByIdAndDelete({ _id: branches[i]._id })
+    //     .exec();
+    // }
 
     const batches = await batchSchema.find({ institute: id }).exec();
-    for (let i = 0; i < batches.length; i++) {
-      const batch = await batchSchema
-        .findOneAndDelete({ _id: batches[i]._id })
-        .exec();
-    }
+    // for (let i = 0; i < batches.length; i++) {
+    //   const batch = await batchSchema
+    //     .findByIdAndDelete({ _id: batches[i]._id })
+    //     .exec();
+    // }
 
     let students = [];
+    let courses = [];
 
     for (let i = 0; i < batches.length; i++) {
-      const student = await userSchema
-        .findOne({ batch: batches[i]._id })
-        .exec();
-      if (student) students.push(student);
+      const student = await userSchema.find({ batch: batches[i]._id }).exec();
+      const course = await courseSchema.find({ batch: batches[i]._id }).exec();
+      if (student) {
+        for (let j = 0; j < student.length; j++) {
+          students.push(student[i]._id);
+        }
+      }
+      if (course) {
+        for (let j = 0; j < course.length; j++) {
+          courses.push(course[i]._id);
+        }
+      }
     }
 
-    for (let i = 0; i < students.length; i++) {
-      const student = await userSchema
-        .findOneAndDelete({ _id: students[i]._id })
-        .exec();
-    }
+    // for (let i = 0; i < students.length; i++) {
+    //   const student = await userSchema
+    //     .findByIdAndDelete({ _id: students[i]._id })
+    //     .exec();
+    // }
 
+    // for (let i = 0; i < courses.length; i++) {
+    //   const course = await courseSchema
+    //     .findByIdAndDelete({ _id: courses[i]._id })
+    //     .exec();
+    // }
+    console.log("Student------------------", students);
+    console.log("Course------------------------", courses);
+    console.log("Batch------------------------", batches);
+    console.log("Branch------------------------", branches);
     res.json({ success: true });
   } catch (error) {
     console.log(error);
@@ -107,7 +126,7 @@ export const updateInstitute = async (req, res) => {
       .findOneAndUpdate(
         { _id: id },
         { name, slug, abbreviation: ans.toUpperCase() },
-        { new: true },
+        { new: true }
       )
       .exec();
 
