@@ -48,7 +48,7 @@ const Announcement = ({
                     onClick={() => handleDelete(course._id, c._id)}>
                     <i
                       className='fas fa-trash text-danger'
-                      style={{ fontSize: "14px" }}></i>
+                      style={{ fontSize: "16px" }}></i>
                   </span>
                 )}
               </Card.Body>

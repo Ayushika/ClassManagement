@@ -23,6 +23,10 @@ const Lesson = ({
   values,
   handleChange,
 }) => {
+  const handleDelete = () => {
+    if (window.confirm("Are you sure you want to delete ?")) {
+    }
+  };
   return (
     <div>
       {course && course.lessons && course.lessons.length <= 0 && (
@@ -37,6 +41,15 @@ const Lesson = ({
             <Accordion>
               <Accordion.Item eventKey={i}>
                 <Accordion.Header>
+                  {role !== "student" && (
+                    <span
+                      className='btn btn-sm m-1'
+                      onClick={() => handleDelete()}>
+                      <i
+                        className='fas fa-trash text-danger'
+                        style={{ fontSize: "16px" }}></i>
+                    </span>
+                  )}
                   {c.title} -
                   <span className='text-muted'> &nbsp;{c.description} - </span>
                   <span className='text-muted'>
