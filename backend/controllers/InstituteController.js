@@ -54,7 +54,6 @@ export const deleteInstitute = async (req, res) => {
     const id = institute._id;
 
     const branches = await branchSchema.find({ institute: id }).exec();
-
     for (let i = 0; i < branches.length; i++) {
       const branch = await branchSchema
         .findOneAndDelete({ _id: branches[i]._id })
@@ -62,7 +61,6 @@ export const deleteInstitute = async (req, res) => {
     }
 
     const batches = await batchSchema.find({ institute: id }).exec();
-
     for (let i = 0; i < batches.length; i++) {
       const batch = await batchSchema
         .findOneAndDelete({ _id: batches[i]._id })
@@ -72,8 +70,10 @@ export const deleteInstitute = async (req, res) => {
     let students = [];
 
     for (let i = 0; i < batches.length; i++) {
-      const student = await userSchema.find({ batch: batches[i]._id }).exec();
-      student.push(student);
+      const student = await userSchema
+        .findOne({ batch: batches[i]._id })
+        .exec();
+      if (student) students.push(student);
     }
 
     for (let i = 0; i < students.length; i++) {
