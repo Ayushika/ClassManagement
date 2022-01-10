@@ -5,7 +5,8 @@ import { useSelector, useDispatch } from "react-redux";
 import Meta from "../../components/Meta";
 import { Link } from "react-router-dom";
 import { login } from "../../actions/userAction";
-import { Row, Col, Button, Form, Container, InputGroup } from "react-bootstrap";
+import { Row, Col, Button, Form, InputGroup, Container } from "react-bootstrap";
+import signIn from "../../images/signin.svg";
 
 const LoginPage = ({ history }) => {
   const [email, setEmail] = useState("");
@@ -29,11 +30,11 @@ const LoginPage = ({ history }) => {
     <div>
       <Meta title="ClassRoom : Login" />
       <Container>
-        <Row className="justify-content-md-center">
-          <Col xs={12} md={6}>
-            <h3 className="text-success mt-5">Sign In</h3>
+        <Row>
+          <Col sm={12} md={4} lg={4} xl={4} className="my-auto ms-auto">
+            <h3 className="text-success">Sign In</h3>
             <Form onSubmit={handleSubmit}>
-              <Form.Group controlId="email" className="mt-4">
+              <Form.Group controlId="email" className="mt-3">
                 <Form.Control
                   type="email"
                   placeholder="Enter Email Address"
@@ -67,11 +68,27 @@ const LoginPage = ({ history }) => {
             </Form>
             <Row className="py-2">
               <Col>
-                <Link to="/forgot-password" className="custom-link text-muted">
+                <Link
+                  to="/forgot-password"
+                  className="text-muted"
+                  style={{ textDecoration: "none" }}
+                >
                   Forget Password ?
                 </Link>
               </Col>
             </Row>
+          </Col>
+
+          <Col
+            sm={12}
+            md={6}
+            lg={6}
+            xl={6}
+            //style={{ backgroundColor: "#F3F1F6" }}
+            style={{ marginTop: "3rem" }}
+            className="ms-auto"
+          >
+            <img src={signIn} alt="signIn" className="login-img" />
           </Col>
         </Row>
       </Container>

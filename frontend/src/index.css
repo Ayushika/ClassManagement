@@ -6,6 +6,10 @@
 a {
   text-decoration: none;
 }
+body {
+  overflow-x: hidden;
+}
+
 main {
   min-height: 80vh;
 }
@@ -77,6 +81,11 @@ h2 {
   width: 100%;
   display: block;
   object-fit: cover;
+}
+.login-img {
+  width: 100%;
+  object-fit: cover;
+  display: block;
 }
 @media (min-width: 992px) {
   .page {

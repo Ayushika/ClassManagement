@@ -62,15 +62,23 @@ const ForgotPasswordPage = ({ history }) => {
         <Row className="justify-content-md-center">
           <Col xs={12} md={6}>
             <h3 className="text-success mt-5">Forgot Password ?</h3>
+
             <Form onSubmit={success ? handleSubmit : handleOtp}>
               <Form.Group controlId="email" className="mt-4">
-                <Form.Control
-                  type="email"
-                  placeholder="Enter Email Address"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  disabled={success}
-                ></Form.Control>
+                <InputGroup hasValidation>
+                  <Form.Control
+                    type="email"
+                    placeholder="Email Address"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    disabled={success}
+                    required
+                    isInvalid={!email}
+                  ></Form.Control>
+                  <Form.Control.Feedback type="invalid">
+                    Enter the Email Associated with your account
+                  </Form.Control.Feedback>
+                </InputGroup>
               </Form.Group>
               {success && (
                 <>
