@@ -20,7 +20,7 @@ const lessonSchema = mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 const AnnouncementSchema = new mongoose.Schema(
@@ -35,7 +35,7 @@ const AnnouncementSchema = new mongoose.Schema(
     },
     file: {},
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const CourseSchema = new mongoose.Schema(
@@ -73,7 +73,7 @@ const CourseSchema = new mongoose.Schema(
     lessons: [lessonSchema],
     announcements: [AnnouncementSchema],
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const Course = mongoose.model("Course", CourseSchema);

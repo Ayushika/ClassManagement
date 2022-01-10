@@ -2,7 +2,8 @@
 
 import React, { useEffect } from "react";
 import { Button, Col, Form, Modal, Row, Card } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { deleteAnnouncement } from "../actions/courseAction";
 
 const Announcement = ({
   role,
@@ -14,6 +15,14 @@ const Announcement = ({
   setAnnouncementValues,
   showAnnouncementModal,
 }) => {
+  const dispatch = useDispatch();
+
+  const handleDelete = (courseId, id) => {
+    if (window.confirm("Are you sure you want to delete ?")) {
+      dispatch(deleteAnnouncement(courseId, id));
+    }
+  };
+
   return (
     <div>
       {course && course.announcements && course.announcements.length <= 0 && (
@@ -31,10 +40,26 @@ const Announcement = ({
                 <span className='text-muted text-end'>
                   &nbsp;({c.uploadedAt.substring(0, 10)})
                 </span>
+
+                {role !== "student" && (
+                  <span
+                    style={{ marginLeft: "90%", marginTop: "-53px" }}
+                    className='btn btn-sm'
+                    onClick={() => handleDelete(course._id, c._id)}>
+                    <i
+                      className='fas fa-trash text-danger'
+                      style={{ fontSize: "14px" }}></i>
+                  </span>
+                )}
               </Card.Body>
               {c.file && (
-                <a href={c.file.Location} target='_blank'>
-                  <Button variant='outline-success' className="mx-3 mb-3">See Document</Button>
+                <a
+                  href={c.file.Location}
+                  target='_blank'
+                  style={{  marginTop: "-14px" }}>
+                  <Button variant='outline-success' className='mx-3 mb-4'>
+                    See Document
+                  </Button>
                 </a>
               )}
             </Card>

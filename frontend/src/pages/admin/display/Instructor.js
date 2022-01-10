@@ -9,20 +9,28 @@ const Instructor = () => {
   const dispatch = useDispatch();
   const { instructors } = useSelector((state) => state.instructorDisplay);
 
+  const handleDelete = (id) => {
+    if (window.confirm("Are you sure you want to delete ?")) {
+      // dispatch(deleteUser(id));
+    }
+  };
+
   useEffect(() => {
     dispatch(displayInstructor());
   }, [dispatch]);
+
   return (
-    <Container className="mt-3">
-      <Row className="mb-3 mt-5">
-        <div className="table-responsive">
-          <table className="table table-bordered">
+    <Container className='mt-3'>
+      <Row className='mb-3 mt-5'>
+        <div className='table-responsive'>
+          <table className='table table-bordered'>
             <thead>
               <tr>
-                <th scope="col">S. no</th>
-                <th scope="col">Name</th>
-                <th scope="col">Phone</th>
-                <th scope="col">Email</th>
+                <th scope='col'>S. no</th>
+                <th scope='col'>Name</th>
+                <th scope='col'>Phone</th>
+                <th scope='col'>Email</th>
+                <th scope='col'>Delete</th>
               </tr>
             </thead>
             <tbody>
@@ -31,10 +39,19 @@ const Instructor = () => {
                 instructors.map((s, index) => {
                   return (
                     <tr key={s._id}>
-                      <th scope="row">{index + 1}</th>
+                      <th scope='row'>{index + 1}</th>
                       <td>{s.name}</td>
                       <td>{s.phone}</td>
                       <td>{s.email}</td>
+                      <td>
+                        <span
+                          className='btn btn-sm'
+                          onClick={() => handleDelete(s._id)}>
+                          <i
+                            className='fas fa-trash text-danger'
+                            style={{ fontSize: "14px" }}></i>
+                        </span>
+                      </td>
                     </tr>
                   );
                 })}

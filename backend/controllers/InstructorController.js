@@ -4,6 +4,7 @@ import batchSchema from "../models/BatchModel";
 import userSchema from "../models/UserModel";
 import { mailTemplate } from "../utils/awsServices";
 import slugify from "slugify";
+import mongoose from "mongoose";
 import { nanoid } from "nanoid";
 import dotenv from "dotenv";
 import AWS from "aws-sdk";
@@ -349,6 +350,27 @@ export const addAnnouncement = async (req, res) => {
     }
 
     res.json(course);
+  } catch (error) {
+    console.log(error);
+    res.status(400).send("Error,Please Try Again");
+  }
+};
+
+export const deleteAnnouncement = async (req, res) => {
+  try {
+    const { courseId, id } = req.body;
+
+    const course = await courseSchema.findOne({ _id: courseId }).exec();
+
+    if (!course) {
+      return res.status(400).send("No course Found");
+    }
+
+    const aId = new mongoose.Types.ObjectId(id);
+
+    await course.announcements.pull(aId);
+    await course.save();
+    res.json({ course });
   } catch (error) {
     console.log(error);
     res.status(400).send("Error,Please Try Again");

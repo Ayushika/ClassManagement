@@ -16,6 +16,9 @@ import {
   COURSE_ADD_ANNOUNCEMENT_FAIL,
   COURSE_ADD_ANNOUNCEMENT_SUCCESS,
   COURSE_GET_DETAILS_SUCCESS,
+  DELETE_ANNOUNCEMENT_FAIL,
+  DELETE_ANNOUNCEMENT_REQUEST,
+  DELETE_ANNOUNCEMENT_SUCCESS,
 } from "../constants/courseConstants";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -135,3 +138,29 @@ export const addAnnouncement =
       toast.error("Error While Adding Announcement ,Try Again");
     }
   };
+
+export const deleteAnnouncement = (courseId, id) => async (dispatch) => {
+  try {
+    console.log("Course : ", courseId);
+    dispatch({ type: DELETE_ANNOUNCEMENT_REQUEST });
+
+    await axios.delete(
+      `http://localhost:5000/api/instructor/course/delete-announcement`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+        data: { courseId: courseId, id: id },
+      },
+    );
+    dispatch({ type: DELETE_ANNOUNCEMENT_SUCCESS });
+    toast.success("Deleted ✔");
+  } catch (error) {
+    dispatch({
+      type: DELETE_ANNOUNCEMENT_FAIL,
+      payload: error.response.data,
+    });
+    toast.error("Error While Deleting Announcement ,Try Again");
+  }
+};

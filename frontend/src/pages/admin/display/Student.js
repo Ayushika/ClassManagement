@@ -27,22 +27,27 @@ const Student = () => {
     dispatch(getAllBatch());
   }, [dispatch]);
 
+  const handleDelete = (id) => {
+    if (window.confirm("Are you sure you want to delete ?")) {
+      // dispatch(deleteUser(id));
+    }
+  };
+
   return (
-    <Container className="mt-3">
-      <Row className="mb-3 mt-4">
-        <Form.Group as={Col} controlId="formGridInstitute">
+    <Container className='mt-3'>
+      <Row className='mb-3 mt-4'>
+        <Form.Group as={Col} controlId='formGridInstitute'>
           <Form.Label>Institute</Form.Label>
           <Form.Select
-            className="text-muted"
+            className='text-muted'
             value={institute}
             onChange={(e) => {
               setInstitute(e.target.value);
               setBranch("");
               setSection("");
               setYear("");
-            }}
-          >
-            <option value="">Select</option>
+            }}>
+            <option value=''>Select</option>
             {institutes &&
               institutes.map((i) => (
                 <option key={i._id} value={i._id}>
@@ -53,18 +58,17 @@ const Student = () => {
         </Form.Group>
 
         {institute.length > 0 && (
-          <Form.Group as={Col} controlId="formGridBranch">
+          <Form.Group as={Col} controlId='formGridBranch'>
             <Form.Label>Branch</Form.Label>
             <Form.Select
-              className="text-muted"
+              className='text-muted'
               value={branch}
               onChange={(e) => {
                 setBranch(e.target.value);
                 setSection("");
                 setYear("");
-              }}
-            >
-              <option value="">Select</option>
+              }}>
+              <option value=''>Select</option>
               {branches &&
                 branches
                   .filter((b) => b.institute._id === institute)
@@ -78,23 +82,22 @@ const Student = () => {
         )}
 
         {institute.length > 0 && branch.length > 0 && (
-          <Form.Group as={Col} controlId="formGridSection">
+          <Form.Group as={Col} controlId='formGridSection'>
             <Form.Label>Year</Form.Label>
             <Form.Select
-              className="text-muted"
+              className='text-muted'
               value={year}
               onChange={(e) => {
                 setYear(e.target.value);
                 setSection("");
-              }}
-            >
-              <option value="">Select</option>
+              }}>
+              <option value=''>Select</option>
               {batches &&
                 batches.length > 0 &&
                 batches
                   .filter(
                     (b) =>
-                      b.institute._id === institute && b.branch._id === branch
+                      b.institute._id === institute && b.branch._id === branch,
                   )
                   .map((b) => (
                     <option key={b._id} value={b.year}>
@@ -106,14 +109,13 @@ const Student = () => {
         )}
 
         {institute.length > 0 && branch.length > 0 && year.length > 0 && (
-          <Form.Group as={Col} controlId="formGridSection">
+          <Form.Group as={Col} controlId='formGridSection'>
             <Form.Label>Section</Form.Label>
             <Form.Select
-              className="text-muted"
+              className='text-muted'
               value={section}
-              onChange={(e) => setSection(e.target.value)}
-            >
-              <option value="">Select</option>
+              onChange={(e) => setSection(e.target.value)}>
+              <option value=''>Select</option>
               {batches &&
                 batches.length > 0 &&
                 batches
@@ -121,7 +123,7 @@ const Student = () => {
                     (b) =>
                       b.institute._id === institute &&
                       b.branch._id === branch &&
-                      b.year === year
+                      b.year === year,
                   )
                   .map((b) => (
                     <option key={b._id} value={b.section}>
@@ -133,15 +135,16 @@ const Student = () => {
         )}
       </Row>
       {students && students.length > 0 ? (
-        <Row className="mb-4 mt-5">
-          <div className="table-responsive">
-            <table className="table table-bordered">
+        <Row className='mb-4 mt-5'>
+          <div className='table-responsive'>
+            <table className='table table-bordered'>
               <thead>
                 <tr>
-                  <th scope="col">S. no</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Phone</th>
-                  <th scope="col">Email</th>
+                  <th scope='col'>S. no</th>
+                  <th scope='col'>Name</th>
+                  <th scope='col'>Phone</th>
+                  <th scope='col'>Email</th>
+                  <th scope='col'>Delete</th>
                 </tr>
               </thead>
               <tbody>
@@ -155,15 +158,24 @@ const Student = () => {
                         s.batch.institute === institute &&
                         s.batch.branch === branch &&
                         s.batch.year === year &&
-                        s.batch.section === section
+                        s.batch.section === section,
                     )
                     .map((s, index) => {
                       return (
                         <tr key={s._id}>
-                          <th scope="row">{index + 1}</th>
+                          <th scope='row'>{index + 1}</th>
                           <td>{s.name}</td>
                           <td>{s.phone}</td>
                           <td>{s.email}</td>
+                          <td>
+                            <span
+                              className='btn btn-sm'
+                              onClick={() => handleDelete(s._id)}>
+                              <i
+                                className='fas fa-trash text-danger'
+                                style={{ fontSize: "14px" }}></i>
+                            </span>
+                          </td>
                         </tr>
                       );
                     })}
@@ -177,15 +189,24 @@ const Student = () => {
                       (s) =>
                         s.batch.institute === institute &&
                         s.batch.branch === branch &&
-                        s.batch.year === year
+                        s.batch.year === year,
                     )
                     .map((s, index) => {
                       return (
                         <tr key={s._id}>
-                          <th scope="row">{index + 1}</th>
+                          <th scope='row'>{index + 1}</th>
                           <td>{s.name}</td>
                           <td>{s.phone}</td>
                           <td>{s.email}</td>
+                          <td>
+                            <span
+                              className='btn btn-sm'
+                              onClick={() => handleDelete(s._id)}>
+                              <i
+                                className='fas fa-trash text-danger'
+                                style={{ fontSize: "14px" }}></i>
+                            </span>
+                          </td>
                         </tr>
                       );
                     })}
@@ -198,15 +219,24 @@ const Student = () => {
                     .filter(
                       (s) =>
                         s.batch.institute === institute &&
-                        s.batch.branch === branch
+                        s.batch.branch === branch,
                     )
                     .map((s, index) => {
                       return (
                         <tr key={s._id}>
-                          <th scope="row">{index + 1}</th>
+                          <th scope='row'>{index + 1}</th>
                           <td>{s.name}</td>
                           <td>{s.phone}</td>
                           <td>{s.email}</td>
+                          <td>
+                            <span
+                              className='btn btn-sm'
+                              onClick={() => handleDelete(s._id)}>
+                              <i
+                                className='fas fa-trash text-danger'
+                                style={{ fontSize: "14px" }}></i>
+                            </span>
+                          </td>
                         </tr>
                       );
                     })}
@@ -220,10 +250,19 @@ const Student = () => {
                     .map((s, index) => {
                       return (
                         <tr key={s._id}>
-                          <th scope="row">{index + 1}</th>
+                          <th scope='row'>{index + 1}</th>
                           <td>{s.name}</td>
                           <td>{s.phone}</td>
                           <td>{s.email}</td>
+                          <td>
+                            <span
+                              className='btn btn-sm'
+                              onClick={() => handleDelete(s._id)}>
+                              <i
+                                className='fas fa-trash text-danger'
+                                style={{ fontSize: "14px" }}></i>
+                            </span>
+                          </td>
                         </tr>
                       );
                     })}
