@@ -22,6 +22,9 @@ import {
   UPLOAD_IMAGE_REQUEST,
   UPLOAD_IMAGE_SUCCESS,
   UPLOAD_IMAGE_FAIL,
+  USER_DELETE_FAIL,
+  USER_DELETE_SUCCESS,
+  USER_DELETE_REQUEST,
 } from "../constants/userConstants";
 import Resizer from "react-image-file-resizer";
 
@@ -189,5 +192,26 @@ export const upload = (file) => async (dispatch) => {
       },
       "base64",
     );
+  }
+};
+
+export const deleteUser = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: USER_DELETE_REQUEST });
+
+    await axios.delete(`http://localhost:5000/api/user/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+    });
+    dispatch({ type: USER_DELETE_SUCCESS });
+    toast.success("Deleted ✔");
+  } catch (error) {
+    dispatch({
+      type: USER_DELETE_FAIL,
+      payload: error.response.data,
+    });
+    toast.error("Error While Deleting USER ,Try Again");
   }
 };
