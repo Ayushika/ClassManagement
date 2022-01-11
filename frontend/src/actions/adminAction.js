@@ -14,7 +14,6 @@ import {
   STUDENT_DISPLAY_REQUEST,
   STUDENT_DISPLAY_SUCCESS,
 } from "../constants/adminConstants";
-
 import axios from "axios";
 import { toast } from "react-toastify";
 

@@ -1,14 +1,23 @@
 /** @format */
 
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useEffect } from "react";
+import axios from "axios";
 import { Container } from "react-bootstrap";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useHistory,
+} from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import { logout } from "./actions/userAction";
+import { useDispatch } from "react-redux";
 import "react-toastify/dist/ReactToastify.css";
 
 // Components
 import Header from "./components/layout/Header";
 import Loading from "./components/Loading";
+import { USER_LOGOUT } from "./constants/userConstants";
 
 const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
 
@@ -65,6 +74,35 @@ const UserUpdateProfilePage = lazy(() =>
 );
 
 const App = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    withCredentials: true,
+  };
+
+  useEffect(() => {
+    axios.interceptors.response.use(
+      function (response) {
+        // Any status code that lies within the range of 2xx use this function to trigger
+        console.log("RESPONSE");
+        return response;
+      },
+
+      function (error) {
+        //Any status code that lies outside the range of 2xx use this function to trigger
+        let res = error.response;
+        if (res.status === 401 && res.config && !res.config.__isRetryRequest) {
+          dispatch(logout());
+        }
+        return Promise.reject(error);
+      },
+    );
+  }, [Route]);
+
   return (
     <Router>
       <Suspense fallback={<Loading />}>

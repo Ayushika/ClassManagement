@@ -1,3 +1,5 @@
+/** @format */
+
 * {
   margin: 0;
   padding: 0;
@@ -97,23 +99,23 @@ h2 {
   }
 }
 
-/* .paginationItemStyle {
+.paginationItemStyle {
   margin-left: 5px !important;
 }
 .paginationItemStyle .page-link {
   color: #000 !important;
 }
-.paginationItemStyle.page-item.active button {
+.paginationItemStyle .page-item .active button {
   background-color: green !important;
   border-color: green !important;
 }
-.paginationLinkStyle {
-  background-color: #b90000 !important;
-  border-radius: 5px !important;
-}
+/* .paginationLinkStyle {
+  background-color: red !important;
+  /* border-radius: 5px !important; */
+/* }
 .paginationLinkStyle:hover {
-  background-color: #772e2e !important;
+  background-color: red !important;
 }
 .paginationLinkStyle:active {
-  background-color: #772e2e !important;
-} */
+  background-color: red !important;
+} */ 
