@@ -1,23 +1,26 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import CourseCard from "../../components/cards/InstructorCourseCard";
 import { getCourses } from "../../actions/courseAction";
 import { useDispatch, useSelector } from "react-redux";
 import { COURSE_CREATE_RESET } from "../../constants/courseConstants";
 import { Col, Row } from "react-bootstrap";
+import Paginate from "../../components/Paginate";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
 
-  const { courses } = useSelector((state) => state.courseGetAll);
+  const { courses, page, pages } = useSelector((state) => state.courseGetAll);
   const { success } = useSelector((state) => state.courseCreate);
+
+  const [paginatePage, setPaginatePage] = useState(1);
 
   const value = "instructor";
   useEffect(() => {
     if (success) {
       dispatch({ type: COURSE_CREATE_RESET });
     }
-    dispatch(getCourses(value));
-  }, [dispatch, success]);
+    dispatch(getCourses(value, paginatePage));
+  }, [dispatch, success, paginatePage]);
 
   return (
     <div>
@@ -32,6 +35,9 @@ const Dashboard = () => {
               </Col>
             );
           })}
+      </Row>
+      <Row>
+        <Paginate pages={pages} page={page} setPaginatePage={setPaginatePage} />
       </Row>
     </div>
   );

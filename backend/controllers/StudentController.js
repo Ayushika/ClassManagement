@@ -16,17 +16,27 @@ export const currentStudent = async (req, res) => {
 export const courseGetAll = async (req, res) => {
   try {
     const id = req.user.id;
-    const students = await userSchema.findOne({ _id: id }).select("-password");
-    const courses = [];
+    const students = await userSchema.findById({ _id: id }).select("-password");
+    let courses = [];
+    let cou = [];
+    let { page } = req.body;
+    if (!page) page = 1;
+    const pageSize = 4;
+
     for (let i = 0; i < students.courseId.length; i++) {
       const course = await courseSchema
         .findById(students.courseId[i])
         .populate("instructor")
         .exec();
-      courses.push(course);
+      //.sort([[sort, order]])
+      cou.push(course);
     }
-
-    res.json(courses);
+    cou.reverse();
+    courses = cou.slice(
+      pageSize * (page - 1),
+      pageSize * (page - 1) + pageSize
+    );
+    res.json({ courses, page, pages: Math.ceil(cou.length / pageSize) });
   } catch (error) {
     console.log(error);
     res.status(400).send("Error,Please Try Again");

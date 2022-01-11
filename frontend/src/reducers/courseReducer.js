@@ -48,7 +48,12 @@ export const courseGetAllReducer = (state = { courses: [] }, action) => {
     case COURSE_GET_ALL_REQUEST:
       return { loading: true };
     case COURSE_GET_ALL_SUCCESS:
-      return { loading: false, courses: action.payload };
+      return {
+        loading: false,
+        courses: action.payload.courses,
+        page: action.payload.page,
+        pages: action.payload.pages,
+      };
     case COURSE_GET_ALL_FAIL:
       return { loading: false, error: action.payload };
     default:
@@ -84,7 +89,7 @@ export const courseAddLessonReducer = (state = { lesson: {} }, action) => {
 
 export const courseAddAnnouncementReducer = (
   state = { announcement: {} },
-  action,
+  action
 ) => {
   switch (action.type) {
     case COURSE_ADD_ANNOUNCEMENT_REQUEST:

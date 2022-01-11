@@ -1,5 +1,5 @@
 @todo: 
  
 1. remove duplicate years
-2. pagination on dashboard(student , instructor)
+2. color pagination
 3. axios interceptors (logout automatically)

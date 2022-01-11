@@ -1,24 +1,26 @@
 /** @format */
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { getCourses } from "../../actions/courseAction";
 import { useDispatch, useSelector } from "react-redux";
 import { Col, Row } from "react-bootstrap";
 import CourseCard from "../../components/cards/StudentCourseCard";
+import Paginate from "../../components/Paginate";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
 
-  const { courses } = useSelector((state) => state.courseGetAll);
+  const [paginatePage, setPaginatePage] = useState(1);
+  const { courses, page, pages } = useSelector((state) => state.courseGetAll);
 
   const value = "student";
   useEffect(() => {
-    dispatch(getCourses(value));
-  }, [dispatch]);
+    dispatch(getCourses(value, paginatePage));
+  }, [dispatch, paginatePage]);
 
   return (
     <div>
-      <h3 className='text-center text-success'>Courses</h3>
+      <h3 className="text-center text-success">Courses</h3>
 
       <Row>
         {courses &&
@@ -31,6 +33,8 @@ const Dashboard = () => {
             );
           })}
       </Row>
+
+      <Paginate pages={pages} page={page} setPaginatePage={setPaginatePage} />
     </div>
   );
 };

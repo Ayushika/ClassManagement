@@ -32,11 +32,20 @@ export const currentInstructor = async (req, res) => {
 //@access PRIVATE
 export const courseGetAll = async (req, res) => {
   try {
+    let { page } = req.body;
+    if (!page) page = 1;
+    const pageSize = 4;
+    const count = await courseSchema.countDocuments({});
     const courses = await courseSchema
       .find({ instructor: req.user.id })
       .populate("instructor")
-      .populate("batch");
-    res.json(courses);
+      .populate("batch")
+      .sort({ createdAt: -1 })
+      .limit(pageSize)
+      .skip(pageSize * (page - 1));
+    //.sort([[sort, order]])
+
+    res.json({ courses, page, pages: Math.ceil(count / pageSize) });
   } catch (error) {
     console.log(error);
     res.status(400).send("Error,Please Try Again");
@@ -90,7 +99,7 @@ export const courseCreate = async (req, res) => {
     const instructor = await userSchema.findByIdAndUpdate(
       { _id: req.user.id },
       { $push: { courseId: course._id } },
-      { new: true },
+      { new: true }
     );
 
     const id = batch._id;
@@ -101,7 +110,7 @@ export const courseCreate = async (req, res) => {
         { _id: students[i]._id },
 
         { $push: { courseId: course._id } },
-        { new: true },
+        { new: true }
       );
 
       const params = {
@@ -191,7 +200,7 @@ export const uploadAnnouncement = async (req, res) => {
     }
     const base64Data = new Buffer.from(
       file.replace(/^data:application\/\w+;base64,/, ""),
-      "base64",
+      "base64"
     );
 
     const type = file.split(";")[0].split("/")[1];
@@ -434,7 +443,7 @@ export const courseDelete = async (req, res) => {
       .findByIdAndUpdate(
         { _id: instructor },
         { $pull: { courseId: course._id } },
-        { new: true },
+        { new: true }
       )
       .exec();
 
@@ -444,7 +453,7 @@ export const courseDelete = async (req, res) => {
         .findByIdAndUpdate(
           { _id: users[i]._id },
           { $pull: { courseId: course._id } },
-          { new: true },
+          { new: true }
         )
         .exec();
     }
