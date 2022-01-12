@@ -43,7 +43,7 @@ export const login = (email, password, history) => async (dispatch) => {
     const { data } = await axios.post(
       "http://localhost:5000/api/user/login",
       { email, password },
-      config,
+      config
     );
 
     dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
@@ -79,7 +79,7 @@ export const verifyEmail = (email) => async (dispatch) => {
     const { data } = await axios.post(
       "http://localhost:5000/api/user/verify-email",
       { email },
-      config,
+      config
     );
     dispatch({ type: USER_VERIFY_EMAIL_SUCCESS, payload: data });
   } catch (error) {
@@ -94,7 +94,7 @@ export const forgotPassword = (email, password) => async (dispatch) => {
     const { data } = await axios.post(
       "http://localhost:5000/api/user/forgot-password",
       { email, password },
-      config,
+      config
     );
     dispatch({ type: USER_FORGOT_PASSWORD_SUCCESS, payload: data });
   } catch (error) {
@@ -121,7 +121,7 @@ export const getUserDetails = (id) => async (dispatch) => {
     const { data } = await axios.post(
       `http://localhost:5000/api/user/${id}`,
       {},
-      config,
+      config
     );
     dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
   } catch (error) {
@@ -141,7 +141,7 @@ export const updateUserProfile =
       const { data } = await axios.put(
         `http://localhost:5000/api/user/update-profile`,
         { name, phone },
-        config,
+        config
       );
 
       dispatch({
@@ -176,7 +176,7 @@ export const upload = (file) => async (dispatch) => {
           .post(
             `http://localhost:5000/api/user/upload-image`,
             { image: uri },
-            config,
+            config
           )
           .then((res) => {
             dispatch({ type: UPLOAD_IMAGE_SUCCESS, payload: res.data });
@@ -190,7 +190,7 @@ export const upload = (file) => async (dispatch) => {
             toast.error("Image Upload Fail,Try Again");
           });
       },
-      "base64",
+      "base64"
     );
   }
 };
@@ -208,7 +208,7 @@ export const deleteUser = (id, role) => async (dispatch) => {
     dispatch({ type: USER_DELETE_SUCCESS });
     toast.success("Deleted ✔");
 
-    if (role == "student") {
+    if (role === "student") {
       dispatch(displayStudent());
     } else {
       dispatch(displayInstructor());

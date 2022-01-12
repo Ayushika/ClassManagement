@@ -1,23 +1,15 @@
 /** @format */
 
-import React, { lazy, Suspense, useEffect } from "react";
-import axios from "axios";
+import React, { lazy, Suspense } from "react";
 import { Container } from "react-bootstrap";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  useHistory,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import { logout } from "./actions/userAction";
-import { useDispatch } from "react-redux";
+
 import "react-toastify/dist/ReactToastify.css";
 
 // Components
 import Header from "./components/layout/Header";
 import Loading from "./components/Loading";
-import { USER_LOGOUT } from "./constants/userConstants";
 
 const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
 
@@ -25,19 +17,19 @@ const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
 const HomePage = lazy(() => import("./pages/HomePage"));
 const LoginPage = lazy(() => import("./pages/auth/LoginPage"));
 const ForgotPasswordPage = lazy(() =>
-  import("./pages/auth/ForgotPasswordPage"),
+  import("./pages/auth/ForgotPasswordPage")
 );
 
 //admin pages
 const AdminRoute = lazy(() =>
-  import("./components/protectedRoutes/AdminRoute"),
+  import("./components/protectedRoutes/AdminRoute")
 );
 const AdminDashboardPage = lazy(() => import("./pages/admin/Dashboard"));
 const InstructorCreatePage = lazy(() =>
-  import("./pages/admin/register/InstructorCreatePage"),
+  import("./pages/admin/register/InstructorCreatePage")
 );
 const StudentCreatePage = lazy(() =>
-  import("./pages/admin/register/StudentCreatePage"),
+  import("./pages/admin/register/StudentCreatePage")
 );
 const Institute = lazy(() => import("./pages/admin/create/Institute"));
 const Branch = lazy(() => import("./pages/admin/create/Branch"));
@@ -47,147 +39,118 @@ const Instructor = lazy(() => import("./pages/admin/display/Instructor"));
 
 //student pages
 const StudentRoute = lazy(() =>
-  import("./components/protectedRoutes/StudentRoute"),
+  import("./components/protectedRoutes/StudentRoute")
 );
 const StudentDashboardPage = lazy(() => import("./pages/student/Dashboard"));
 const StudentCourseDetails = lazy(() =>
-  import("./pages/student/course/CourseDetails"),
+  import("./pages/student/course/CourseDetails")
 );
 
 //instructor pages
 const InstructorRoute = lazy(() =>
-  import("./components/protectedRoutes/InstructorRoute"),
+  import("./components/protectedRoutes/InstructorRoute")
 );
 const InstructorDashboardPage = lazy(() =>
-  import("./pages/instructor/Dashboard"),
+  import("./pages/instructor/Dashboard")
 );
 
 const CourseCreate = lazy(() => import("./pages/instructor/course/Create"));
 const CourseDetails = lazy(() =>
-  import("./pages/instructor/course/CourseDetails"),
+  import("./pages/instructor/course/CourseDetails")
 );
 
 // user pages
 const UserRoute = lazy(() => import("./components/protectedRoutes/UserRoute"));
 const UserUpdateProfilePage = lazy(() =>
-  import("./pages/user/UserUpdateProfilePage"),
+  import("./pages/user/UserUpdateProfilePage")
 );
 
 const App = () => {
-  const dispatch = useDispatch();
-  const history = useHistory();
-
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-    },
-    withCredentials: true,
-  };
-
-  useEffect(() => {
-    axios.interceptors.response.use(
-      function (response) {
-        // Any status code that lies within the range of 2xx use this function to trigger
-        console.log("RESPONSE");
-        return response;
-      },
-
-      function (error) {
-        //Any status code that lies outside the range of 2xx use this function to trigger
-        let res = error.response;
-        if (res.status === 401 && res.config && !res.config.__isRetryRequest) {
-          dispatch(logout());
-        }
-        return Promise.reject(error);
-      },
-    );
-  }, [Route]);
-
   return (
     <Router>
       <Suspense fallback={<Loading />}>
         <Header />
-        <ToastContainer position='top-center' />
-        <main className='py-3'>
+        <ToastContainer position="top-center" />
+        <main className="py-3">
           <Container>
             <Switch>
-              <Route exact path='/' component={HomePage} />
-              <Route exact path='/login' component={LoginPage} />
-              <Route exact path='/' component={HomePage} />
-              <Route exact path='/login' component={LoginPage} />
+              <Route exact path="/" component={HomePage} />
+              <Route exact path="/login" component={LoginPage} />
+              <Route exact path="/" component={HomePage} />
+              <Route exact path="/login" component={LoginPage} />
               <UserRoute
                 exact
-                path='/update-profile/:id'
+                path="/update-profile/:id"
                 component={UserUpdateProfilePage}
               />
               <Route
                 exact
-                path='/forgot-password'
+                path="/forgot-password"
                 component={ForgotPasswordPage}
               />
               <AdminRoute
                 exact
-                path='/admin/dashboard'
+                path="/admin/dashboard"
                 component={AdminDashboardPage}
               />
               <AdminRoute
                 exact
-                path='/admin/instructor/create'
+                path="/admin/instructor/create"
                 component={InstructorCreatePage}
               />
               <AdminRoute
                 exact
-                path='/admin/student/create'
+                path="/admin/student/create"
                 component={StudentCreatePage}
               />
               <AdminRoute
                 exact
-                path='/admin/create/institute'
+                path="/admin/create/institute"
                 component={Institute}
               />
               <AdminRoute
                 exact
-                path='/admin/create/branch'
+                path="/admin/create/branch"
                 component={Branch}
               />
-              <AdminRoute exact path='/admin/create/batch' component={Batch} />
+              <AdminRoute exact path="/admin/create/batch" component={Batch} />
               <AdminRoute
                 exact
-                path='/admin/display/student'
+                path="/admin/display/student"
                 component={Student}
               />
               <AdminRoute
                 exact
-                path='/admin/display/instructor'
+                path="/admin/display/instructor"
                 component={Instructor}
               />
               <StudentRoute
                 exact
-                path='/student/dashboard'
+                path="/student/dashboard"
                 component={StudentDashboardPage}
               />
               <StudentRoute
                 exact
-                path='/student/course/:slug'
+                path="/student/course/:slug"
                 component={StudentCourseDetails}
               />
               <InstructorRoute
                 exact
-                path='/instructor/dashboard'
+                path="/instructor/dashboard"
                 component={InstructorDashboardPage}
               />
               <InstructorRoute
                 exact
-                path='/instructor/course/create'
+                path="/instructor/course/create"
                 component={CourseCreate}
               />
 
               <InstructorRoute
                 exact
-                path='/instructor/course/:slug'
+                path="/instructor/course/:slug"
                 component={CourseDetails}
               />
-              <Route exact path='/*' component={NotFoundPage} />
+              <Route exact path="/*" component={NotFoundPage} />
             </Switch>
           </Container>
         </main>

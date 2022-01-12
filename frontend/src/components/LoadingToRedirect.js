@@ -5,7 +5,7 @@ import { Link, useHistory } from "react-router-dom";
 import notAuthorize from "../images/401.svg";
 
 const LoadingToRedirect = () => {
-  const [count, setCount] = useState(10);
+  const [count, setCount] = useState(3);
   const history = useHistory();
 
   useEffect(() => {

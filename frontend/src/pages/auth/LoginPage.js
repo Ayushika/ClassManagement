@@ -81,9 +81,9 @@ const LoginPage = ({ history }) => {
 
           <Col
             sm={12}
-            md={6}
-            lg={6}
-            xl={6}
+            md={5}
+            lg={5}
+            xl={5}
             //style={{ backgroundColor: "#F3F1F6" }}
             style={{ marginTop: "3rem" }}
             className="ms-auto"
