@@ -63,8 +63,8 @@ const StudentCreatePage = () => {
     }
     dispatch(registerStudent(values));
     setPreview("");
-    setLoading(false);
     dispatch({ type: UPLOAD_IMAGE_RESET });
+    setLoading(false);
   };
 
   return (

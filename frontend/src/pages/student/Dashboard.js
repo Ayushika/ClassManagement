@@ -7,6 +7,7 @@ import { Col, Row } from "react-bootstrap";
 import CourseCard from "../../components/cards/StudentCourseCard";
 import Paginate from "../../components/Paginate";
 import Meta from "../../components/Meta";
+import online from "../../images/online.svg";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -23,21 +24,43 @@ const Dashboard = () => {
     <>
       <Meta title={`Student Dashboard`} />
       <div>
-        <h3 className="text-center text-success">Courses</h3>
+        {courses && courses.length > 0 && (
+          <h3 className="text-center text-success">Courses</h3>
+        )}
 
         <Row>
-          {courses &&
-            courses.length > 0 &&
+          {courses && courses.length > 0 ? (
             courses.map((course) => {
               return (
                 <Col key={course._id} sm={12} md={6} lg={4} xl={3}>
                   <CourseCard course={course} />
                 </Col>
               );
-            })}
+            })
+          ) : (
+            <>
+              <div className="container text-center mt-5 pt-5">
+                <img
+                  src={online}
+                  alt="not Authorize"
+                  style={{ width: "100%", height: "300px" }}
+                />
+
+                <p className="mt-5" style={{ letterSpacing: ".75px" }}>
+                  You are not enrolled in any course yet 😥
+                </p>
+              </div>
+            </>
+          )}
         </Row>
 
-        <Paginate pages={pages} page={page} setPaginatePage={setPaginatePage} />
+        {courses && courses.length > 0 && (
+          <Paginate
+            pages={pages}
+            page={page}
+            setPaginatePage={setPaginatePage}
+          />
+        )}
       </div>
     </>
   );

@@ -48,9 +48,9 @@ const InstructorCreatePage = () => {
     dispatch(registerInstructor(values, image));
     setValues(intialValues);
     setPreview("");
-    setLoading(false);
     setUploadedButtonText("Upload Image");
     dispatch({ type: UPLOAD_IMAGE_RESET });
+    setLoading(false);
   };
   return (
     <div>

@@ -220,7 +220,7 @@ const CourseCreateForm = ({
                   )}
               </Row>
 
-              <Button type="submit" className=" btn btn-success btn-md mt-2">
+              <Button type="submit" className=" btn btn-success btn-md">
                 Save
               </Button>
             </Form>

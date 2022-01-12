@@ -1,7 +1,7 @@
 /** @format */
 
 import React from "react";
-import { Button, Card } from "react-bootstrap";
+import { Button, Card, Col, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { deleteCourse } from "../../actions/courseAction";
 import { useDispatch } from "react-redux";
@@ -44,16 +44,21 @@ const InstructorCourseCard = ({ course }) => {
             <i className="fas fa-file-pdf p-1"></i> Announcements:{" "}
             {course.announcements.length}
           </Card.Text>
+        </Card.Body>
+      </Link>
+      <Row>
+        <Col className="ms-3 mb-1">
           <Button
             variant="outline-success"
             onClick={() => handleDeleteCourse()}
-            style={{ borderRadius: "0" }}
+            style={{ borderRadius: "10px" }}
           >
             Delete
-            <i className="fas fa-trash p-1"></i>
           </Button>
-        </Card.Body>
-      </Link>
+        </Col>
+        <Col></Col>
+        <Col></Col>
+      </Row>
     </Card>
   );
 };
