@@ -27,36 +27,50 @@ const CourseCreateForm = ({
     dispatch(getAllBatch());
   }, [dispatch]);
 
+  const uniqueYear = (batches) => {
+    const arr = batches.filter(
+      (b) =>
+        b.institute._id === values.institute && b.branch._id === values.branch
+    );
+    const result = [...new Set(arr.map((data) => data.year))];
+    return result.map((b, i) => (
+      <option key={i} value={b}>
+        {b}
+      </option>
+    ));
+  };
+
   return (
-    <Container className='mt-3'>
-      <Row className='justify-content-md-center'>
+    <Container className="mt-3">
+      <Row className="justify-content-md-center">
         <Col xs={12} md={6}>
           <div
-            className='card p-5'
-            style={{ boxShadow: "0px 0 18px rgba(55, 66, 59, 0.08)" }}>
+            className="card p-5"
+            style={{ boxShadow: "0px 0 18px rgba(55, 66, 59, 0.08)" }}
+          >
             <Form onSubmit={handleSubmit}>
               <h2>Create Course</h2>
-              <div className='underline2'></div>
-              <div className='form-row mt-3'>
-                <div className='col'>
-                  <div className='form-group'>
-                    <label className='btn btn-outline-success btn-block'>
+              <div className="underline2"></div>
+              <div className="form-row mt-3">
+                <div className="col">
+                  <div className="form-group">
+                    <label className="btn btn-outline-success btn-block">
                       Upload Image
                       <input
-                        type='file'
-                        name='image'
+                        type="file"
+                        name="image"
                         onChange={handleImage}
-                        accept='image/*'
+                        accept="image/*"
                         hidden
                         required
                       />
                     </label>
                     {preview !== "" && (
-                      <Badge pill className='pointer' as='img-badge'>
+                      <Badge pill className="pointer" as="img-badge">
                         <img
                           src={preview}
-                          alt='preview'
-                          className='m-2'
+                          alt="preview"
+                          className="m-2"
                           style={{
                             width: "80px",
                             objectFit: "cover",
@@ -68,37 +82,39 @@ const CourseCreateForm = ({
                 </div>
               </div>
 
-              <Row className='mb-4 mt-4'>
-                <Form.Group as={Col} controlId='formGridName'>
+              <Row className="mb-4 mt-4">
+                <Form.Group as={Col} controlId="formGridName">
                   <Form.Label>Title</Form.Label>
                   <Form.Control
-                    type='text'
-                    name='title'
+                    type="text"
+                    name="title"
                     value={values.title}
                     onChange={handleChange}
-                    placeholder='John Doe'
-                    required></Form.Control>
+                    placeholder="John Doe"
+                    required
+                  ></Form.Control>
                 </Form.Group>
               </Row>
               <Row>
-                <Form.Group as={Col} controlId='formGridEmail'>
+                <Form.Group as={Col} controlId="formGridEmail">
                   <Form.Label>Description</Form.Label>
                   <textarea
-                    className='form-control'
+                    className="form-control"
                     value={values.description}
-                    name='description'
-                    placeholder='Add Description'
+                    name="description"
+                    placeholder="Add Description"
                     onChange={handleChange}
-                    required></textarea>
+                    required
+                  ></textarea>
                 </Form.Group>
               </Row>
 
-              <Row className='mb-3 mt-4'>
-                <Form.Group as={Col} controlId='formGridInstitute'>
+              <Row className="mb-3 mt-4">
+                <Form.Group as={Col} controlId="formGridInstitute">
                   <Form.Label>Institute</Form.Label>
                   <Form.Select
-                    defaultValue='Select'
-                    className='text-muted'
+                    defaultValue="Select"
+                    className="text-muted"
                     value={values.institute}
                     onChange={(e) =>
                       setValues({
@@ -108,8 +124,9 @@ const CourseCreateForm = ({
                         year: "",
                         branch: "",
                       })
-                    }>
-                    <option value=''>Select</option>
+                    }
+                  >
+                    <option value="">Select</option>
                     {institutes &&
                       institutes.map((i) => (
                         <option key={i._id} value={i._id}>
@@ -120,11 +137,11 @@ const CourseCreateForm = ({
                 </Form.Group>
 
                 {values.institute.length > 0 && (
-                  <Form.Group as={Col} controlId='formGridBranch'>
+                  <Form.Group as={Col} controlId="formGridBranch">
                     <Form.Label>Branch</Form.Label>
                     <Form.Select
-                      defaultValue='Select'
-                      className='text-muted'
+                      defaultValue="Select"
+                      className="text-muted"
                       value={values.branch}
                       onChange={(e) =>
                         setValues({
@@ -133,8 +150,9 @@ const CourseCreateForm = ({
                           section: "",
                           year: "",
                         })
-                      }>
-                      <option value=''>Select</option>
+                      }
+                    >
+                      <option value="">Select</option>
                       {branches &&
                         branches
                           .filter((b) => b.institute._id === values.institute)
@@ -147,13 +165,13 @@ const CourseCreateForm = ({
                   </Form.Group>
                 )}
               </Row>
-              <Row className='mb-3 mt-4'>
+              <Row className="mb-3 mt-4">
                 {values.institute.length > 0 && values.branch.length > 0 && (
-                  <Form.Group as={Col} controlId='formGridSection'>
+                  <Form.Group as={Col} controlId="formGridSection">
                     <Form.Label>Year</Form.Label>
                     <Form.Select
-                      defaultValue='Select'
-                      className='text-muted'
+                      defaultValue="Select"
+                      className="text-muted"
                       value={values.year}
                       onChange={(e) =>
                         setValues({
@@ -161,21 +179,10 @@ const CourseCreateForm = ({
                           year: e.target.value,
                           section: "",
                         })
-                      }>
-                      <option value=''>Select</option>
-                      {batches &&
-                        batches.length > 0 &&
-                        batches
-                          .filter(
-                            (b) =>
-                              b.institute._id === values.institute &&
-                              b.branch._id === values.branch,
-                          )
-                          .map((b) => (
-                            <option key={b._id} value={b.year}>
-                              {b.year}
-                            </option>
-                          ))}
+                      }
+                    >
+                      <option value="">Select</option>
+                      {batches && batches.length > 0 && uniqueYear(batches)}
                     </Form.Select>
                   </Form.Group>
                 )}
@@ -183,16 +190,17 @@ const CourseCreateForm = ({
                 {values.institute.length > 0 &&
                   values.branch.length > 0 &&
                   values.year.length > 0 && (
-                    <Form.Group as={Col} controlId='formGridSection'>
+                    <Form.Group as={Col} controlId="formGridSection">
                       <Form.Label>Section</Form.Label>
                       <Form.Select
-                        defaultValue='Select'
-                        className='text-muted'
+                        defaultValue="Select"
+                        className="text-muted"
                         value={values.section}
                         onChange={(e) =>
                           setValues({ ...values, section: e.target.value })
-                        }>
-                        <option value=''>Select</option>
+                        }
+                      >
+                        <option value="">Select</option>
                         {batches &&
                           batches.length > 0 &&
                           batches
@@ -200,7 +208,7 @@ const CourseCreateForm = ({
                               (b) =>
                                 b.institute._id === values.institute &&
                                 b.branch._id === values.branch &&
-                                b.year === values.year,
+                                b.year === values.year
                             )
                             .map((b) => (
                               <option key={b._id} value={b.section}>
@@ -212,7 +220,7 @@ const CourseCreateForm = ({
                   )}
               </Row>
 
-              <Button type='submit' className=' btn btn-success btn-md mt-2'>
+              <Button type="submit" className=" btn btn-success btn-md mt-2">
                 Save
               </Button>
             </Form>

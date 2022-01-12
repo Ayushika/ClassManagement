@@ -102,20 +102,3 @@ h2 {
 .paginationItemStyle {
   margin-left: 5px !important;
 }
-.paginationItemStyle .page-link {
-  color: #000 !important;
-}
-.paginationItemStyle .page-item .active button {
-  background-color: green !important;
-  border-color: green !important;
-}
-/* .paginationLinkStyle {
-  background-color: red !important;
-  /* border-radius: 5px !important; */
-/* }
-.paginationLinkStyle:hover {
-  background-color: red !important;
-}
-.paginationLinkStyle:active {
-  background-color: red !important;
-} */ 
