@@ -26,21 +26,19 @@ const CourseDetails = ({ match }) => {
       <Meta title={`ClassRoom : ${slug}`} />
       {course && (
         <>
-          <h4 className='text-center'>{course.title}</h4>
-          <div className='underline'></div>
+          <h4 className="text-center">{course.title}</h4>
+          <div className="underline"></div>
 
           <Tabs
-            id='controlled-tab-example'
+            id="controlled-tab-example"
             activeKey={key}
             onSelect={(k) => setKey(k)}
-            className='mb-3'>
-            <Tab eventKey='lesson' title='Lesson'>
+            className="mb-3"
+          >
+            <Tab eventKey="lesson" title="Lesson">
               <Lesson course={course} role={role} />
             </Tab>
-            <Tab
-              eventKey='announcement'
-              title='Announcement'
-             >
+            <Tab eventKey="announcement" title="Announcement">
               <Announcement course={course} role={role} />
             </Tab>
           </Tabs>

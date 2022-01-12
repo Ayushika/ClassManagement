@@ -1,7 +1,7 @@
 /** @format */
 
 import React from "react";
-import { Card } from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { deleteCourse } from "../../actions/courseAction";
 import { useDispatch } from "react-redux";
@@ -16,40 +16,44 @@ const InstructorCourseCard = ({ course }) => {
   };
 
   return (
-    <Card className='mt-3 p-2 rounded pointer'>
+    <Card className="mt-3 p-2 rounded pointer custom-card">
       <Link
         to={`/instructor/course/${course.slug}`}
-        style={{ textDecoration: "none" }}>
+        style={{ textDecoration: "none" }}
+      >
         <Card.Img
           src={course.image.Location}
-          variant='top'
+          variant="top"
           style={{ width: "100%", height: "150px", objectFit: "cover" }}
         />
 
         <Card.Body>
-          <Card.Title as='div'>
-            <p className='text-dark'>{course.title.toUpperCase()}</p>
+          <Card.Title as="div">
+            <p className="text-dark">{course.title.toUpperCase()}</p>
           </Card.Title>
 
-          <Card.Text as='p' className='text-muted'>
-            <i className='fas fa-university p-1'></i> Batch: {course.batch.year}{" "}
+          <Card.Text as="p" className="text-muted">
+            <i className="fas fa-university p-1"></i> Batch: {course.batch.year}{" "}
             - {course.batch.section}
           </Card.Text>
-          <Card.Text as='p' className='text-muted'>
-            <i className='fas fa-video p-1'></i> Lessons :{" "}
+          <Card.Text as="p" className="text-muted">
+            <i className="fas fa-video p-1"></i> Lessons :{" "}
             {course.lessons.length}
           </Card.Text>
-          <Card.Text as='p' className='text-muted'>
-            <i className='fas fa-file-pdf p-1'></i> Announcements:{" "}
+          <Card.Text as="p" className="text-muted">
+            <i className="fas fa-file-pdf p-1"></i> Announcements:{" "}
             {course.announcements.length}
           </Card.Text>
+          <Button
+            variant="outline-success"
+            onClick={() => handleDeleteCourse()}
+            style={{ borderRadius: "0" }}
+          >
+            Delete
+            <i className="fas fa-trash p-1"></i>
+          </Button>
         </Card.Body>
       </Link>
-      <span
-        className='btn btn-md text-center text-danger'
-        onClick={() => handleDeleteCourse()}>
-        Delete Course
-      </span>
     </Card>
   );
 };

@@ -1,7 +1,7 @@
 /** @format */
 
 import React, { useState, useEffect } from "react";
-import { Form, Modal, Row, Col, Button } from "react-bootstrap";
+import { Form, Modal, Col, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { updateInstitute } from "../../../actions/instituteAction";
 import {
@@ -9,6 +9,7 @@ import {
   deleteInstitute,
   getAllInstitute,
 } from "../../../actions/instituteAction";
+import Meta from "../../../components/Meta";
 
 const Institute = () => {
   const [name, setName] = useState("");
@@ -51,26 +52,28 @@ const Institute = () => {
 
   return (
     <>
-      <h2 className='text-center'>Institute</h2>
-      <div className='underline'></div>
-      <div className='container'>
-        <div className='row'>
-          <Form className='mt-3 mb-5' onSubmit={handleSubmit}>
-            <Form.Group className='mb-3' controlId='formBasicEmail'>
-              <div className='row justify-content-center'>
-                <div className='col-md-11'>
+      <Meta title="ClassRoom : Institute" />
+      <h2 className="text-center">Institute</h2>
+      <div className="underline"></div>
+      <div className="container">
+        <div className="row">
+          <Form className="mt-3 mb-5" onSubmit={handleSubmit}>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <div className="row justify-content-center">
+                <div className="col-md-11">
                   <Form.Control
-                    type='text'
-                    placeholder='Enter Institute Name'
+                    type="text"
+                    placeholder="Enter Institute Name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                   />
                 </div>
-                <div className='col-md-1'>
+                <div className="col-md-1">
                   <button
-                    type='submit'
-                    className='btn btn-success btn-md'
-                    onClick={(e) => handleSubmit(e)}>
+                    type="submit"
+                    className="btn btn-success btn-md"
+                    onClick={(e) => handleSubmit(e)}
+                  >
                     Create
                   </button>
                 </div>
@@ -79,15 +82,15 @@ const Institute = () => {
           </Form>
         </div>
       </div>
-      <div className='row container'>
-        <div className='table-responsive'>
-          <table className='table table-bordered'>
+      <div className="row container">
+        <div className="table-responsive">
+          <table className="table table-bordered">
             <thead>
               <tr>
-                <th scope='col'>S. no</th>
-                <th scope='col'>Institute name</th>
-                <th scope='col'>Edit</th>
-                <th scope='col'>Delete</th>
+                <th scope="col">S. no</th>
+                <th scope="col">Institute name</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
               </tr>
             </thead>
             <tbody>
@@ -95,24 +98,28 @@ const Institute = () => {
                 institutes.map((i, index) => {
                   return (
                     <tr key={i._id}>
-                      <th scope='row'>{index + 1}</th>
+                      <th scope="row">{index + 1}</th>
                       <td>{i.name}</td>
                       <td>
                         <span
-                          className='btn btn-sm'
-                          onClick={() => handleEdit(i.name, i._id)}>
+                          className="btn btn-sm"
+                          onClick={() => handleEdit(i.name, i._id)}
+                        >
                           <i
-                            className='fas fa-edit text-warning'
-                            style={{ fontSize: "14px" }}></i>
+                            className="fas fa-edit text-warning"
+                            style={{ fontSize: "14px" }}
+                          ></i>
                         </span>
                       </td>
                       <td>
                         <span
-                          className='btn btn-sm'
-                          onClick={() => handleDelete(i.slug)}>
+                          className="btn btn-sm"
+                          onClick={() => handleDelete(i.slug)}
+                        >
                           <i
-                            className='fas fa-trash text-danger'
-                            style={{ fontSize: "14px" }}></i>
+                            className="fas fa-trash text-danger"
+                            style={{ fontSize: "14px" }}
+                          ></i>
                         </span>
                       </td>
                     </tr>
@@ -125,25 +132,27 @@ const Institute = () => {
       <Modal
         show={showModal}
         onHide={() => setShowModal(false)}
-        size='md'
-        aria-labelledby='contained-modal-title-vcenter'
-        centered>
+        size="md"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
         <Form onSubmit={handleEditSubmit}>
           <Modal.Header closeButton>
-            <Modal.Title id='contained-modal-title-vcenter'>
-              <i className='fas fa-edit'></i>
+            <Modal.Title id="contained-modal-title-vcenter">
+              <i className="fas fa-edit"></i>
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form.Group
               as={Col}
-              controlId='formGridEmail'
-              className='mt-3 mb-3'>
-              <div className='row justify-content-center'>
-                <div className='col-md-12'>
+              controlId="formGridEmail"
+              className="mt-3 mb-3"
+            >
+              <div className="row justify-content-center">
+                <div className="col-md-12">
                   <Form.Control
-                    type='text'
-                    placeholder='Enter Institute Name'
+                    type="text"
+                    placeholder="Enter Institute Name"
                     value={editInstituteName}
                     onChange={(e) => setEditInstituteName(e.target.value)}
                   />
@@ -154,8 +163,9 @@ const Institute = () => {
           <Modal.Footer>
             <Button
               onClick={(e) => handleEditSubmit(e)}
-              className='btn btn-success'
-              type='submit'>
+              className="btn btn-success"
+              type="submit"
+            >
               Update
             </Button>
           </Modal.Footer>

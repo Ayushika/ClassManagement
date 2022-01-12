@@ -11,6 +11,7 @@ import {
   getAllBatch,
   updateBatch,
 } from "../../../actions/batchAction";
+import Meta from "../../../components/Meta";
 
 const Batch = () => {
   const [section, setSection] = useState("");
@@ -89,6 +90,7 @@ const Batch = () => {
 
   return (
     <>
+      <Meta title="ClassRoom : Batches" />
       <h2 className="text-center">Batch</h2>
       <div className="underline"></div>
       <div className="container">

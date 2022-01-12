@@ -10,6 +10,7 @@ import {
   getAllBranch,
   updateBranch,
 } from "../../../actions/branchAction";
+import Meta from "../../../components/Meta";
 
 const Branch = () => {
   const [name, setName] = useState("");
@@ -59,6 +60,7 @@ const Branch = () => {
 
   return (
     <>
+      <Meta title="ClassRoom : Branches" />
       <h2 className="text-center">Branch</h2>
       <div className="underline"></div>
       <div className="container">
