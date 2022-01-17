@@ -29,9 +29,9 @@ export const createBranch = (name, institute) => async (dispatch) => {
     dispatch({ type: CREATE_BRANCH_REQUEST });
 
     const { data } = await axios.post(
-      "http://localhost:5000/api/admin/branch",
+      "/api/admin/branch",
       { name, institute },
-      config,
+      config
     );
 
     dispatch({ type: CREATE_BRANCH_SUCCESS, payload: data });
@@ -46,11 +46,7 @@ export const updateBranch = (id, name, institute) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_BRANCH_REQUEST });
 
-    await axios.put(
-      "http://localhost:5000/api/admin/branch",
-      { name, institute, id },
-      config,
-    );
+    await axios.put("/api/admin/branch", { name, institute, id }, config);
 
     dispatch({ type: UPDATE_BRANCH_SUCCESS });
     toast.success(`Updated ✔`);
@@ -65,11 +61,7 @@ export const getAllBranch = () => async (dispatch) => {
   try {
     dispatch({ type: GET_ALL_BRANCH_REQUEST });
 
-    const { data } = await axios.post(
-      "http://localhost:5000/api/admin/branch/all",
-      {},
-      config,
-    );
+    const { data } = await axios.post("/api/admin/branch/all", {}, config);
 
     dispatch({ type: GET_ALL_BRANCH_SUCCESS, payload: data });
   } catch (error) {
@@ -82,10 +74,7 @@ export const deleteBranch = (slug) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_BRANCH_REQUEST });
 
-    await axios.delete(
-      `http://localhost:5000/api/admin/branch/${slug}`,
-      config,
-    );
+    await axios.delete(`/api/admin/branch/${slug}`, config);
 
     dispatch({ type: DELETE_BRANCH_SUCCESS });
     toast.success("Deleted Successfully");

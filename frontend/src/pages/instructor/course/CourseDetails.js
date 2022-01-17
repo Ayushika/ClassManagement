@@ -65,7 +65,7 @@ const CourseDetails = ({ match }) => {
       videoData.append("video", file);
 
       const { data } = await axios.post(
-        `http://localhost:5000/api/instructor/course/upload-video`,
+        `/api/instructor/course/upload-video`,
         videoData,
         {
           headers: {
@@ -102,7 +102,7 @@ const CourseDetails = ({ match }) => {
         var base64 = fileLoadedEvent.target.result;
         var file = base64;
         const { data } = await axios.post(
-          `http://localhost:5000/api/instructor/course/upload-announcement`,
+          `/api/instructor/course/upload-announcement`,
           { file },
           {
             headers: {

@@ -30,7 +30,7 @@ export const createBatch =
       dispatch({ type: CREATE_BATCH_REQUEST });
 
       const { data } = await axios.post(
-        "http://localhost:5000/api/admin/batch",
+        "/api/admin/batch",
         { institute, branch, section, year },
         config
       );
@@ -47,11 +47,7 @@ export const getAllBatch = () => async (dispatch) => {
   try {
     dispatch({ type: GET_ALL_BATCH_REQUEST });
 
-    const { data } = await axios.post(
-      "http://localhost:5000/api/admin/batch/all",
-      {},
-      config
-    );
+    const { data } = await axios.post("/api/admin/batch/all", {}, config);
 
     dispatch({ type: GET_ALL_BATCH_SUCCESS, payload: data });
   } catch (error) {
@@ -64,7 +60,7 @@ export const deleteBatch = (id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_BATCH_REQUEST });
 
-    await axios.delete(`http://localhost:5000/api/admin/batch/${id}`, config);
+    await axios.delete(`/api/admin/batch/${id}`, config);
 
     dispatch({ type: DELETE_BATCH_SUCCESS });
     toast.success("Deleted Successfully");
@@ -80,7 +76,7 @@ export const updateBatch =
       dispatch({ type: UPDATE_BATCH_REQUEST });
 
       await axios.put(
-        "http://localhost:5000/api/admin/batch",
+        "/api/admin/batch",
         { id, institute, branch, section, year },
         config
       );

@@ -28,11 +28,7 @@ export const createInstitute = (name) => async (dispatch) => {
   try {
     dispatch({ type: CREATE_INSTITUTE_REQUEST });
 
-    const { data } = await axios.post(
-      "http://localhost:5000/api/admin/institute",
-      { name },
-      config,
-    );
+    const { data } = await axios.post("/api/admin/institute", { name }, config);
 
     dispatch({ type: CREATE_INSTITUTE_SUCCESS, payload: data });
     toast.success(`${name} created successfully`);
@@ -46,11 +42,7 @@ export const getAllInstitute = () => async (dispatch) => {
   try {
     dispatch({ type: GET_ALL_INSTITUTE_REQUEST });
 
-    const { data } = await axios.post(
-      "http://localhost:5000/api/admin/institute/all",
-      {},
-      config,
-    );
+    const { data } = await axios.post("/api/admin/institute/all", {}, config);
 
     dispatch({ type: GET_ALL_INSTITUTE_SUCCESS, payload: data });
   } catch (error) {
@@ -63,10 +55,7 @@ export const deleteInstitute = (slug) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_INSTITUTE_REQUEST });
 
-    await axios.delete(
-      `http://localhost:5000/api/admin/institute/${slug}`,
-      config,
-    );
+    await axios.delete(`/api/admin/institute/${slug}`, config);
 
     dispatch({ type: DELETE_INSTITUTE_SUCCESS });
     toast.success("Deleted Successfully");
@@ -80,11 +69,7 @@ export const updateInstitute = (id, name) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_INSTITUTE_REQUEST });
 
-    await axios.put(
-      `http://localhost:5000/api/admin/institute/`,
-      { id, name },
-      config,
-    );
+    await axios.put(`/api/admin/institute/`, { id, name }, config);
 
     dispatch({ type: UPDATE_INSTITUTE_SUCCESS });
     toast.success(`Updated ✔`);

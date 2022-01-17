@@ -17,11 +17,7 @@ const InstructorRoute = ({ children, ...rest }) => {
 
   const isValidInstructor = async () => {
     try {
-      const { data } = await axios.post(
-        "http://localhost:5000/api/instructor/isvalid",
-        {},
-        config
-      );
+      const { data } = await axios.post("/api/instructor/isvalid", {}, config);
       if (data.success === true) setOk(true);
     } catch (error) {
       console.log(error.message);

@@ -41,7 +41,7 @@ export const login = (email, password, history) => async (dispatch) => {
     dispatch({ type: USER_LOGIN_REQUEST });
 
     const { data } = await axios.post(
-      "http://localhost:5000/api/user/login",
+      "/api/user/login",
       { email, password },
       config
     );
@@ -77,7 +77,7 @@ export const verifyEmail = (email) => async (dispatch) => {
   try {
     dispatch({ type: USER_VERIFY_EMAIL_REQUEST });
     const { data } = await axios.post(
-      "http://localhost:5000/api/user/verify-email",
+      "/api/user/verify-email",
       { email },
       config
     );
@@ -92,7 +92,7 @@ export const forgotPassword = (email, password) => async (dispatch) => {
   try {
     dispatch({ type: USER_FORGOT_PASSWORD_REQUEST });
     const { data } = await axios.post(
-      "http://localhost:5000/api/user/forgot-password",
+      "/api/user/forgot-password",
       { email, password },
       config
     );
@@ -105,7 +105,7 @@ export const forgotPassword = (email, password) => async (dispatch) => {
 
 export const logout = (history) => async (dispatch) => {
   try {
-    await axios.post("http://localhost:5000/api/user/logout", {}, config);
+    await axios.post("/api/user/logout", {}, config);
     window.localStorage.removeItem("userInfo");
     dispatch({ type: USER_LOGOUT });
     history.push("/");
@@ -118,11 +118,7 @@ export const logout = (history) => async (dispatch) => {
 export const getUserDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: USER_DETAILS_REQUEST });
-    const { data } = await axios.post(
-      `http://localhost:5000/api/user/${id}`,
-      {},
-      config
-    );
+    const { data } = await axios.post(`/api/user/${id}`, {}, config);
     dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: USER_DETAILS_FAIL, payload: error.response.data });
@@ -139,7 +135,7 @@ export const updateUserProfile =
       });
 
       const { data } = await axios.put(
-        `http://localhost:5000/api/user/update-profile`,
+        `/api/user/update-profile`,
         { name, phone },
         config
       );
@@ -173,11 +169,7 @@ export const upload = (file) => async (dispatch) => {
       (uri) => {
         dispatch({ type: UPLOAD_IMAGE_REQUEST });
         axios
-          .post(
-            `http://localhost:5000/api/user/upload-image`,
-            { image: uri },
-            config
-          )
+          .post(`/api/user/upload-image`, { image: uri }, config)
           .then((res) => {
             dispatch({ type: UPLOAD_IMAGE_SUCCESS, payload: res.data });
           })
@@ -199,7 +191,7 @@ export const deleteUser = (id, role) => async (dispatch) => {
   try {
     dispatch({ type: USER_DELETE_REQUEST });
 
-    await axios.delete(`http://localhost:5000/api/user/${id}`, {
+    await axios.delete(`/api/user/${id}`, {
       headers: {
         "Content-Type": "application/json",
       },

@@ -71,7 +71,6 @@ const App = () => {
     <Router>
       <Suspense fallback={<Loading />}>
         <Header />
-
         <ToastContainer position="top-center" />
         <Fade bottom duration={1000} distance="10px">
           <main className="py-3">

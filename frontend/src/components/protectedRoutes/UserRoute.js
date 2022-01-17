@@ -17,11 +17,7 @@ const UserRoute = ({ children, ...rest }) => {
 
   const isValidUser = async () => {
     try {
-      const { data } = await axios.post(
-        "http://localhost:5000/api/user/isvalid",
-        {},
-        config
-      );
+      const { data } = await axios.post("/api/user/isvalid", {}, config);
       if (data.success === true) setOk(true);
     } catch (error) {
       console.log(error.message);

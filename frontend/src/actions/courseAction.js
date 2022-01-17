@@ -44,7 +44,7 @@ export const courseCreate = (values) => async (dispatch) => {
     dispatch({ type: COURSE_CREATE_REQUEST });
 
     const { data } = await axios.post(
-      "http://localhost:5000/api/instructor/course/create",
+      "/api/instructor/course/create",
       { title, description, image, institute, branch, section, year },
       config
     );
@@ -65,7 +65,7 @@ export const getCourses = (value, page) => async (dispatch) => {
     dispatch({ type: COURSE_GET_ALL_REQUEST });
 
     const { data } = await axios.post(
-      `http://localhost:5000/api/${value}/course/get/all`,
+      `/api/${value}/course/get/all`,
       { page },
       config
     );
@@ -85,7 +85,7 @@ export const getCourseDetails = (slug, value) => async (dispatch) => {
     dispatch({ type: COURSE_GET_DETAILS_REQUEST });
 
     const { data } = await axios.post(
-      `http://localhost:5000/api/${value}/course/get`,
+      `/api/${value}/course/get`,
       { slug },
       config
     );
@@ -107,7 +107,7 @@ export const addLesson = (slug, values) => async (dispatch) => {
     dispatch({ type: COURSE_ADD_LESSON_REQUEST });
 
     const { data } = await axios.post(
-      `http://localhost:5000/api/instructor/course/add-lesson`,
+      `/api/instructor/course/add-lesson`,
       { title, description, video, slug },
       config
     );
@@ -131,7 +131,7 @@ export const addAnnouncement =
       dispatch({ type: COURSE_ADD_ANNOUNCEMENT_REQUEST });
 
       const { data } = await axios.post(
-        `http://localhost:5000/api/instructor/course/add-announcement`,
+        `/api/instructor/course/add-announcement`,
         { description, file, slug },
         config
       );
@@ -151,16 +151,13 @@ export const deleteAnnouncement = (courseId, id, slug) => async (dispatch) => {
   try {
     dispatch({ type: COURSE_DELETE_ANNOUNCEMENT_REQUEST });
 
-    await axios.delete(
-      `http://localhost:5000/api/instructor/course/delete-announcement`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        withCredentials: true,
-        data: { courseId: courseId, id: id },
-      }
-    );
+    await axios.delete(`/api/instructor/course/delete-announcement`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+      data: { courseId: courseId, id: id },
+    });
     dispatch({ type: COURSE_DELETE_ANNOUNCEMENT_SUCCESS });
     toast.success("Deleted ✔");
     dispatch(getCourseDetails(slug, "instructor"));
@@ -177,16 +174,13 @@ export const deleteLesson = (courseId, id, slug) => async (dispatch) => {
   try {
     dispatch({ type: COURSE_DELETE_LESSON_REQUEST });
 
-    await axios.delete(
-      `http://localhost:5000/api/instructor/course/delete-lesson`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        withCredentials: true,
-        data: { courseId: courseId, id: id },
-      }
-    );
+    await axios.delete(`/api/instructor/course/delete-lesson`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+      data: { courseId: courseId, id: id },
+    });
     dispatch({ type: COURSE_DELETE_LESSON_SUCCESS });
     toast.success("Deleted ✔");
     dispatch(getCourseDetails(slug, "instructor"));
@@ -203,7 +197,7 @@ export const deleteCourse = (id, instructor) => async (dispatch) => {
   try {
     dispatch({ type: COURSE_DELETE_REQUEST });
 
-    await axios.delete(`http://localhost:5000/api/instructor/course/delete`, {
+    await axios.delete(`/api/instructor/course/delete`, {
       headers: {
         "Content-Type": "application/json",
       },

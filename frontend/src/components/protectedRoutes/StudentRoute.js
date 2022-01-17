@@ -17,11 +17,7 @@ const StudentRoute = ({ children, ...rest }) => {
 
   const isValidStudent = async () => {
     try {
-      const { data } = await axios.post(
-        "http://localhost:5000/api/student/isvalid",
-        {},
-        config
-      );
+      const { data } = await axios.post("/api/student/isvalid", {}, config);
       if (data.success === true) setOk(true);
     } catch (error) {
       console.log(error.message);

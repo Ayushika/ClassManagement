@@ -29,9 +29,9 @@ export const registerInstructor = (values, image) => async (dispatch) => {
     const { email, name, phone } = values;
     dispatch({ type: INSTRUCTOR_REGISTER_REQUEST });
     let { data } = await axios.post(
-      `http://localhost:5000/api/admin/instructor/register`,
+      `/api/admin/instructor/register`,
       { name, image, phone, email },
-      config,
+      config
     );
     dispatch({ type: INSTRUCTOR_REGISTER_SUCCESS, payload: data });
     toast.success("Register Successfully");
@@ -51,9 +51,9 @@ export const registerStudent = (values) => async (dispatch) => {
       values;
     dispatch({ type: STUDENT_REGISTER_REQUEST });
     let { data } = await axios.post(
-      `http://localhost:5000/api/admin/student/register`,
+      `/api/admin/student/register`,
       { name, image, phone, email, institute, branch, section, year },
-      config,
+      config
     );
     dispatch({ type: STUDENT_REGISTER_SUCCESS, payload: data });
     toast.success("Register Successfully");
@@ -70,11 +70,7 @@ export const registerStudent = (values) => async (dispatch) => {
 export const displayStudent = () => async (dispatch) => {
   try {
     dispatch({ type: STUDENT_DISPLAY_REQUEST });
-    let { data } = await axios.post(
-      `http://localhost:5000/api/admin/student/display`,
-      {},
-      config,
-    );
+    let { data } = await axios.post(`/api/admin/student/display`, {}, config);
     dispatch({ type: STUDENT_DISPLAY_SUCCESS, payload: data });
   } catch (error) {
     console.log(error);
@@ -90,9 +86,9 @@ export const displayInstructor = () => async (dispatch) => {
   try {
     dispatch({ type: INSTRUCTOR_DISPLAY_REQUEST });
     let { data } = await axios.post(
-      `http://localhost:5000/api/admin/instructor/display`,
+      `/api/admin/instructor/display`,
       {},
-      config,
+      config
     );
     dispatch({ type: INSTRUCTOR_DISPLAY_SUCCESS, payload: data });
   } catch (error) {

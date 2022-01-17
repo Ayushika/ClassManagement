@@ -17,11 +17,7 @@ const AdminRoute = ({ children, ...rest }) => {
 
   const isValidAdmin = async () => {
     try {
-      const { data } = await axios.post(
-        "http://localhost:5000/api/admin/isvalid",
-        {},
-        config
-      );
+      const { data } = await axios.post("/api/admin/isvalid", {}, config);
       if (data.success === true) setOk(true);
     } catch (error) {
       console.log(error.message);
