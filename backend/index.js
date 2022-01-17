@@ -12,6 +12,7 @@ import UserRoutes from "./routes/UserRoutes";
 import AdminRoutes from "./routes/AdminRoutes";
 import StudentRoutes from "./routes/StudentRoutes";
 import InstructorRoutes from "./routes/InstructorRoutes";
+import path from "path";
 
 const app = express();
 dotenv.config();
