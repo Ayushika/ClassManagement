@@ -69,7 +69,7 @@ const StudentCreatePage = () => {
 
   return (
     <div>
-      <Meta title="ClassRoom : Create Student" />
+      <Meta title="Kakshaa : Create Student" />
       {loading && <Loading />}
       <StudentCreateForm
         handleSubmit={handleSubmit}

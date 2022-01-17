@@ -90,7 +90,7 @@ const Batch = () => {
 
   return (
     <>
-      <Meta title="ClassRoom : Batches" />
+      <Meta title="Kakshaa : Batches" />
       <h2 className="text-center">Batch</h2>
       <div className="underline"></div>
       <div className="container">

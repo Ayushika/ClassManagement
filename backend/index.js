@@ -47,6 +47,27 @@ app.use("/api/admin", AdminRoutes);
 app.use("/api/student", StudentRoutes);
 app.use("/api/instructor", InstructorRoutes);
 
+if (process.env.NODE_ENV === "production") {
+  app.use(
+    express.static(path.join(path.join(__dirname, "../"), "/frontend/build"))
+  ); // set static folder
+  //returning frontend for any route other than api
+  app.get("*", (req, res) => {
+    res.sendFile(
+      path.resolve(
+        path.join(__dirname, "../"),
+        "frontend",
+        "build",
+        "index.html"
+      )
+    );
+  });
+} else {
+  app.get("/", (req, res) => {
+    res.send("API is running....");
+  });
+}
+
 // connecting to the database
 connectDB();
 
@@ -58,6 +79,3 @@ app.use(errorHandler);
 app.listen(process.env.PORT || 5000, () =>
   console.log(`Server Running ${process.env.NODE_ENV} mode on port 5000`)
 );
-
-// Access Key id -> AKIASBMIZ3GVLQDP3Y3W
-// Secret -> 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

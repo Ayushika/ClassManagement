@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { logout } from "../../actions/userAction";
-import pustak from "../../images/pustak-sm.png";
+import pustak from "../../images/Kakshaa-sm.png";
 
 const Header = () => {
   const { userInfo } = useSelector((state) => state.userLogin);
@@ -23,7 +23,7 @@ const Header = () => {
       <Navbar bg="light" expand="lg" id="header">
         <Container>
           <Link to="/" className="custom-link">
-            <Navbar.Brand className="font-bold  h1">
+            <Navbar.Brand>
               <img src={pustak} alt="Pustak" style={{ width: "125px" }} />
             </Navbar.Brand>
           </Link>

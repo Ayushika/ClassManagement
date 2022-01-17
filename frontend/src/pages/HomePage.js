@@ -14,13 +14,12 @@ const HomePage = () => {
       <div className="container page">
         <div className="info">
           <h1>
-            Class <span style={{ color: "#02b875" }}>Management</span> app
+            Class <span style={{ color: "#02b875" }}>Management</span>
           </h1>
           <p style={{ color: "hsl(210, 22%, 49%)" }}>
-            I'm baby wayfarers hoodie next level taiyaki brooklyn cliche blue
-            bottle single-origin coffee chia. Aesthetic post-ironic venmo,
-            quinoa lo-fi tote bag adaptogen everyday carry meggings +1 brunch
-            narwhal.
+            A Bridge between Students and the Education. The Responsive
+            Classroom approach creates an ideal environment for learning, every
+            teacher should know about it.
           </p>
           <Link
             to={

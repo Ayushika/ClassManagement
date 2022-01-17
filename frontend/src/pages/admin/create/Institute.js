@@ -52,7 +52,7 @@ const Institute = () => {
 
   return (
     <>
-      <Meta title="ClassRoom : Institute" />
+      <Meta title="Kakshaa : Institute" />
       <h2 className="text-center">Institute</h2>
       <div className="underline"></div>
       <div className="container">

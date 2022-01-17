@@ -17,7 +17,7 @@ const Dashboard = () => {
 
   return (
     <>
-      <Meta title="ClassRoom : Admin Dashboard" />
+      <Meta title="Kakshaa : Admin Dashboard" />
       <h2 className="text-center">Dashboard</h2>
       <div className="underline"></div>
 

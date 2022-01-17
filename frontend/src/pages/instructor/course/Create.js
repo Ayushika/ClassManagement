@@ -63,7 +63,7 @@ const Create = () => {
 
   return (
     <div>
-      <Meta title='ClassRoom : Create Course' />
+      <Meta title="Kakshaa : Create Course" />
       <CourseCreateForm
         handleSubmit={handleSubmit}
         handleImage={handleImage}

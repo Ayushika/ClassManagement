@@ -28,7 +28,7 @@ const LoginPage = ({ history }) => {
 
   return (
     <div>
-      <Meta title="ClassRoom : Login" />
+      <Meta title="Kakshaa : Login" />
       <Container>
         <Row>
           <Col sm={12} md={4} lg={4} xl={4} className="my-auto ms-auto">
@@ -78,7 +78,6 @@ const LoginPage = ({ history }) => {
               </Col>
             </Row>
           </Col>
-
           <Col
             sm={12}
             md={5}

@@ -43,7 +43,7 @@ const UserUpdateProfilePage = ({ match, history }) => {
 
   return (
     <div>
-      <Meta title="ClassRoom : Update Profile" />
+      <Meta title="Kakshaa : Update Profile" />
       <Container className="mt-5">
         <Row className="justify-content-md-center">
           <Col xs={12} md={6}>

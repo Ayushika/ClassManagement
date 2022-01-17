@@ -10,6 +10,7 @@ a {
 }
 body {
   overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
 main {

@@ -24,7 +24,7 @@ const Instructor = () => {
 
   return (
     <>
-      <Meta title="ClassRoom : Instructors" />
+      <Meta title="Kakshaa : Instructors" />
       <Container className="mt-3">
         <Row className="mb-3 mt-5">
           <div className="table-responsive">

@@ -54,7 +54,7 @@ const InstructorCreatePage = () => {
   };
   return (
     <div>
-      <Meta title="ClassRoom : Create Instructor" />
+      <Meta title="Kakshaa : Create Instructor" />
       {loading && <Loading />}
 
       <InstructorCreateForm

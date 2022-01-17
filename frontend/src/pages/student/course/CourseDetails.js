@@ -23,7 +23,7 @@ const CourseDetails = ({ match }) => {
 
   return (
     <>
-      <Meta title={`ClassRoom : ${slug}`} />
+      <Meta title={`Kakshaa : ${slug}`} />
       {course && (
         <>
           <h4 className="text-center">{course.title}</h4>

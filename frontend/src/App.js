@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
+import Fade from "react-reveal/Fade";
 
 // Components
 import Header from "./components/layout/Header";
@@ -70,90 +71,95 @@ const App = () => {
     <Router>
       <Suspense fallback={<Loading />}>
         <Header />
-        <ToastContainer position="top-center" />
-        <main className="py-3">
-          <Container>
-            <Switch>
-              <Route exact path="/" component={HomePage} />
-              <Route exact path="/login" component={LoginPage} />
-              <Route exact path="/" component={HomePage} />
-              <Route exact path="/login" component={LoginPage} />
-              <UserRoute
-                exact
-                path="/update-profile/:id"
-                component={UserUpdateProfilePage}
-              />
-              <Route
-                exact
-                path="/forgot-password"
-                component={ForgotPasswordPage}
-              />
-              <AdminRoute
-                exact
-                path="/admin/dashboard"
-                component={AdminDashboardPage}
-              />
-              <AdminRoute
-                exact
-                path="/admin/instructor/create"
-                component={InstructorCreatePage}
-              />
-              <AdminRoute
-                exact
-                path="/admin/student/create"
-                component={StudentCreatePage}
-              />
-              <AdminRoute
-                exact
-                path="/admin/create/institute"
-                component={Institute}
-              />
-              <AdminRoute
-                exact
-                path="/admin/create/branch"
-                component={Branch}
-              />
-              <AdminRoute exact path="/admin/create/batch" component={Batch} />
-              <AdminRoute
-                exact
-                path="/admin/display/student"
-                component={Student}
-              />
-              <AdminRoute
-                exact
-                path="/admin/display/instructor"
-                component={Instructor}
-              />
-              <StudentRoute
-                exact
-                path="/student/dashboard"
-                component={StudentDashboardPage}
-              />
-              <StudentRoute
-                exact
-                path="/student/course/:slug"
-                component={StudentCourseDetails}
-              />
-              <InstructorRoute
-                exact
-                path="/instructor/dashboard"
-                component={InstructorDashboardPage}
-              />
-              <InstructorRoute
-                exact
-                path="/instructor/course/create"
-                component={CourseCreate}
-              />
 
-              <InstructorRoute
-                exact
-                path="/instructor/course/:slug"
-                component={CourseDetails}
-              />
-              <Route exact path="/*" component={NotFoundPage} />
-            </Switch>
-          </Container>
-        </main>
+        <ToastContainer position="top-center" />
+        <Fade bottom duration={1000} distance="10px">
+          <main className="py-3">
+            <Container>
+              <Switch>
+                <Route exact path="/" component={HomePage} />
+                <Route exact path="/login" component={LoginPage} />
+                <Route
+                  exact
+                  path="/forgot-password"
+                  component={ForgotPasswordPage}
+                />
+                <UserRoute
+                  exact
+                  path="/update-profile/:id"
+                  component={UserUpdateProfilePage}
+                />
+                <AdminRoute
+                  exact
+                  path="/admin/dashboard"
+                  component={AdminDashboardPage}
+                />
+                <AdminRoute
+                  exact
+                  path="/admin/instructor/create"
+                  component={InstructorCreatePage}
+                />
+                <AdminRoute
+                  exact
+                  path="/admin/student/create"
+                  component={StudentCreatePage}
+                />
+                <AdminRoute
+                  exact
+                  path="/admin/create/institute"
+                  component={Institute}
+                />
+                <AdminRoute
+                  exact
+                  path="/admin/create/branch"
+                  component={Branch}
+                />
+                <AdminRoute
+                  exact
+                  path="/admin/create/batch"
+                  component={Batch}
+                />
+                <AdminRoute
+                  exact
+                  path="/admin/display/student"
+                  component={Student}
+                />
+                <AdminRoute
+                  exact
+                  path="/admin/display/instructor"
+                  component={Instructor}
+                />
+                <StudentRoute
+                  exact
+                  path="/student/dashboard"
+                  component={StudentDashboardPage}
+                />
+                <StudentRoute
+                  exact
+                  path="/student/course/:slug"
+                  component={StudentCourseDetails}
+                />
+                <InstructorRoute
+                  exact
+                  path="/instructor/dashboard"
+                  component={InstructorDashboardPage}
+                />
+                <InstructorRoute
+                  exact
+                  path="/instructor/course/create"
+                  component={CourseCreate}
+                />
+
+                <InstructorRoute
+                  exact
+                  path="/instructor/course/:slug"
+                  component={CourseDetails}
+                />
+                <Route exact path="/*" component={NotFoundPage} />
+              </Switch>
+            </Container>
+          </main>
+        </Fade>
       </Suspense>
     </Router>
   );

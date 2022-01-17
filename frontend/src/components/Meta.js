@@ -12,8 +12,8 @@ const Meta = ({ title, description, keywords }) => {
   );
 };
 Meta.defaultProps = {
-  title: "Welcome To ClassRoom",
-  description: "",
+  title: "Welcome To Kakshaa",
+  description: "Best and easy to use",
   keywords: "",
 };
 Meta.propTypes = {

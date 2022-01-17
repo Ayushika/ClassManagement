@@ -38,7 +38,7 @@ const Student = () => {
 
   return (
     <>
-      <Meta title="ClassRoom : Students" />
+      <Meta title="Kakshaa : Students" />
       <Container className="mt-3">
         <Row className="mb-3 mt-4">
           <Form.Group as={Col} controlId="formGridInstitute">

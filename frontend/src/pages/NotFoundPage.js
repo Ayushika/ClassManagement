@@ -8,7 +8,7 @@ import notFound from "../images/404.svg";
 const NotFoundPage = () => {
   return (
     <>
-      <Meta title="ClassRoom : Update Profile" />
+      <Meta title="Kakshaa : Update Profile" />
       <div className="container text-center">
         <img
           src={notFound}

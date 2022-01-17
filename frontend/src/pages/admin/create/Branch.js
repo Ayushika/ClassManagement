@@ -60,7 +60,7 @@ const Branch = () => {
 
   return (
     <>
-      <Meta title="ClassRoom : Branches" />
+      <Meta title="Kakshaa : Branches" />
       <h2 className="text-center">Branch</h2>
       <div className="underline"></div>
       <div className="container">
