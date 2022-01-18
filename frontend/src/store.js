@@ -94,7 +94,7 @@ const middleware = [thunk];
 const store = createStore(
   reducer,
   initialState,
-  process.env.NODE_ENV !== "development"
+  process.env.NODE_ENV !== "production"
     ? composeWithDevTools(applyMiddleware(...middleware))
     : compose(applyMiddleware(...middleware))
 );
