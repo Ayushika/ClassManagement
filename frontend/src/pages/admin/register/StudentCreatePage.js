@@ -44,43 +44,50 @@ const StudentCreatePage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    values.image = image;
-    setLoading(true);
-    setValues(intialValues);
-    if (
-      !values.email &&
-      !values.image &&
-      !values.phone &&
-      !values.name &&
-      !values.institute &&
-      !values.branch &&
-      !values.section &&
-      !values.year
-    ) {
-      toast.warning("All Fields are required");
+    try {
+      values.image = image;
+      setLoading(true);
+      setValues(intialValues);
+      if (
+        !values.email &&
+        !values.image &&
+        !values.phone &&
+        !values.name &&
+        !values.institute &&
+        !values.branch &&
+        !values.section &&
+        !values.year
+      ) {
+        toast.warning("All Fields are required");
+        setLoading(false);
+        return;
+      }
+      dispatch(registerStudent(values));
+      setPreview("");
+      dispatch({ type: UPLOAD_IMAGE_RESET });
       setLoading(false);
-      return;
+    } catch (error) {
+      console.log(error);
     }
-    dispatch(registerStudent(values));
-    setPreview("");
-    dispatch({ type: UPLOAD_IMAGE_RESET });
-    setLoading(false);
   };
 
   return (
     <div>
       <Meta title="Kakshaa : Create Student" />
-      {loading && <Loading />}
-      <StudentCreateForm
-        handleSubmit={handleSubmit}
-        handleChange={handleChange}
-        handleImage={handleImage}
-        values={values}
-        setValues={setValues}
-        preview={preview}
-        uploading={uploading}
-        uploadedButtonText={uploadedButtonText}
-      />
+      {loading ? (
+        <Loading />
+      ) : (
+        <StudentCreateForm
+          handleSubmit={handleSubmit}
+          handleChange={handleChange}
+          handleImage={handleImage}
+          values={values}
+          setValues={setValues}
+          preview={preview}
+          uploading={uploading}
+          uploadedButtonText={uploadedButtonText}
+        />
+      )}
     </div>
   );
 };

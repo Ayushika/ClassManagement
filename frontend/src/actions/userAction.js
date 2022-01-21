@@ -88,20 +88,24 @@ export const verifyEmail = (email) => async (dispatch) => {
   }
 };
 
-export const forgotPassword = (email, password) => async (dispatch) => {
-  try {
-    dispatch({ type: USER_FORGOT_PASSWORD_REQUEST });
-    const { data } = await axios.post(
-      "/api/user/forgot-password",
-      { email, password },
-      config
-    );
-    dispatch({ type: USER_FORGOT_PASSWORD_SUCCESS, payload: data });
-  } catch (error) {
-    toast.error(error.response.data);
-    dispatch({ type: USER_FORGOT_PASSWORD_FAIL, payload: error.response.data });
-  }
-};
+export const forgotPassword =
+  (email, password, otp, hashCode) => async (dispatch) => {
+    try {
+      dispatch({ type: USER_FORGOT_PASSWORD_REQUEST });
+      const { data } = await axios.post(
+        "/api/user/forgot-password",
+        { email, password, otp, hashCode },
+        config
+      );
+      dispatch({ type: USER_FORGOT_PASSWORD_SUCCESS, payload: data });
+    } catch (error) {
+      toast.error(error.response.data);
+      dispatch({
+        type: USER_FORGOT_PASSWORD_FAIL,
+        payload: error.response.data,
+      });
+    }
+  };
 
 export const logout = (history) => async (dispatch) => {
   try {
@@ -142,6 +146,10 @@ export const updateUserProfile =
 
       dispatch({
         type: USER_UPDATE_PROFILE_SUCCESS,
+        payload: data,
+      });
+      dispatch({
+        type: USER_LOGIN_SUCCESS,
         payload: data,
       });
       toast.success("Update Successfully");

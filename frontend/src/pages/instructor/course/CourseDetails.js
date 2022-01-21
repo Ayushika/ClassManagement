@@ -13,6 +13,7 @@ import {
 } from "../../../actions/courseAction";
 import Lesson from "../../../components/Lesson";
 import Announcement from "../../../components/Announcement";
+import Loading from "../../../components/Loading";
 
 const CourseDetails = ({ match }) => {
   const { slug } = match.params;
@@ -22,6 +23,7 @@ const CourseDetails = ({ match }) => {
   const [key, setKey] = useState("lesson");
   const [uploading, setUploading] = useState(false);
   const [uploaded, setUploaded] = useState(false);
+
   const role = "instructor";
 
   const intialValues = {
@@ -47,13 +49,18 @@ const CourseDetails = ({ match }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!values.video) {
-      toast.error("Please Upload Video");
-      return;
+    try {
+      if (!values.video) {
+        toast.error("Please Upload Video");
+        return;
+      }
+      dispatch(addLesson(slug, values));
+      setUploaded(false);
+      toast.success("Lesson Uploaded Successfully");
+    } catch (error) {
+      console.log(error);
+      setUploaded(false);
     }
-    dispatch(addLesson(slug, values));
-    setUploaded(false);
-    toast.success("Lesson Uploaded Successfully");
   };
 
   const handleVideoUpload = async (e) => {
@@ -81,7 +88,6 @@ const CourseDetails = ({ match }) => {
           // },
         }
       );
-      console.log(data);
       //setProgress(0);
       setValues({ ...values, video: data });
       setUploading(false);
@@ -124,12 +130,15 @@ const CourseDetails = ({ match }) => {
 
   const handleAnnouncementSubmit = (e) => {
     e.preventDefault();
-    console.log("value", announcementValues);
-    dispatch(addAnnouncement(slug, announcementValues));
-    toast.success("Announcement Uploaded Successfully");
+    try {
+      dispatch(addAnnouncement(slug, announcementValues));
+      toast.success("Announcement Uploaded Successfully");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const { course } = useSelector((state) => state.courseGetDetails);
+  const { course, loading } = useSelector((state) => state.courseGetDetails);
 
   useEffect(() => {
     if (!course || !course.title || course.slug !== slug)
@@ -139,47 +148,51 @@ const CourseDetails = ({ match }) => {
   return (
     <>
       <Meta title={`Kakshaa : ${slug}`} />
-      {course && (
-        <>
-          <h4 className="text-center">{course.title}</h4>
-          <div className="underline"></div>
+      {loading ? (
+        <Loading />
+      ) : (
+        course && (
+          <>
+            <h4 className="text-center">{course.title}</h4>
+            <div className="underline"></div>
 
-          <Tabs
-            id="controlled-tab-example"
-            activeKey={key}
-            onSelect={(k) => setKey(k)}
-            className="mb-3"
-          >
-            <Tab eventKey="lesson" title="Lesson">
-              <Lesson
-                course={course}
-                role={role}
-                setShowLessonModal={setShowLessonModal}
-                handleVideoUpload={handleVideoUpload}
-                showLessonModal={showLessonModal}
-                handleSubmit={handleSubmit}
-                //progress={progress}
-                uploading={uploading}
-                uploaded={uploaded}
-                values={values}
-                handleChange={handleChange}
-              />
-            </Tab>
-            <Tab eventKey="announcement" title="Announcement">
-              <Announcement
-                role={role}
-                course={course}
-                setShowAnnouncementModal={setShowAnnouncementModal}
-                announcementValues={announcementValues}
-                handleFileUpload={handleFileUpload}
-                handleAnnouncementSubmit={handleAnnouncementSubmit}
-                setAnnouncementValues={setAnnouncementValues}
-                showAnnouncementModal={showAnnouncementModal}
-                uploading={uploading}
-              />
-            </Tab>
-          </Tabs>
-        </>
+            <Tabs
+              id="controlled-tab-example"
+              activeKey={key}
+              onSelect={(k) => setKey(k)}
+              className="mb-3"
+            >
+              <Tab eventKey="lesson" title="Lesson">
+                <Lesson
+                  course={course}
+                  role={role}
+                  setShowLessonModal={setShowLessonModal}
+                  handleVideoUpload={handleVideoUpload}
+                  showLessonModal={showLessonModal}
+                  handleSubmit={handleSubmit}
+                  //progress={progress}
+                  uploading={uploading}
+                  uploaded={uploaded}
+                  values={values}
+                  handleChange={handleChange}
+                />
+              </Tab>
+              <Tab eventKey="announcement" title="Announcement">
+                <Announcement
+                  role={role}
+                  course={course}
+                  setShowAnnouncementModal={setShowAnnouncementModal}
+                  announcementValues={announcementValues}
+                  handleFileUpload={handleFileUpload}
+                  handleAnnouncementSubmit={handleAnnouncementSubmit}
+                  setAnnouncementValues={setAnnouncementValues}
+                  showAnnouncementModal={showAnnouncementModal}
+                  uploading={uploading}
+                />
+              </Tab>
+            </Tabs>
+          </>
+        )
       )}
     </>
   );

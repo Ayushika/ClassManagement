@@ -40,33 +40,40 @@ const InstructorCreatePage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-    if (!values.email || !values.phone || !values.name) {
-      toast.error("All fields are required");
+    try {
+      if (!values.email || !values.phone || !values.name) {
+        toast.error("All fields are required");
+        setLoading(false);
+        return;
+      }
+      dispatch(registerInstructor(values, image));
+      setValues(intialValues);
+      setPreview("");
+      setUploadedButtonText("Upload Image");
+      dispatch({ type: UPLOAD_IMAGE_RESET });
       setLoading(false);
-      return;
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
     }
-    dispatch(registerInstructor(values, image));
-    setValues(intialValues);
-    setPreview("");
-    setUploadedButtonText("Upload Image");
-    dispatch({ type: UPLOAD_IMAGE_RESET });
-    setLoading(false);
   };
   return (
     <div>
       <Meta title="Kakshaa : Create Instructor" />
-      {loading && <Loading />}
-
-      <InstructorCreateForm
-        handleSubmit={handleSubmit}
-        handleImage={handleImage}
-        handleChange={handleChange}
-        values={values}
-        setValues={setValues}
-        preview={preview}
-        uploading={uploading}
-        uploadedButtonText={uploadedButtonText}
-      />
+      {loading ? (
+        <Loading />
+      ) : (
+        <InstructorCreateForm
+          handleSubmit={handleSubmit}
+          handleImage={handleImage}
+          handleChange={handleChange}
+          values={values}
+          setValues={setValues}
+          preview={preview}
+          uploading={uploading}
+          uploadedButtonText={uploadedButtonText}
+        />
+      )}
     </div>
   );
 };

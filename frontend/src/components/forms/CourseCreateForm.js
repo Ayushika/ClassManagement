@@ -5,7 +5,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllBranch } from "../../actions/branchAction";
 import { getAllInstitute } from "../../actions/instituteAction";
 import { getAllBatch } from "../../actions/batchAction";
-import { Row, Col, Button, Form, Container, Badge } from "react-bootstrap";
+import {
+  Row,
+  Col,
+  Button,
+  Form,
+  Container,
+  Badge,
+  Spinner,
+} from "react-bootstrap";
 
 const CourseCreateForm = ({
   handleSubmit,
@@ -14,6 +22,8 @@ const CourseCreateForm = ({
   values,
   handleChange,
   setValues,
+  uploading,
+  uploadedButtonText,
 }) => {
   const dispatch = useDispatch();
 
@@ -55,7 +65,20 @@ const CourseCreateForm = ({
                 <div className="col">
                   <div className="form-group">
                     <label className="btn btn-outline-success btn-block">
-                      Upload Image
+                      {uploading ? (
+                        <>
+                          <Spinner
+                            as="span"
+                            animation="border"
+                            size="sm"
+                            role="status"
+                            aria-hidden="true"
+                          />{" "}
+                          Uploading..
+                        </>
+                      ) : (
+                        uploadedButtonText
+                      )}
                       <input
                         type="file"
                         name="image"

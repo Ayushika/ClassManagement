@@ -72,7 +72,7 @@ export const updateInstitute = (id, name) => async (dispatch) => {
     await axios.put(`/api/admin/institute/`, { id, name }, config);
 
     dispatch({ type: UPDATE_INSTITUTE_SUCCESS });
-    toast.success(`Updated ✔`);
+    toast.success(`Updated`);
     dispatch(getAllInstitute());
   } catch (error) {
     toast.error(error.response.data);

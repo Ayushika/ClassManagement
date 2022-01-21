@@ -4,6 +4,7 @@ import userSchema from "../models/UserModel";
 import { hashPassword, comparePassword } from "../utils/bcrypt";
 import generateToken from "../utils/generateToken";
 import { nanoid } from "nanoid";
+import crypto from "crypto";
 import { mailTemplate } from "../utils/awsServices";
 import AWS from "aws-sdk";
 import dotenv from "dotenv";
@@ -67,7 +68,12 @@ export const verifyEmail = async (req, res) => {
     if (!user) {
       return res.status(400).send("User Not Found!");
     }
-    const otp = nanoid(6).toUpperCase();
+    const otp = crypto.randomInt(1000, 9999);
+    const hashedOtp = await hashPassword(otp.toString());
+    const updateUser = await userSchema.findOneAndUpdate(
+      { email },
+      { hashedOtp: hashedOtp }
+    );
     const params = {
       Source: process.env.EMAIL_FROM,
       Destination: {
@@ -97,7 +103,7 @@ export const verifyEmail = async (req, res) => {
     const emailSent = mailTemplate(params);
     emailSent
       .then((data) => {
-        res.json(otp);
+        res.json(hashedOtp);
       })
       .catch((err) => console.log(err));
   } catch (error) {
@@ -111,8 +117,17 @@ export const verifyEmail = async (req, res) => {
 //@access PUBLIC
 export const forgotPassword = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, otp, hashCode } = req.body;
     const user = await userSchema.findOne({ email });
+
+    if (!otp || user.hashedOtp === "") {
+      return res.status(400).send("Otp is required");
+    }
+
+    const isOtpMatched = await comparePassword(otp, user.hashedOtp);
+    if (!isOtpMatched) {
+      return res.status(400).send("Invalid Otp");
+    }
 
     if (!password || password.length < 8)
       return res
@@ -127,7 +142,7 @@ export const forgotPassword = async (req, res) => {
 
     const updateUser = await userSchema.findOneAndUpdate(
       { email },
-      { password: hashedPassword },
+      { password: hashedPassword, hashedOtp: "" }
     );
 
     const params = {
@@ -243,7 +258,7 @@ export const uploadImage = async (req, res) => {
 
     const base64Data = new Buffer.from(
       image.replace(/^data:image\/\w+;base64,/, ""),
-      "base64",
+      "base64"
     );
 
     const type = image.split(";")[0].split("/")[1];

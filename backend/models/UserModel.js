@@ -31,10 +31,14 @@ const UserSchema = new mongoose.Schema(
       enum: ["Student", "Instructor", "Admin"],
     },
     image: {},
+    hashedOtp: {
+      type: String,
+      default: "",
+    },
     courseId: [{ type: mongoose.Schema.Types.ObjectId, ref: "Course" }],
     batch: { type: mongoose.Schema.Types.ObjectId, ref: "Batch" },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 const User = mongoose.model("User", UserSchema);
