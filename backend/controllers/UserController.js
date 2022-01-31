@@ -89,7 +89,7 @@ export const verifyEmail = async (req, res) => {
             <h1>Reset Your Password</h1>
             <p>Use this code</p>
             <h2 style="color:red;">${otp}</h2>
-            <i>ClassRoom</i>
+            <i>https://kakshaa.herokuapp.com/</i>
             </html>
             `,
           },
@@ -158,7 +158,7 @@ export const forgotPassword = async (req, res) => {
             Data: `
                 <html>
                 <h1>Password Reset Successfully</h1>
-                <i>ClassRoom</i>
+                <i>https://kakshaa.herokuapp.com/</i>
                 </html>
                 `,
           },

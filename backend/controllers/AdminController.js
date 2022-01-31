@@ -51,7 +51,7 @@ export const registerInstructor = async (req, res) => {
               <p>Your credentials are : </p>
               <p>Email - <span style="color:red;">${email} </span></p> 
               <p>Password - <span style="color:red;">${password} </span></p> 
-              <i>ClassRoom</i>
+              <i>https://kakshaa.herokuapp.com/</i>
               </html>
               `,
           },
@@ -90,7 +90,7 @@ export const registerStudent = async (req, res) => {
         branch: branch,
       })
       .exec();
-      
+
     const courses = await courseSchema.find({ batch: batch._id }).exec();
 
     let courseId = [];
@@ -132,7 +132,7 @@ export const registerStudent = async (req, res) => {
                 <p>Your credentials are : </p>
                 <p>Email - <span style="color:red;">${email} </span></p>
                 <p>Password - <span style="color:red;">${password} </span></p>
-                <i>ClassRoom</i>
+                <i>https://kakshaa.herokuapp.com/</i>
                 </html>
                 `,
           },
