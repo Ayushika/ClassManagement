@@ -128,7 +128,7 @@ export const courseCreate = async (req, res) => {
               <h2>Hey ${students[i].name}</h2> 
               <p>Hope this email finds you well.</p>
               <p>You are enrolled in course - ${title} </p>
-              <p>Login to see the course</p>
+              <p>${title} - ${description}</p>
               <i>https://kakshaa.herokuapp.com/</i>
               </html>
               `,
@@ -266,7 +266,7 @@ export const addLesson = async (req, res) => {
               <h2>Hey ${students[i].name}</h2> 
               <p>Hope this email finds you well.</p>
               <p>Your course - ${course.title} has a new Lesson - ${title}</p>
-              <p>Login to see the activity</p>
+              <p>${title} - ${description}</p>
               <i>https://kakshaa.herokuapp.com/</i>
               </html>
               `,
@@ -373,7 +373,7 @@ export const addAnnouncement = async (req, res) => {
               <h2>Hey ${students[i].name}</h2> 
               <p>Hope this email finds you well.</p>
               <p>Your course - ${course.title} has a new announcement</p>
-              <p>Login to see the activity</p>
+              <p>${title} - ${description}</p>
               <i>https://kakshaa.herokuapp.com/</i>
               </html>
               `,
